@@ -1,0 +1,421 @@
+body{
+
+background: url("download.jpg"); 
+color: #888;
+}
+/* Header */
+
+.codrops-header {
+    padding: 2em 1em 4em;
+    text-align: center;
+}
+
+.codrops-header h1 {
+    margin: 0.5em 0 0;
+    letter-spacing: -1px;
+    font-size: 3em;
+    line-height: 1;
+}
+
+.codrops-header h1 span {
+    display: block;
+    padding: 0.5em 0 1em;
+    color: #999;
+    font-weight: normal;
+    font-size: 0.45em;
+}
+.codrops-links {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.codrops-links::after {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    content: '';
+    -webkit-transform: rotate3d(0, 0, 1, 22.5deg);
+    transform: rotate3d(0, 0, 1, 22.5deg);
+}
+
+.codrops-icon {
+    display: inline-block;
+    margin: 0.5em;
+    padding: 0em 0;
+    width: 1.5em;
+    text-decoration: none;
+}
+
+.codrops-icon span {
+    display: none;
+}
+
+.codrops-icon:before {
+    margin: 0 5px;
+    text-transform: none;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    font-family: 'codropsicons';
+    line-height: 1;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+.codrops-icon--drop:before {
+    content: "\e001";
+}
+
+.codrops-icon--prev:before {
+    content: "\e004";
+}
+
+
+/* Demo links */
+
+.codrops-demos {
+    margin: 2em 0 0;
+}
+
+.codrops-demos a {
+    display: inline-block;
+    margin: 0 0.5em;
+}
+
+.codrops-demos a.current-demo {
+    color: #333;
+}
+
+.js .inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+
+.inputfile + label {
+    max-width: 80%;
+    font-size: 1.25rem;
+    
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 0.625rem 1.25rem;
+   
+}
+.no-js .inputfile + label {
+    display: none;
+}
+
+.inputfile:focus + label,
+.inputfile.has-focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.inputfile + label * {
+    /* pointer-events: none; */
+    /* in case of FastClick lib use */
+}
+
+.inputfile + label svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+    margin-top: -0.25em;
+    /* 4px */
+    margin-right: 0.25em;
+    /* 4px */
+}
+.inputfile-4 + label {
+    color: #d3394c;
+}
+
+.inputfile-4:focus + label,
+.inputfile-4.has-focus + label,
+.inputfile-4 + label:hover {
+    color: #0656d6;
+}
+
+.inputfile-4 + label figure {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #d3394c;
+    display: block;
+    padding: 20px;
+    margin: 0 auto 10px;
+}
+
+.inputfile-4:focus + label figure,
+.inputfile-4.has-focus + label figure,
+.inputfile-4 + label:hover figure {
+    background-color: #722040;
+}
+
+.inputfile-4 + label svg {
+    width: 100%;
+    height: 100%;
+    fill: #f1e5e6;
+}
+.content {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0 0 3em 0;
+}
+
+.content footer {
+    color: #b39295;
+    margin-top: 40px;
+}
+
+.content footer a:hover,
+.content footer a:focus {
+    color: #4b0f31;
+}
+
+.box {
+    background: rgba(0,0,0,0.4);
+    padding: 6.25rem 1.25rem;
+}
+
+.box + .box {
+    margin-top: 2.5rem;
+}
+
+
+/* Related demos */
+
+.content--related {
+    text-align: center;
+    font-weight: bold;
+    padding-top: 4em;
+}
+
+#footer{
+        position: fixed; /* the footer must stick to the bottom of the page, the fixed positionning is here necessary. */
+        bottom: 0px;
+        margin:0;
+        padding:0;
+        left:0;
+        right:0;
+        width: 100%;
+        height: 40px;
+        font-family:Arial;
+        text-shadow: 1px 1px 1px black; /*h,v,blur,color */
+        /* glass effect */
+        border-top: 1px solid rgba(0,0,0,0.3);
+        background: rgba(0,0,0,0.25);
+        /*inset = inner shadow ----------- this just creates multiple shadows*/
+        /*top border, top white section, overlay top white, bottom*/
+        box-shadow: inset 0 1px rgba(255,255,255,0.3), inset 0 10px rgba(255,255,255,0.2), inset 0 10px 20px rgba(255,255,255,0.25), inset 0 -15px 30px rgba(0,0,0,0.3);
+}
+#footer h2{
+        font-weight:normal;
+        font-size:14px;
+        text-decoration:underline;
+        color: #CC0000;
+        margin-top:10px;
+        margin-bottom:5px;
+        margin-left:10px;       
+}
+#footer p{
+        color:white;
+        font-size:12px;
+        float:left;
+        padding:0px 10px; /*top & bottom = 0px */
+        margin:10px 0px;
+}
+#footer img{
+        border:none;
+}
+#footer li ul{ /* Programs button is a list */
+        list-style:none;
+        padding:0px;
+        margin-bottom:12px;
+}
+.clear { /* Use this class between rows of content when you use columns */
+        clear: both; /*no floating elements allowed on the left or the right side*/
+        display: block;
+        overflow: hidden;
+        visibility: hidden; /*nothing displays, just resets the layout*/
+        width: 0px;
+        height: 0px;
+}
+#footer .whiteBorder { /* good for images */
+        border:1px solid white;
+}
+#footer .img_left { /* image floats to the left */
+        float:left;
+        margin-right:10px;
+        width: 40px;
+}
+#footer .black_box {
+        background: rgba(0,0,0,0.4);
+        padding:5px;
+        margin-bottom:5px;
+    border-radius: 5px;
+}
+
+ 
+/* Footer Buttons  */
+ 
+#footer_menu{ /*entire footer bar*/
+        margin: 0;
+        padding: 0;
+        width:auto;
+}
+#footer_menu li { /* the "buttons" */
+        list-style: none;
+        float: left;
+        font-size:12px;
+        padding: 12px 14px 14px 14px;
+        /* cool glass look */
+        border-right:1px solid rgba(0,0,0,0.4);
+        background: rgba(0,0,0,0.1);
+}
+#footer_menu li:hover {
+        background: rgba(0,0,0,0.3); /*a little darker on hover*/
+}
+#footer_menu li a { /*text on the buttons*/
+        display: block;
+        color: #cccccc;
+        text-decoration: none;
+}
+#footer_menu li a:hover {
+        color: #ffffff; /*gray to white looks like it glows*/
+}
+/* used for the home button, text is here hidden and replaced by an image */
+#footer_menu .homeButton { 
+    padding:5px 8px 0px 14px;
+    border:none;
+    background:none;
+}
+#footer_menu .homeButton a { /* used for the home button, text is replaced by an image */
+    background:url("img/home.png") top left no-repeat;
+    width:36px;
+    height:30px;
+}
+#footer_menu li.homeButton:hover {
+    background:none;
+}
+#footer_menu li.homeButton a:hover {
+    background:url("img/home.png") top left no-repeat;
+}
+ 
+/* Drop-Up Menus */
+ 
+#footer_menu li ul.dropup{
+   display: none; 
+}
+#footer_menu li:hover ul.dropup{ /*Programs menu*/
+        display: block;
+        position: absolute;
+        margin: 0 0 0 -15px; /*move left 15px to line up properly*/
+        bottom:40px; /* distance to the bottom of the browser */
+        border: 1px solid #111111;
+        border-bottom:none;
+        background: rgba(0,0,0,0.5);
+        border-radius: 7px 7px 0px 0px; /*top-left, top-right, bottom-right, bottom-left*/
+}
+#footer_menu li:hover li { /* items in Programs menu */
+        float: none;
+        background:none;
+        border:none;
+        border-bottom:1px solid #161616;
+        padding:12px 10px 12px 10px;
+}
+/* drop-up default links */
+#footer_menu li:hover a {
+        color: #aaaaaa;
+}
+#footer_menu li:hover a:hover {
+        color: #eeeeee; /*lighter*/
+}
+/* Stream, Messages, etc... */
+#footer_menu li:hover a.headerLinks {
+        font-size:14px;
+        text-decoration:underline;
+        color: #CC0000;
+        margin-top:10px;
+        margin-left:10px;
+}
+#footer_menu li:hover a.headerLinks:hover {
+        color: white;
+        cursor:pointer;
+}
+/* List Links */
+#footer_menu li:hover a.listLinks {
+        font-size:12px;
+        color: #999999;
+        margin-left:10px;
+}
+#footer_menu li:hover a.listLinks:hover {
+        color: white;
+        cursor:pointer;
+}
+#footer_menu .right { /* Use the right class to push the content to the right */
+        float:right;
+        right:0px;
+        margin-right:2px;
+        border-right:none;
+        border-left:1px solid rgba(0,0,0,0.3);
+}
+ 
+/* 03 FOOTER - COLUMNS CONTENT - We will make 3 different layouts, which can contain 1 to 3 columns */
+ 
+#footer .one_column_layout, 
+#footer .two_column_layout, 
+#footer .three_column_layout {
+        margin:4px auto;
+        position:absolute;
+        padding-bottom:15px;
+        display:none;
+        text-align:left;
+}
+ 
+/* Layout Sizes */
+#footer .one_column_layout {width: 140px;}
+#footer .two_column_layout {width: 280px;}
+#footer .three_column_layout {width: 140px;}
+ 
+/* Entire drop-up menu, show on mouse hover */
+#footer_menu li:hover .one_column_layout, 
+#footer_menu li:hover .two_column_layout, 
+#footer_menu li:hover .three_column_layout {
+        display: block;
+        position: absolute;
+        margin: 0 0 0 -15px;
+        bottom:40px;
+        border: 1px solid #111111;
+        border-radius: 7px 7px 0px 0px;
+        background: rgba(0,0,0,0.5);
+}
+ 
+/* columns must be placed inside a layout */
+#footer .col_1,
+#footer .col_2,
+#footer .col_3 {
+        display:inline;
+        float: left;
+        position: relative;
+        margin-left: 5px;
+        margin-right: 5px;
+}
+#footer .col_1 {width:130px;}
+#footer .col_2 {width:270px;}
+#footer .col_3 {width:410px;}
