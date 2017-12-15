@@ -1,9 +1,28 @@
 body{
 
-background: url("download.jpg"); 
-color: #888;
+background: url("pic3.jpg"); 
+color: #333333;
+}
+.box__dragndrop,
+.box__uploading,
+.box__success,
+.box__error {
+  display: none;
 }
 /* Header */
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  
+  padding: 10px;
+}
+.grid-item {
+  
+  
+  padding: 20px;
+  font-size: 30px;
+  text-align: left;
+}
 
 .codrops-header {
     padding: 2em 1em 4em;
