@@ -7,36 +7,8 @@
 	<title>Ant Finder</title>
 	<meta name="description" content="Machine Learning image classification of ant species" />
 	<meta name="keywords" content="ant, ants, species, ML, DL, machine learning, identify, classify" />
-	<link rel="stylesheet" href="css.css" type="text/css" /><!-- Footer Stylings -->
-	<!--<script>(function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);</script>-->
-	<script>function handleFileSelect(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-
-    var files = evt.dataTransfer.files; // FileList object.
-
-    // files is a FileList of File objects. List some properties.
-    var output = [];
-    for (var i = 0, f; f = files[i]; i++) {
-      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-                  f.size, ' bytes, last modified: ',
-                  f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-                  '</li>');
-    }
-    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
-  }
-
-  function handleDragOver(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-    evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
-  }
-
-  // Setup the dnd listeners.
-  var dropZone = document.getElementById('drop_zone');
-  dropZone.addEventListener('dragover', handleDragOver, false);
-  dropZone.addEventListener('drop', handleFileSelect, false);
-</script>
+	<link rel="stylesheet" href="css.css" type="text/css" />
+	<script type="text/javascript" src="antFinderScript.js"></script>
 </head>
 <body>
 	<header class="header">
@@ -44,31 +16,40 @@
  				</header>
 
 <div class="grid-container">
-	
-  <div class="grid grid1">Login:</div>
-  
-  <div class="grid grid2">Results:</div>
-  
-  <div class="grid grid3">Lets get started!</div>
-
-  <div class="grid grid4"><form class="box" method="post" action="" enctype="multipart/form-data">
-  <div class="box__input">
-    <input class="box__file" type="file" name="files[]" id="file" data-multiple-caption="{count} files selected" multiple />
-    <label for="file"><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
-    <button class="box__button" type="submit">Upload</button>
-  </div>
-  <div class="box__uploading">Uploading&hellip;</div>
-  <div class="box__success">Done!</div>
-  <div class="box__error">Error! <span></span>.</div>
-</form></div>
-  <!--<div class="grid grid5">b</div>
-  <div class="grid grid6">c </div>-->
-  
-
+	<div class="grid grid1">Login:
+	<p>// login button that presents username/pass fields dynamically when pressed</p>
+	<p>// link to registration</p>
+</div>
+    <div class="grid grid2">Results:
+    	<p>//Results are presented in this area. Need to decide what info to initially provide.<ul>
+    		<li>Best Guess</li>
+    		<li>probability</li>
+    		<li>Stock image of species</li>
+    		<li>Details of species extracted from JSON/other data source</li>
+    		<li>Next 4 best guess and probabilites</li>
+    		<li>Links to resources for each result</li>
+    		<li>If we handle multiple submissions then next/prev arrows for other submissions</li>
+    		</ul>
+    	</p>
+    </div>
+    <div class="grid grid3">Lets get started!
+    	<p>//Brief instructions and options available for user</p>
+    </div>
+	<div class="grid grid4">
+		<h4>Choose a file or drag an image into box</h4>
+		<form class="box" method="post" action="" enctype="multipart/form-data">
+			<div class="box__input">
+				<input class="box__file" type="file" name="files[]" id="file" data-multiple-caption="{count} files selected" multiple />
+				<label for="file"><span class="box__dragndrop"> </span></label>
+				<button class="box__button" type="submit">Upload</button>
+			</div>
+		</form>
+		<p>//Decorate better and add a larger and obvious area for dragging images into</p>
+		<p>//Confirmation of upload or error message. For 3 image processing user will need to select which angle</p>
+  	</div>
 
 	<div id="footer">
 		<ul id="footer_menu">
-			<li><a href="#"">Home</a></li> <!--<li class="homeButton"><a href="#">Home</a></li>-->
 			<li><a href="#">Account</a>
 				<div class="one_column_layout">
 					<div class="col_1">
@@ -118,16 +99,3 @@
     </div>
 </body>
 </html>
-
-<!--	<div class="container">
-			<header class="codrops-header">
-				<h1>Ant Species Identifier</h1>
-				</header>
-			<div class="content">
-				<div class="box">
-					<input type="file" name="file-5[]" id="file-5" class="inputfile inputfile-4" data-multiple-caption="{count} files selected" multiple />
-					<label for="file-5"><figure><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg></figure> <span>Choose a file&hellip;</span></label>
-				</div>
-			</div>
-			<script src="js/custom-file-input.js"></script>
-		</div>-->

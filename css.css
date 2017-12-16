@@ -3,10 +3,7 @@ body{
 background: url("pic3.jpg"); 
 color: #333333;
 }
-.box__dragndrop,
-.box__uploading,
-.box__success,
-.box__error {
+.box__dragndrop{
   display: none;
 }
 /* Header */
@@ -22,62 +19,66 @@ color: #333333;
   
   padding: 2px;
 }
-   /* .grid{
-
-      display:grid;
-      grid-template-columns: 70% 30%;
-      grid-auto-rows: minmax(100px, auto);
-      
-      grid-gap:1em;
-      justify-items:stretch;
-      align-items:stretch;
-      /*
-      grid-column-gap:1em;
-      grid-row-gap:1em;
-      
-      grid-gap:1em;
-            border:#333 1px solid;
-      padding:1em;
-    }
-*/
     .grid > div{
 
       background:#eee;
       padding:1em;
-    }
-    /*.grid > div:nth-child(odd){
 
-      background:#ddd;
-    }*/
+    }
+    .grid{
+        font-weight: bold;
+    }
+    .grid > p{
+        font-weight: normal;
+        color:white;
+        text-align: left;
+
+    }
+    .grid > ul{
+        font-weight: normal;
+        color:white;
+        text-align: left;
+
+    }
+
+    
     .grid1{
-      /*align-self:start;*/
-       background: rgba(0,0,0,0.1);
-      grid-column:1/2;
+     
+      padding:1em;
+       text-align: left;
+       background: rgba(0,0,0,0.2);
+      grid-column:1/3;
       grid-row:1/2;
       border:1px solid #333;
+      
     }
 
     .grid2{
-      /*align-self:end;*/
-       background: rgba(0,0,0,0.1);
+    
+      padding:1em;
+       text-align: center;
+       background: rgba(0,0,0,0.2);
       grid-column:3/5;
       grid-row:1/5;
       border:1px solid #333;
     }
 
     .grid3{
-      /*justify-self:end;*/
-       background: rgba(0,0,0,0.1);
+      
+      padding:1em;
+       text-align: center;
+      background: rgba(0,0,0,0.2);
       grid-column:1/3;
       grid-row:2/3;
       border:1px solid #333;
     }
 
    .grid4{
-     background: rgba(0,0,0,0.1);
+     background: rgba(0,0,0,0.2);
       grid-column:1/3;
       grid-row:3/5;
       border:1px solid #333;
+      padding: 1em;
     }
 
     .header {
@@ -100,195 +101,10 @@ color: #333333;
     font-size: 0.45em;
 }
 
-/** .codrops-header {
-    padding: 2em 1em 4em;
-    text-align: center;
-}
 
-.codrops-header h1 {
-    margin: 0.5em 0 0;
-    letter-spacing: -1px;
-    font-size: 3em;
-    line-height: 1;
-}
-
-.codrops-header h1 span {
-    display: block;
-    padding: 0.5em 0 1em;
-    color: #999;
-    font-weight: normal;
-    font-size: 0.45em;
-}
-.codrops-links {
-    position: relative;
-    display: inline-block;
-    text-align: center;
-    white-space: nowrap;
-}
-
-.codrops-links::after {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 1px;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.1);
-    content: '';
-    -webkit-transform: rotate3d(0, 0, 1, 22.5deg);
-    transform: rotate3d(0, 0, 1, 22.5deg);
-}
-
-.codrops-icon {
-    display: inline-block;
-    margin: 0.5em;
-    padding: 0em 0;
-    width: 1.5em;
-    text-decoration: none;
-}
-
-.codrops-icon span {
-    display: none;
-}
-
-.codrops-icon:before {
-    margin: 0 5px;
-    text-transform: none;
-    font-weight: normal;
-    font-style: normal;
-    font-variant: normal;
-    font-family: 'codropsicons';
-    line-height: 1;
-    speak: none;
-    -webkit-font-smoothing: antialiased;
-}
-
-.codrops-icon--drop:before {
-    content: "\e001";
-}
-
-.codrops-icon--prev:before {
-    content: "\e004";
-}
-**/
-
-
-/* Demo links */
-/**
-
-.codrops-demos {
-    margin: 2em 0 0;
-}
-
-.codrops-demos a {
-    display: inline-block;
-    margin: 0 0.5em;
-}
-
-.codrops-demos a.current-demo {
-    color: #333;
-}
-
-
-.js .inputfile {
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-}
-
-
-.inputfile + label {
-    max-width: 80%;
-    font-size: 1.25rem;
-    
-    font-weight: 700;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    cursor: pointer;
-    display: inline-block;
-    overflow: hidden;
-    padding: 0.625rem 1.25rem;
-   
-}
-.no-js .inputfile + label {
-    display: none;
-}
-
-.inputfile:focus + label,
-.inputfile.has-focus + label {
-    outline: 1px dotted #000;
-    outline: -webkit-focus-ring-color auto 5px;
-}
-
-
-
-.inputfile + label svg {
-    width: 1em;
-    height: 1em;
-    vertical-align: middle;
-    fill: currentColor;
-    margin-top: -0.25em;
- 
-    margin-right: 0.25em;
-    
-}
-.inputfile-4 + label {
-    color: #d3394c;
-}
-
-.inputfile-4:focus + label,
-.inputfile-4.has-focus + label,
-.inputfile-4 + label:hover {
-    color: #0656d6;
-}
-
-.inputfile-4 + label figure {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #d3394c;
-    display: block;
-    padding: 20px;
-    margin: 0 auto 10px;
-}
-
-.inputfile-4:focus + label figure,
-.inputfile-4.has-focus + label figure,
-.inputfile-4 + label:hover figure {
-    background-color: #722040;
-}
-
-.inputfile-4 + label svg {
-    width: 100%;
-    height: 100%;
-    fill: #f1e5e6;
-}
-
-.content {
-    width: 100%;
-    max-width: 800px;
-    text-align: center;
-    margin: 0 auto;
-    padding: 0 0 3em 0;
-}
-
-.content footer {
-    color: #b39295;
-    margin-top: 40px;
-}
-
-.content footer a:hover,
-.content footer a:focus {
-    color: #4b0f31;
-}
-**/
 
 .box {
-    
-    padding: 2.25rem 1.25rem;
-}
+    }
 
 .box + .box {
     margin-top: .5rem;
