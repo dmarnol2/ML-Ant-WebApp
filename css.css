@@ -12,19 +12,95 @@ color: #333333;
 /* Header */
 .grid-container {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns:1fr 1fr 1fr 1fr;
   
-  padding: 10px;
+   grid-auto-rows: minmax(100px, auto);
+      
+      grid-gap:1em;
+      justify-items:stretch;
+      align-items:stretch;
+  
+  padding: 2px;
 }
-.grid-item {
-  
-  
-  padding: 20px;
-  font-size: 30px;
-  text-align: left;
+   /* .grid{
+
+      display:grid;
+      grid-template-columns: 70% 30%;
+      grid-auto-rows: minmax(100px, auto);
+      
+      grid-gap:1em;
+      justify-items:stretch;
+      align-items:stretch;
+      /*
+      grid-column-gap:1em;
+      grid-row-gap:1em;
+      
+      grid-gap:1em;
+            border:#333 1px solid;
+      padding:1em;
+    }
+*/
+    .grid > div{
+
+      background:#eee;
+      padding:1em;
+    }
+    /*.grid > div:nth-child(odd){
+
+      background:#ddd;
+    }*/
+    .grid1{
+      /*align-self:start;*/
+       background: rgba(0,0,0,0.1);
+      grid-column:1/2;
+      grid-row:1/2;
+      border:1px solid #333;
+    }
+
+    .grid2{
+      /*align-self:end;*/
+       background: rgba(0,0,0,0.1);
+      grid-column:3/5;
+      grid-row:1/5;
+      border:1px solid #333;
+    }
+
+    .grid3{
+      /*justify-self:end;*/
+       background: rgba(0,0,0,0.1);
+      grid-column:1/3;
+      grid-row:2/3;
+      border:1px solid #333;
+    }
+
+   .grid4{
+     background: rgba(0,0,0,0.1);
+      grid-column:1/3;
+      grid-row:3/5;
+      border:1px solid #333;
+    }
+
+    .header {
+    padding: 0em 1em 1em;
+    text-align: center;
 }
 
-.codrops-header {
+.header h1 {
+    margin: 0.5em 0 0;
+    letter-spacing: -1px;
+    font-size: 2em;
+    line-height: 1;
+}
+
+.header h1 span {
+    display: block;
+    padding: 0.5em 0 1em;
+    color: #999;
+    font-weight: normal;
+    font-size: 0.45em;
+}
+
+/** .codrops-header {
     padding: 2em 1em 4em;
     text-align: center;
 }
@@ -93,9 +169,11 @@ color: #333333;
 .codrops-icon--prev:before {
     content: "\e004";
 }
+**/
 
 
 /* Demo links */
+/**
 
 .codrops-demos {
     margin: 2em 0 0;
@@ -109,6 +187,7 @@ color: #333333;
 .codrops-demos a.current-demo {
     color: #333;
 }
+
 
 .js .inputfile {
     width: 0.1px;
@@ -143,10 +222,7 @@ color: #333333;
     outline: -webkit-focus-ring-color auto 5px;
 }
 
-.inputfile + label * {
-    /* pointer-events: none; */
-    /* in case of FastClick lib use */
-}
+
 
 .inputfile + label svg {
     width: 1em;
@@ -154,9 +230,9 @@ color: #333333;
     vertical-align: middle;
     fill: currentColor;
     margin-top: -0.25em;
-    /* 4px */
+ 
     margin-right: 0.25em;
-    /* 4px */
+    
 }
 .inputfile-4 + label {
     color: #d3394c;
@@ -189,6 +265,7 @@ color: #333333;
     height: 100%;
     fill: #f1e5e6;
 }
+
 .content {
     width: 100%;
     max-width: 800px;
@@ -206,24 +283,17 @@ color: #333333;
 .content footer a:focus {
     color: #4b0f31;
 }
+**/
 
 .box {
-    background: rgba(0,0,0,0.4);
-    padding: 6.25rem 1.25rem;
+    
+    padding: 2.25rem 1.25rem;
 }
 
 .box + .box {
-    margin-top: 2.5rem;
+    margin-top: .5rem;
 }
 
-
-/* Related demos */
-
-.content--related {
-    text-align: center;
-    font-weight: bold;
-    padding-top: 4em;
-}
 
 #footer{
         position: fixed; /* the footer must stick to the bottom of the page, the fixed positionning is here necessary. */

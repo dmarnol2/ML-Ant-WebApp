@@ -8,7 +8,7 @@
 	<meta name="description" content="Machine Learning image classification of ant species" />
 	<meta name="keywords" content="ant, ants, species, ML, DL, machine learning, identify, classify" />
 	<link rel="stylesheet" href="css.css" type="text/css" /><!-- Footer Stylings -->
-	<script>(function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);</script>
+	<!--<script>(function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);</script>-->
 	<script>function handleFileSelect(evt) {
     evt.stopPropagation();
     evt.preventDefault();
@@ -39,15 +39,19 @@
 </script>
 </head>
 <body>
+	<header class="header">
+ 			<h1>Ant Species Identifier</h1>
+ 				</header>
 
 <div class="grid-container">
-  <div class="grid-item">Ant Species Identifier</div>
+	
+  <div class="grid grid1">Login:</div>
   
-  <div class="grid-item">Results:</div>
+  <div class="grid grid2">Results:</div>
   
-  <div class="grid-item">Login:</div>
-  <div class="grid-item"></div>
-  <div class="grid-item"><form class="box" method="post" action="" enctype="multipart/form-data">
+  <div class="grid grid3">Lets get started!</div>
+
+  <div class="grid grid4"><form class="box" method="post" action="" enctype="multipart/form-data">
   <div class="box__input">
     <input class="box__file" type="file" name="files[]" id="file" data-multiple-caption="{count} files selected" multiple />
     <label for="file"><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
@@ -57,9 +61,8 @@
   <div class="box__success">Done!</div>
   <div class="box__error">Error! <span></span>.</div>
 </form></div>
-  <div class="grid-item">
-  	
-  </div>
+  <!--<div class="grid grid5">b</div>
+  <div class="grid grid6">c </div>-->
   
 
 
