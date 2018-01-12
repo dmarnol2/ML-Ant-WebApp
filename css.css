@@ -1,11 +1,7 @@
 body{
 
-background: url("pic4.jpg"); 
-color: #333333;
 }
-.box__dragndrop{
-  display: none;
-}
+
 /* Header */
 .grid-container {
   display: grid;
@@ -41,47 +37,45 @@ color: #333333;
 
     }
 
-    
-    .grid1{
-     
-      padding:1em;
-       text-align: left;
-       background: rgba(0,0,0,0.1);
-      grid-column:1/3;
-      grid-row:1/2;
-      border:1px solid #333;
-      
-    }
 
-    .grid2{
+    .grid3{
     
       padding:1em;
        text-align: center;
        background: rgba(0,0,0,0.1);
-      grid-column:3/5;
-      grid-row:1/5;
+      grid-column:1/5;
+      grid-row:3/4;
       border:1px solid #333;
+      display:block;
     }
 
-    .grid3{
+    .grid1{
       
       padding:1em;
        text-align: center;
       background: rgba(0,0,0,0.1);
-      grid-column:1/3;
+      grid-column:1/5;
+      grid-row:1/2;
+      border:1px solid #333;
+      display:block;
+    }
+
+   .grid2{
+     background: rgba(0,0,0,0.1);
+      grid-column:1/5;
       grid-row:2/3;
       border:1px solid #333;
-    }
-
-   .grid4{
-     background: rgba(0,0,0,0.1);
-      grid-column:1/3;
-      grid-row:3/5;
-      border:1px solid #333;
       padding: 1em;
+      display:block;
     }
 
-    .header {
+/* improve dran an drop zone */
+.box__dragndrop{
+  display: none;
+  
+}
+
+.header {
     padding: 0em 1em 1em;
     text-align: center;
 }
@@ -103,8 +97,7 @@ color: #333333;
 
 
 
-.box {
-    }
+.box { }
 
 .box + .box {
     margin-top: .5rem;
@@ -112,7 +105,7 @@ color: #333333;
 
 
 #footer{
-        position: fixed; /* the footer must stick to the bottom of the page, the fixed positionning is here necessary. */
+        position: fixed; /* the footer to stick to the bottom of the page*/
         bottom: 0px;
         margin:0;
         padding:0;
@@ -127,18 +120,11 @@ color: #333333;
         background: rgba(0,0,0,0.25);
         /*inset = inner shadow ----------- this just creates multiple shadows*/
         /*top border, top white section, overlay top white, bottom*/
-        box-shadow: inset 0 1px rgba(255,255,255,0.3), inset 0 10px rgba(255,255,255,0.2), inset 0 10px 20px rgba(255,255,255,0.25), inset 0 -15px 30px rgba(0,0,0,0.3);
+        box-shadow: inset 0 1px rgba(255,255,255,0.3), inset 0 10px rgba(255,255,255,0.2), 
+            inset 0 10px 20px rgba(255,255,255,0.25), inset 0 -15px 30px rgba(0,0,0,0.3);
 }
-#footer h2{
-        font-weight:normal;
-        font-size:14px;
-        text-decoration:underline;
-        color: #CC0000;
-        margin-top:10px;
-        margin-bottom:5px;
-        margin-left:10px;       
-}
-#footer p{
+
+#footer p{ /*written word within the 'about' menu option*/
         color:white;
         font-size:12px;
         float:left;
@@ -153,30 +139,8 @@ color: #333333;
         padding:0px;
         margin-bottom:12px;
 }
-.clear { /* Use this class between rows of content when you use columns */
-        clear: both; /*no floating elements allowed on the left or the right side*/
-        display: block;
-        overflow: hidden;
-        visibility: hidden; /*nothing displays, just resets the layout*/
-        width: 0px;
-        height: 0px;
-}
-#footer .whiteBorder { /* good for images */
-        border:1px solid white;
-}
-#footer .img_left { /* image floats to the left */
-        float:left;
-        margin-right:10px;
-        width: 40px;
-}
-#footer .black_box {
-        background: rgba(0,0,0,0.4);
-        padding:5px;
-        margin-bottom:5px;
-    border-radius: 5px;
-}
 
- 
+
 /* Footer Buttons  */
  
 #footer_menu{ /*entire footer bar*/
@@ -204,13 +168,14 @@ color: #333333;
 #footer_menu li a:hover {
         color: #ffffff; /*gray to white looks like it glows*/
 }
-/* used for the home button, text is here hidden and replaced by an image */
+
+/* used for the home button
 #footer_menu .homeButton { 
     padding:5px 8px 0px 14px;
     border:none;
     background:none;
 }
-#footer_menu .homeButton a { /* used for the home button, text is replaced by an image */
+#footer_menu .homeButton a { 
     background:url("img/home.png") top left no-repeat;
     width:36px;
     height:30px;
@@ -221,6 +186,7 @@ color: #333333;
 #footer_menu li.homeButton a:hover {
     background:url("img/home.png") top left no-repeat;
 }
+*/
  
 /* Drop-Up Menus */
  
@@ -234,7 +200,7 @@ color: #333333;
         bottom:40px; /* distance to the bottom of the browser */
         border: 1px solid #111111;
         border-bottom:none;
-        background: rgba(0,0,0,0.5);
+        background: rgba(0,0,0,0.8);
         border-radius: 7px 7px 0px 0px; /*top-left, top-right, bottom-right, bottom-left*/
 }
 #footer_menu li:hover li { /* items in Programs menu */
@@ -259,14 +225,16 @@ color: #333333;
         margin-top:10px;
         margin-left:10px;
 }
+/*
 #footer_menu li:hover a.headerLinks:hover {
         color: white;
         cursor:pointer;
 }
+*/
 /* List Links */
 #footer_menu li:hover a.listLinks {
         font-size:12px;
-        color: #999999;
+        color: #f8f8ff;
         margin-left:10px;
 }
 #footer_menu li:hover a.listLinks:hover {
@@ -296,7 +264,7 @@ color: #333333;
 /* Layout Sizes */
 #footer .one_column_layout {width: 140px;}
 #footer .two_column_layout {width: 280px;}
-#footer .three_column_layout {width: 140px;}
+#footer .three_column_layout {width: 280px;}
  
 /* Entire drop-up menu, show on mouse hover */
 #footer_menu li:hover .one_column_layout, 
@@ -308,7 +276,7 @@ color: #333333;
         bottom:40px;
         border: 1px solid #111111;
         border-radius: 7px 7px 0px 0px;
-        background: rgba(0,0,0,0.5);
+        background: rgba(0,0,0,0.8);
 }
  
 /* columns must be placed inside a layout */
@@ -321,6 +289,3 @@ color: #333333;
         margin-left: 5px;
         margin-right: 5px;
 }
-#footer .col_1 {width:130px;}
-#footer .col_2 {width:270px;}
-#footer .col_3 {width:410px;}
