@@ -1,4 +1,6 @@
 body{
+    background-color: #ffffff;
+    
 
 }
 
@@ -17,7 +19,7 @@ body{
 }
     .grid > div{
 
-      background:#eee;
+      background:#ffffff;
       padding:1em;
 
     }
@@ -26,13 +28,13 @@ body{
     }
     .grid > p{
         font-weight: normal;
-        color:white;
+        color:black;
         text-align: left;
 
     }
     .grid > ul{
         font-weight: normal;
-        color:white;
+        color:black;
         text-align: left;
 
     }
@@ -42,10 +44,10 @@ body{
     
       padding:1em;
        text-align: center;
-       background: rgba(0,0,0,0.1);
+       /*background: rgba(0,0,0,0.1);*/
       grid-column:1/5;
       grid-row:3/4;
-      border:1px solid #333;
+     /* border:1px solid #333;*/
       display:block;
     }
 
@@ -53,18 +55,18 @@ body{
       
       padding:1em;
        text-align: center;
-      background: rgba(0,0,0,0.1);
+      /*background: rgba(0,0,0,0.1);*/
       grid-column:1/5;
       grid-row:1/2;
-      border:1px solid #333;
+     /* border:1px solid #333;*/
       display:block;
     }
 
    .grid2{
-     background: rgba(0,0,0,0.1);
+     background: rgba(0,0,0,0.05);
       grid-column:1/5;
       grid-row:2/3;
-      border:1px solid #333;
+      /*border:1px solid #333;*/
       padding: 1em;
       display:block;
     }
@@ -212,7 +214,7 @@ body{
 }
 /* drop-up default links */
 #footer_menu li:hover a {
-        color: #aaaaaa;
+        color: #ffffff;
 }
 #footer_menu li:hover a:hover {
         color: #eeeeee; /*lighter*/
