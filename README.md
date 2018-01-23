@@ -1,5 +1,5 @@
 # Deep-Learning-TensorFlow-Python
-Tool using neural network modeling for automated identification and classification of biological species from images.
+A tool using neural network modeling for automated identification and classification of biological species from images. This repository houses the web application focus of the project.
 
 This project is a data science project that aims to develop a system to automatically identify insect specimens. This system would primarily help researchers studying biodiversity, behavior, and ecology of ants but also provide means to support amateur entomologists in the field as well as to generalize to other insect species. The project consists in the development of a system composed by: 1) a deep learning image classification model, 2) a back-end software running on a server to automatically classify pictures of insect specimens using the model, and both 3) a web-based interface and 4) an app-based interface to upload pictures and visualize classification results. 
 
