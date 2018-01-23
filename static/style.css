@@ -1,0 +1,75 @@
+.clickArea {
+    display:block;
+    
+    line-height:140px;
+    height:140px;
+    width: 1135px;
+    border-radius:40px;
+    -webkit-font-smoothing: antialiased; 
+    
+    
+    text-align:center;
+}
+
+.submitButton {
+  border-radius:10px;
+  display:block;
+  width: 100px;
+  text-align: center;
+  color:gray;
+  float:right;
+}
+
+.filePicker + label {
+
+    display: inline-block;
+}
+
+.filePicker + label {
+  cursor: pointer; /* "hand" cursor */
+}
+
+.filePicker {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+
+}
+
+.hide {
+   display:none;
+}
+.show{
+	display:block;
+}
+
+.navbar{
+        margin-bottom:0;
+        border-radius:0;
+}
+
+
+
+/* layout.css Style */
+.upload-drop-zone {
+  height: 150px;
+  border-width: 2px;
+  margin-bottom: 20px;
+}
+
+/* skin.css Style*/
+.upload-drop-zone {
+  color: #ccc;
+  border-style: dashed;
+  border-color: #ccc;
+  line-height: 150px;
+  text-align: center;
+  background-color: #fff;
+}
+.upload-drop-zone.drop {
+  color: #222;
+  border-color: #222;
+}

@@ -8,20 +8,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ant Classifier</title>
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
+    <!--<link href="bootstrap.min.css" rel="stylesheet">-->
+
+    <!-- Figure out why link to local style sheet is not recognized -->
+    <!-- Works fine when Node is not running, cant find it when Node is running -->
     <style>
+
+    .clickArea {
+    display:block;
+    
+    line-height:140px;
+    height:140px;
+    width: 1135px;
+    border-radius:40px;
+    -webkit-font-smoothing: antialiased; 
+    
+    
+    text-align:center;
+}
+
+.submitButton {
+  border-radius:10px;
+  display:block;
+  width: 100px;
+  text-align: center;
+  color:gray;
+  float:right;
+}
+
+.filePicker + label {
+
+    display: inline-block;
+}
+
+.filePicker + label {
+  cursor: pointer; /* "hand" cursor */
+}
+
+.filePicker {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+
+}
 
 .hide {
    display:none;
 }
 .show{
-	display:block;
+  display:block;
 }
 
-      .navbar{
+.navbar{
         margin-bottom:0;
         border-radius:0;
-      }
+}
 
 
 
@@ -45,6 +91,7 @@
   color: #222;
   border-color: #222;
 }
+    
 </style>
   </head>
 <body >
@@ -101,33 +148,30 @@
       </div><!-- /.container-fluid -->
     </nav>
 
-	<div class=" jumbotron show">
+	<div class=" jumbotron show" id="jumbotron-display">
       <div class="container text-center">
         <h1>Welcome to Ant Classifier</h1>
         <p>Using Artificial Intelligence to identify and classify your images.</p>
-        <a href="#" class="btn btn-default" >Read More</a>
+        <a href="#" class="btn btn-default" id="getStarted">Get Started</a>
+        <a href="#" class="btn btn-default" id="readMore" >Read More</a>
+        
       </div>
     </div>
    
-    <div class="container hide" >
-           <!-- Standard Form -->
-          <p> Simply select an image or drag into the box below and upload. Results will appear here.</p>
-          <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">
-            <div class="form-inline">
-              <div class="form-group">
-                <input type="file" name="files[]" id="js-upload-files"> <!-- removed multiple for now -->
-              </div>
-              <button type="submit" class="btn btn-default" id="js-upload-submit">Upload </button>
-            </div>
-          </form>
-          <br>
-
+    <div class="container show" id="dropbox" >
           <!-- Drop Zone -->
-          
           <div class="upload-drop-zone" id="drop-zone">
-            Drag and drop files here
+            <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">
+              <div class="form-inline">
+                <div class="form-group">
+                <!-- <input type="file" name="files[]" id="js-upload-files"> --><!-- removed multiple for now -->
+                  <input type="file" name="file" id="file" class="filePicker">
+                    <label for="file" class="clickArea"> Click or drag and drop files here</label>
+                </div>
+              </div>
+            </form>
           </div>
-
+          <button type="submit" class="btn btn-default submitButton" id="js-upload-submit">Submit</button>
 
           <!-- Progress Bar -->
          
@@ -136,34 +180,11 @@
         
       
     </div> <!-- /container -->
-
-    <!-- FORMS -->
-  
-
-<!-- Alternative file uploader, probably wont be used
-    <div class="container">
-      <form>
-       <div class="form-group">
-          <label>Upload File</label>
-          <input type="file">
-
-          <p class="help-block">Only png, jpg, img, or tif allowed</p>
-        </div> -->
-
-
-        <!-- <div class="checkbox">
-          <label>
-            <input type="checkbox"> Check me out
-          </label>
-        </div> 
-
-        <button type="submit" class="btn btn-default">Submit</button>
-        </form>
-    </div> -->
+    <br>
 
     <!-- TABLES -->
-    <div class="container show"  >
-      <table class="table  table-bordered table-hover table-condensed" >
+    <div class="container"  >
+      <table class="table  table-bordered table-hover table-condensed hide" >
         <tr>
         <th class="col-md-1">Result Ranking</th>
         <th class="col-md-1">Percent Confidence</th>

@@ -1,0 +1,22 @@
+{
+  "name": "ant",
+  "version": "1.0.0",
+  "description": "Node server for ant project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dave Arnold",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "minimatch": "^3.0.4",
+    "multer": "^1.1.0",
+    "pug": "^2.0.0-rc.4"
+  },
+  "devDependencies": {
+    "should": "~7.1.0",
+    "mocha": "~2.3.3",
+    "supertest": "~1.1.0"
+  }
+}
