@@ -1,5 +1,5 @@
 var express = require('express');
-var multer = require('multer');
+var formidable = require('formidable');
 
 var http = require('http');
 var url = require('url');
@@ -7,31 +7,46 @@ var fs = require('fs');
 var events = require('events');
 var eventEmitter = new events.EventEmitter();
 var app = express();
-app.use('*/css',express.static('public/css'));
+
+//app.use('*/css',express.static('public/css'));
+//from workingAjaxUpload
+app.use(express.static(__dirname));
 var port = process.env.PORT || 8080;
 
-//create a server object:
-var storage =   multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, './uploads');
-  },
-  filename: function (req, file, callback) {
-    callback(null, file.fieldname + '-' + Date.now());
-  }
-});
-var upload = multer({ storage : storage}).single('userPhoto');
-
-app.get('/',function(req,res){
-      res.sendFile(__dirname + "/index.html");
+// GET: display index.html
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/index.html');
 });
 
-app.post('/api/photo',function(req,res){
-    upload(req,res,function(err) {
-        if(err) {
-            return res.end("Error uploading file.");
-        }
-        res.end("File is uploaded");
+// POST: handle form data sent from client
+app.post('/upload', function(req, res) {
+  var form = new formidable.IncomingForm();
+  var index, filename;
+
+  form.parse(req);
+
+  form.on('field', function(name, value) {
+    if (name == 'index') index = value;
+  });
+
+  form.on('fileBegin', function(name, file) {
+    file.path = __dirname + '/uploads/' + file.name;
+  });
+  
+  form.on('file', function(name, file) {
+    filename = file.name;
+  });
+
+  form.on('end', function() {
+    res.json({
+      index: index,
+      filename: filename
     });
+  });
+
+  form.on('error', function () {
+    res.end('Something went wrong on ther server side. Your file may not have yet uploaded.');
+  });
 });
 
 http.createServer(function (req, res) {
