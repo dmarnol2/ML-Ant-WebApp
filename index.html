@@ -16,6 +16,10 @@
     <!-- Works fine when Node is not running, cant find it when Node is running -->
     <style>
 
+    .box{
+      margin-top: 10px;
+    }
+
     .clickArea {
     display:block;
     
@@ -23,6 +27,7 @@
     height:140px;
     width: 1135px;
     border-radius:40px;
+
     -webkit-font-smoothing: antialiased; 
     
     
@@ -35,7 +40,7 @@
   width: 100px;
   text-align: center;
   color:gray;
-  float:right;
+  float: left;
 }
 
 .filePicker + label {
@@ -95,8 +100,8 @@
 </style>
   </head>
 <body >
-	<nav class="navbar navbar-inverse right">
-		<div class="container">
+	    <nav class="navbar navbar-inverse right">
+    <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -105,34 +110,34 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-		  
+      
           <a class="navbar-brand" href="#">Ant Classifier</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-          	  <li class="dropdown ">
+              <li class="dropdown ">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contact Us <span class="caret"></span></a>
               <ul class="dropdown-menu">
-            	
-            		
-            			<li><a class="headerLinks">Marek Borowiec - Site Sponsor</a>
-            			 <a class="listLinks" href="mailto:petiolus@gmail.com" target="_top">email: petiolus@gmail.com </a> </li>
-            			 <li role="separator" class="divider"></li>
+              
+                
+                  <li><a class="headerLinks">Marek Borowiec - Site Sponsor</a>
+                   <a class="listLinks" href="mailto:petiolus@gmail.com" target="_top">email: petiolus@gmail.com </a> </li>
+                   <li role="separator" class="divider"></li>
                          <li><a class="headerLinks">Gabriele Valentini - Site Sponsor </a>
-            			 <a class="listLinks" href="mailto:gvalent3@asu.edu" target="_top">email: gvalent3@asu.edu </a></li>
-            			</ul>
-            		
-            	
+                   <a class="listLinks" href="mailto:gvalent3@asu.edu" target="_top">email: gvalent3@asu.edu </a></li>
+                  </ul>
+                
+              
             </li>
             <!--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li> -->
             
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Links <span class="caret"></span></a>
               <ul class="dropdown-menu">
-              	<li><a href="http://antweb.org" target="_blank">AntWeb</a></li>
-              	<li role="separator" class="divider"></li>
+                <li><a href="http://antweb.org" target="_blank">AntWeb</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="https://bugguide.net/node/view/15740" target="_blank">BugGuide</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="https://en.wikipedia.org/wiki/Ant" target="_blank">Wikipedia</a></li>
@@ -147,6 +152,7 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
+<div class="test">
 
 	<div class=" jumbotron show" id="jumbotron-display">
       <div class="container text-center">
@@ -157,8 +163,12 @@
         
       </div>
     </div>
+  </div>
    
-    <div class="container show" id="dropbox" >
+    <div class="container show box" id="dropbox" >
+        <p>  </p>
+        <p>  </p>
+        <br>
           <!-- Drop Zone -->
           <div class="upload-drop-zone" id="drop-zone">
             <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">
@@ -171,7 +181,7 @@
               </div>
             </form>
           </div>
-          <button type="submit" class="btn btn-default submitButton" id="js-upload-submit">Submit</button>
+          <button type="submit" class=" btn btn-default submitButton " id="js-upload-submit">Submit</button>
 
           <!-- Progress Bar -->
          
@@ -181,10 +191,14 @@
       
     </div> <!-- /container -->
     <br>
+    <br>
+
 
     <!-- TABLES -->
+    <div class="tab show">
     <div class="container"  >
-      <table class="table  table-bordered table-hover table-condensed hide" >
+      <table class="table  table-bordered table-hover table-condensed show" >
+
         <tr>
         <th class="col-md-1">Result Ranking</th>
         <th class="col-md-1">Percent Confidence</th>
@@ -232,6 +246,8 @@
         </tr>
       </table>
     </div>
+  </div>
+
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -274,6 +290,23 @@
         this.className = 'upload-drop-zone';
         return false;
     }
+
+    $(document).ready(function(){
+
+    $("#js-upload-submit").click(function(){
+        $(".test").slideUp("fast");
+
+    });
+    $("#getStarted").click(function(){
+        $(".test").slideUp("fast");
+    });
+    $("#readMore").click(function(){
+        $(".test").slideUp("slow");
+    });
+    $(".navbar-brand").click(function(){
+        $(".test").slideDown("fast");
+    });
+});
 
 }(jQuery);
 </script>
