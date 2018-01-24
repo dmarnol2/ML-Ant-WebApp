@@ -8,6 +8,7 @@ var events = require('events');
 var eventEmitter = new events.EventEmitter();
 var app = express();
 app.use('*/css',express.static('public/css'));
+var port = process.env.PORT || 8080;
 
 //create a server object:
 var storage =   multer.diskStorage({
@@ -45,4 +46,4 @@ http.createServer(function (req, res) {
     res.write(data);
     return res.end();
   });
-}).listen(8080); //the server object listens on port 8080
+}).listen(port); //the server object listens on port 8080
