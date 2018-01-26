@@ -104,19 +104,23 @@
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
+
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-      
+
+          
           <a class="navbar-brand" href="#">Ant Classifier</a>
+
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
+
               <li class="dropdown ">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contact Us <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -148,13 +152,14 @@
               </ul>
             </li>
             <li><a href="#">About Site</a></li>
+            <li id="home"><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
 <div class="test">
 
-	<div class=" jumbotron show" id="jumbotron-display">
+	<div class=" jumbotron " id="jumbotron-display">
       <div class="container text-center">
         <h1>Welcome to Ant Classifier</h1>
         <p>Using Artificial Intelligence to identify and classify your images.</p>
@@ -191,14 +196,14 @@
         
       
     </div> <!-- /container -->
-    <br>
-    <br>
+
 
 
     <!-- TABLES -->
-    <div class="tab show">
+    <div  id="tab" >
     <div class="container"  >
 
+      <h4 style="text-align: center;">Results:</h4>
       <table class="table  table-bordered table-hover table-condensed show" >
 
         <tr>
@@ -264,7 +269,8 @@
 
     var dropZone = document.getElementById('drop-zone');
     var uploadForm = document.getElementById('js-upload-form');
-
+    $("#tab").hide();
+    $(".test").show();
     var startUpload = function(files) {
         console.log(files)
     }
@@ -297,6 +303,7 @@
 
     $("#js-upload-submit").click(function(){
         $(".test").slideUp("fast");
+        $("#tab").show();
 
     });
     $("#getStarted").click(function(){
@@ -306,6 +313,9 @@
         $(".test").slideUp("slow");
     });
     $(".navbar-brand").click(function(){
+        $(".test").slideDown("fast");
+    });
+    $("#home").click(function(){
         $(".test").slideDown("fast");
     });
 });
