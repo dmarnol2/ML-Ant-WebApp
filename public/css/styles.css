@@ -1,75 +1,69 @@
-.clickArea {
-    display:block;
-    
-    line-height:140px;
-    height:140px;
-    width: 1135px;
-    border-radius:40px;
-    -webkit-font-smoothing: antialiased; 
-    
-    
-    text-align:center;
+.btn:focus, .upload-btn:focus{
+  outline: 0 !important;
 }
 
-.submitButton {
-  border-radius:10px;
-  display:block;
-  width: 100px;
+html,
+body {
+  height: 100%;
+  background-color: #4791D2;
+}
+
+body {
   text-align: center;
-  color:gray;
-  float:right;
+  font-family: 'Raleway', sans-serif;
 }
 
-.filePicker + label {
-
-    display: inline-block;
+.row {
+  margin-top: 80px;
 }
 
-.filePicker + label {
-  cursor: pointer; /* "hand" cursor */
+.upload-btn {
+  color: #ffffff;
+  background-color: #F89406;
+  border: none;
 }
 
-.filePicker {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
-
+.upload-btn:hover,
+.upload-btn:focus,
+.upload-btn:active,
+.upload-btn.active {
+  color: #ffffff;
+  background-color: #FA8900;
+  border: none;
 }
 
-.hide {
-   display:none;
-}
-.show{
-	display:block;
+h4 {
+  padding-bottom: 30px;
+  color: #B8BDC1;
 }
 
-.navbar{
-        margin-bottom:0;
-        border-radius:0;
+.glyphicon {
+  font-size: 5em;
+  color: #9CA3A9;
 }
 
-
-
-/* layout.css Style */
-.upload-drop-zone {
-  height: 150px;
-  border-width: 2px;
-  margin-bottom: 20px;
+h2 {
+  margin-top: 15px;
+  color: #68757E;
 }
 
-/* skin.css Style*/
-.upload-drop-zone {
-  color: #ccc;
-  border-style: dashed;
-  border-color: #ccc;
-  line-height: 150px;
-  text-align: center;
-  background-color: #fff;
+.panel {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
-.upload-drop-zone.drop {
-  color: #222;
-  border-color: #222;
+
+#upload-input {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .main-container {
+    width: 100%;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 450px;
+  }
 }
