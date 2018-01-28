@@ -7,8 +7,12 @@ var port = process.env.PORT || 8080;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname, '/'));
+//app.get('/', function(req, res){
+//  res.sendFile(path.join(__dirname, 'views/index.html'));
+//});
+
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/index.html');
 });
 
 app.post('/upload', function(req, res){
