@@ -5,6 +5,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 
 app.use(express.static(path.join(__dirname, 'public')));
+var port = process.env.PORT || 8080;
 
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, 'views/index.html'));
@@ -42,6 +43,6 @@ app.post('/upload', function(req, res){
 
 });
 
-var server = app.listen(8080, function(){
+var server = app.listen(port, function(){
   console.log('Server listening on port 8080');
 });
