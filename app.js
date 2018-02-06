@@ -23,8 +23,7 @@ app.get('/', function(req, res){
 //});
 
 app.post('/uploads', function(req, res){
-
-  // create an incoming form object
+    // create an incoming form object
   var form = new formidable.IncomingForm();
 
   // specify that we want to allow the user to upload multiple files in a single request

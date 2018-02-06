@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ant Classifier</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="css/dropzone.css">-->
+
+</head>
+<body>
+	<style>
+
+.box{
+      margin-top: 10px;
+
+    }
+
+    .clickArea {
+      display:block;
+      line-height:140px;
+      height:140px;
+      width: 1135px;
+      border-radius:40px;
+      -webkit-font-smoothing: antialiased;
+      text-align:center;
+    }
+
+    .submitButton {
+      border-radius:10px;
+      display:block;
+      width: 100px;
+      text-align: center;
+      color:gray;
+      float: left;
+    }
+
+    .filePicker + label {
+      display: inline-block;
+    }
+
+    .filePicker + label {
+      cursor: pointer; /* "hand" cursor */
+    }
+
+    .filePicker {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+    }
+
+    .hide {
+      display:none;
+    }
+    .show{
+      display:block;
+    }
+
+    .navbar{
+      margin-bottom:0;
+      border-radius:0;
+    }
+
+    /* layout.css Style */
+    .upload-drop-zone {
+      height: 150px;
+      border-width: 2px;
+      margin-bottom: 20px;
+    }
+
+    /* skin.css Style*/
+    .upload-drop-zone {
+      color: #ccc;
+      border-style: dashed;
+      border-color: #ccc;
+      line-height: 150px;
+      text-align: center;
+      background-color: #fff;
+    }
+    .upload-drop-zone.drop {
+      color: #222;
+      border-color: #222;
+    }
+</style>
+
+
+
+   <div class="container box" >
+    <p style="color:green">  Click or drag image you would like classified into box to begin.</p>
+         <!-- Drop Zone -->
+          
+          	<div class="dropzone" style="border-style: dashed;"></div>
+            <!--<form action="/file-upload" method= "post" enctype="multipart/form-data" id="js-upload-form">
+              <div class="form-inline">
+                <div class="form-group">
+                <input type="file" name="files[]" id="js-upload-files">
+                  <input type="file" name="uploads[]" id="fileInput" class="filePicker">
+                  <label for="fileInput" class="demo-droppable"> Click or drag and drop files here</label>
+                </div>
+              </div>
+            </form>-->
+          </div>
+          <!-- HTML heavily inspired by http://blueimp.github.io/jQuery-File-Upload/ -->
+<div class="container">
+    <h1>jQuery dropzone Plugin Examples</h1>
+        <div class="panel panel-info">
+            <div class="panel-heading">File Upload Form</div>
+            <div class="panel-body">
+                <div class="dropzone"></div>
+
+                <div class="dropzone2"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="javascripts/upload.js"></script>
+    <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+	<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+    <script>
+(function() {
+
+    $(".dropzone").dropzone({
+        url: '/uploads',
+        margin: 20,
+        params:{
+            'action': 'save'
+        },
+        success: function(res, index){
+            console.log(res, index);
+        }
+    });
+
+    $(".dropzone2").dropzone({
+        url: 'upload.php',
+        margin: 20,
+        allowedFileTypes: 'image.*, pdf',
+        params:{
+            'action': 'save'
+        },
+        uploadOnDrop: true,
+        uploadOnPreview: false,
+        success: function(res, index){
+            console.log(res, index);
+        }
+    });
+}());
+    </script>
+	
+</body>
+</html>

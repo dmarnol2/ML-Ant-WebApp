@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ant Classifier</title>
     <!-- Bootstrap -->
@@ -10,22 +10,22 @@
     <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
 </head>
 <body>
-  <style>
+	<style>
 
-  .box{
+	.box{
       margin-top: 10px;}
 
-  .navbar{
+	.navbar{
       margin-bottom:0;
       border-radius:0;
     }
 
     .dropzone{
 
-      width:1135px;
-    }
+    	width:1135px;
+   	}
 
-  .submitButton {
+	.submitButton {
       border-radius:10px;
       display:block;
       width: 100px;
@@ -47,7 +47,7 @@
 
 </style>
 
-  <nav class="navbar navbar-inverse right">
+	<nav class="navbar navbar-inverse right">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -99,7 +99,7 @@
     </nav>
 
   <div class="jTron">
-    <div class=" jumbotron " id="jumbotron-display">
+	  <div class=" jumbotron " id="jumbotron-display">
       <div class="container text-center">
         <h1>Welcome to Ant Classifier</h1>
         <p>Using Artificial Intelligence to identify and classify your images.</p>
@@ -109,7 +109,7 @@
     </div>
   </div>
 
-  <div class="container box"  >
+	<div class="container box"  >
     <p id="steps" style="color:green">Step 1: Upload your image.</p>
     <form action="/uploads" ondrop="drop(event)" onclick="drop(event)" 
       class="dropzone" method="post"
@@ -117,29 +117,29 @@
  
       
 <div class="container box">
-      <button type="submit" class=" btn btn-default submitButton" id="get-results" >Submit</button>
-      </div>
-    <br>
-    <div id="show-results"></div>
+    	<button type="submit" class=" btn btn-default submitButton" id="get-results" >Submit</button>
+    	</div>
+		<br>
+		<div id="show-results"></div>
 
-    <h4 style='text-align: center;'' id="resultText">Results:</h4>
+		<h4 style='text-align: center;'' id="resultText">Results:</h4>
 
-    <div  id="tab" >
+		<div  id="tab" >
     <div class="container"  >
-  <div id="results-table"></div></div></div>
-  <br>
-  <div class="container box">
-      <button type="submit" class=" btn btn-default submitButton" id="return" >Return</button>
-      </div>
+	<div id="results-table"></div></div></div>
+	<br>
+	<div class="container box">
+    	<button type="submit" class=" btn btn-default submitButton" id="return" >Return</button>
+    	</div>
     
     
     
-  
-  
+	
+	
 
 
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
     <script >
@@ -152,38 +152,38 @@
     $("#cancelButton").show();
     //document.getElementById("mydz").style.width = "500px";
 
-  }    
+	}    
     
 
-    Dropzone.options.mydz = {
-      dictDefaultMessage: "Click or drag image into box",
-      addRemoveLinks: true
+   	Dropzone.options.mydz = {
+    	dictDefaultMessage: "Click or drag image into box",
+    	addRemoveLinks: true
     };
 
-    $(document).ready(function(){
+  	$(document).ready(function(){
 
-    $('#get-results').click(function () {
-      var displayResources = $('#results-table');
-      var k=1;
-      $.ajax({
-      type: "GET",
-      url: "example.json",
-      success: function(result){
-        console.log(result);
-        var output="<div  id='tab' ><div class='container'  ><div id='results-table'><table class='table table-bordered table-hover table-condensed show'><tr><th class='col-md-1'>Result Ranking</th><th class='col-md-1'>Percent Confidence</th><th>Ant Species</th><th>Common Name</th><th class='col-md-1' data-field='action' data-formatter='ActionFormatter'>Link</th><tbody>";
-        for (var i in result){
-          if(i==0){
-          output+="<tr class='success'><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a href='"+result[i].url+"' class='btn btn-default'>More Info</a></td></tr>";}
-          else{
-            output+="<tr><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a href='"+result[i].url+"' class='btn btn-default'>More Info</a></td></tr>";}
+  	$('#get-results').click(function () {
+	    var displayResources = $('#results-table');
+	    var k=1;
+	    $.ajax({
+ 			type: "GET",
+ 			url: "example.json",
+ 			success: function(result){
+ 				console.log(result);
+ 				var output="<div  id='tab' ><div class='container'  ><div id='results-table'><table class='table table-bordered table-hover table-condensed show'><tr><th class='col-md-1'>Result Ranking</th><th class='col-md-1'>Percent Confidence</th><th>Ant Species</th><th>Common Name</th><th class='col-md-1' data-field='action' data-formatter='ActionFormatter'>Link</th><tbody>";
+ 				for (var i in result){
+ 					if(i==0){
+ 					output+="<tr class='success'><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a href='"+result[i].url+"' class='btn btn-default'>More Info</a></td></tr>";}
+ 					else{
+ 						output+="<tr><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a href='"+result[i].url+"' class='btn btn-default'>More Info</a></td></tr>";}
 
-          k++;
-          }
-          output+="</tbody></table>";
+ 					k++;
+ 					}
+ 					output+="</tbody></table>";
  
-          displayResources.html(output);
-          $("table").addClass("table");
-          }
+ 					displayResources.html(output);
+ 					$("table").addClass("table");
+ 					}
  
  });
  
@@ -208,7 +208,7 @@
         $("#resultText").show();
     });
 
-  $("#return").click(function(){
+	$("#return").click(function(){
         $(".jTron").slideDown("fast");
         $("#tab").show();
         $(".dropzone").show();
@@ -220,8 +220,8 @@
     });
 
     $("#cancelButton").click(function(){
-      $("#cancelButton").hide();
-      document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
+    	$("#cancelButton").hide();
+    	document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
     });
     
     $("#getStarted").click(function(){
