@@ -44,6 +44,15 @@
       float: left;
       margin-left: 5px;
       }
+      .returnButton {
+      border-radius:10px;
+      display:block;
+      width: 100px;
+      text-align: center;
+      color:black;
+      float: left;
+      
+      }
 
 </style>
 
@@ -120,16 +129,23 @@
       <button type="submit" class=" btn btn-default submitButton" id="get-results" >Submit</button>
       </div>
     <br>
+
+<!-- <div class="container box">
+      <button type="submit" class=" btn btn-default submitButton" id="cancelButton" >Get DB</button>
+      </div>
+    <br>
+  -->
+
     <div id="show-results"></div>
 
     <h4 style='text-align: center;'' id="resultText">Results:</h4>
 
     <div  id="tab" >
-    <div class="container"  >
+    <div class="container box"  >
   <div id="results-table"></div></div></div>
   <br>
   <div class="container box">
-      <button type="submit" class=" btn btn-default submitButton" id="return" >Return</button>
+      <button type="submit" class=" btn btn-default returnButton" id="return" >Return</button>
       </div>
     
     
@@ -147,7 +163,7 @@
 
     function drop(event) {
     event.preventDefault();
-    //$("#cancelButton").show();
+    
     //document.getElementById("mydz").style.width = "500px";
     }    
     
@@ -176,7 +192,34 @@
         $("#get-results").show();
       });
 
+/*
+$('#cancelButton').click(function () {
+      var displayResources = $('#res');
+      var k=1;
+      $.ajax({
+      type: "GET",
+      url: "/database/db",
+      success: function(result){
+        console.log(result);
+        var output="<div  id='tab' ><div class='container'  ><div id='results-table'><table class='table table-bordered table-hover table-condensed show'><tr><th class='col-md-1'>Result Ranking</th><th class='col-md-1'>Percent Confidence</th><th>Ant Species</th><th>Common Name</th><th class='col-md-1' data-field='action' data-formatter='ActionFormatter'>Link</th><tbody>";
+        for (var i in result){
+          if(i==0){
+          output+="<tr class='success'><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a href='"+result[i].url+"' class='btn btn-default'>More Info</a></td></tr>";}
+          else{
+            output+="<tr><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a href='"+result[i].url+"' class='btn btn-default'>More Info</a></td></tr>";}
 
+          k++;
+          }
+          output+="</tbody></table>";
+ 
+          displayResources.html(output);
+          $("table").addClass("table");
+          }
+ 
+ });
+ 
+ });
+ */
 
     $('#get-results').click(function () {
       var displayResources = $('#results-table');
@@ -207,7 +250,7 @@
 
 
     $("#get-results").hide();
-    $("#cancelButton").hide();
+    $("#cancelButton").show();
     $("#tab").hide();
     $(".jTron").show();
     $("#return").hide();
@@ -215,6 +258,7 @@
 
     
     $("#get-results").click(function(){
+      $('#removedfile').trigger('click');
         $(".jTron").slideUp("fast");
         $("#tab").show();
         $(".dropzone").hide();
@@ -233,11 +277,16 @@
         document.getElementById("resultText").innerHTML = "Previous Results:";
         $("#return").hide();
 
-    });
+        $('div.dz-success').remove();
+        $(".dz-message").show();
+   });
+        
+
+
 
     $("#cancelButton").click(function(){
-      $("#cancelButton").hide();
-      document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
+    $("#tab").show();
+    //  document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
     });
     
     $("#getStarted").click(function(){
