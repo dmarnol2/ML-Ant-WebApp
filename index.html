@@ -117,13 +117,15 @@
       </div>
     </div>
   </div>
-  
+
   <div class="container box"  >
     <p id="steps" style="color:green">Step 1: Upload your image.</p>
     <form action="/uploads" ondrop="drop(event)" onclick="drop(event)" 
       class="dropzone" method="post"
       id="mydz" style="border-style: dashed;"></form>
+
     </div>
+
  
       
 <div class="container box">
@@ -131,13 +133,33 @@
       </div>
     <br>
 
+
+  <p class="container box" style='text-align: left;'' id="resultText">Results:</p>
+
+
 <!-- <div class="container box">
       <button type="submit" class=" btn btn-default submitButton" id="cancelButton" >Get DB</button>
       </div>
     <br>
   -->
 
-  <p class="container box" style='text-align: left;'' id="resultText">Results:</p>
+    <div id="show-results"></div>
+
+    <p class = "container box" style='text-align: left;'' id="resultText">Results:</h4>
+
+
+    <div  id="tab" >
+    <div class="container box"  >
+  <div id="results-table"></div></div></div>
+  <br>
+  <div class="container box">
+      <button type="submit" class=" btn btn-default returnButton" id="return" >Return</button>
+      </div>
+    
+    
+    
+  
+  
 
 
   <div id="results-table"></div></div></div>
@@ -155,14 +177,16 @@
 
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
     <script >
 
 
+
     function drop(event) {
     event.preventDefault();
+    
     //document.getElementById("mydz").style.width = "500px";
     }    
     
@@ -190,6 +214,11 @@
         document.getElementById("steps").innerHTML = "Step 2: Click Submit to send image to classifier.";
         $("#get-results").show();
     });
+
+
+
+
+
 
 /*
 $('#cancelButton').click(function () {
@@ -246,6 +275,7 @@ $('#cancelButton').click(function () {
     });
 
 
+
     $("#get-results").hide();
     $("#cancelButton").show();
     $("#tab").hide();
@@ -266,7 +296,9 @@ $('#cancelButton').click(function () {
     });
 
   $("#return").click(function(){
+
         $(".jTron").hide();
+
         $("#tab").show();
         $(".dropzone").show();
         document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
