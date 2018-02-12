@@ -3,10 +3,24 @@ var app = express();
 var path = require('path');
 var formidable = require('formidable');
 var fs = require('fs');
+var pg = require('pg');
+var format = require('pg-format');
+var PGUSER = 'antuser';
+var PGDATABASE = 'antDB';
+var PASS = 'password';
 //var http = require('http');
 //var url = require('url');
-
+var config = {
+  user: PGUSER, // name of the user account
+  database: PGDATABASE, // name of the database
+  password: PASS,
+  max: 10, // max number of clients in the pool
+  idleTimeoutMillis: 30000 // how long a client is allowed to remain idle before being closed
+}
 var port = process.env.PORT || 8080;
+var pool = new pg.Pool(config);
+
+var connectionString = "postgres://antuser:password@localhost:5432/antDB";
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -14,13 +28,34 @@ app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-//app.get('/', function(req, res){
-//  res.sendFile(path.join(__dirname, 'views/index.html'));
-//});
+app.get('/db', function (req, res, next) {
+    pool.connect(function(err,client,done) {
+       if(err){
+           console.log("not able to get connection "+ err);
+           res.status(400).send(err);
+       } 
+       client.query('SELECT * FROM profile', function(err,result) {
+           done(); // closing the connection;
+           if(err){
+               console.log(err);
+               res.status(400).send(err);
+           }
 
-//app.get('/', function (req, res) {
-//  res.sendFile(__dirname + '/index.html');
-//});
+           res.status(200).send("<div  id='tab' ><div class='container'>"+
+            "<div id='results-table'><table class='table table-bordered table-hover table-condensed show'>"+
+            "<tr><th class='col-md-1'>Result Ranking</th><th class='col-md-1'>Percent Confidence</th>"+
+            "<th>Ant Species</th><th>Common Name</th><tbody>"+result);
+       });
+    });
+});
+
+
+
+
+
+
+
+
 
 app.post('/uploads', function(req, res){
     // create an incoming form object
@@ -56,6 +91,14 @@ app.post('/uploads', function(req, res){
 var server = app.listen(port, function(){
   console.log('Server listening on port 8080');
 });
+
+//app.get('/', function(req, res){
+//  res.sendFile(path.join(__dirname, 'views/index.html'));
+//});
+
+//app.get('/', function (req, res) {
+//  res.sendFile(__dirname + '/index.html');
+//});
 
 /*
 http.createServer(function (req, res) {
