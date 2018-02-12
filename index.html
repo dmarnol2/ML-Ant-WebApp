@@ -134,8 +134,6 @@
     <br>
 
 
-  <p class="container box" style='text-align: left;'' id="resultText">Results:</p>
-
 
 <!-- <div class="container box">
       <button type="submit" class=" btn btn-default submitButton" id="cancelButton" >Get DB</button>
@@ -145,17 +143,10 @@
 
     <div id="show-results"></div>
 
-    <p class = "container box" style='text-align: left;'' id="resultText">Results:</h4>
+    <p class = "container box" id="resultText">Results:</p>
 
 
-    <div  id="tab" >
-    <div class="container box"  >
-  <div id="results-table"></div></div></div>
-  <br>
-  <div class="container box">
-      <button type="submit" class=" btn btn-default returnButton" id="return" >Return</button>
-      </div>
-    
+
     
     
   
@@ -282,6 +273,7 @@ $('#cancelButton').click(function () {
     $(".jTron").show();
     $("#return").hide();
     $("#resultText").hide();
+    $("#return").hide();
 
     
     $("#get-results").click(function(){
@@ -301,7 +293,7 @@ $('#cancelButton').click(function () {
 
         $("#tab").show();
         $(".dropzone").show();
-        document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
+        document.getElementById("steps").innerHTML = "Submit another image for classifying.";
         $("#get-results").show();
         document.getElementById("resultText").innerHTML = "Previous Results:";
         $("#return").hide();
@@ -309,6 +301,8 @@ $('#cancelButton').click(function () {
         $('div.dz-success').remove();
         $(".dz-message").show();
         $("#get-results").hide();
+        
+        $("#returnButton").hide();
    });
         
 
