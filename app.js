@@ -28,6 +28,7 @@ app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+//FIGURE OUT DATABASE
 app.get('/db', function (req, res, next) {
     pool.connect(function(err,client,done) {
        if(err){
