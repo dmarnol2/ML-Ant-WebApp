@@ -22,7 +22,8 @@
 
     .dropzone{
 
-      width:1135px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
   .submitButton {
@@ -118,7 +119,7 @@
     </div>
   </div>
 
-  <div class="container box"  >
+  <div class="container box" id="dropz">
     <p id="steps" style="color:green">Step 1: Upload your image.</p>
     <form action="/uploads" ondrop="drop(event)" onclick="drop(event)" 
       class="dropzone" method="post"
@@ -146,14 +147,12 @@
     <p class = "container box" id="resultText">Results:</p>
 
 
-
-    
-    
   
   
 
 
-  <div id="results-table"></div></div></div>
+  <div id="results-table"></div>
+
   <br>
 
 
@@ -248,7 +247,7 @@ $('#cancelButton').click(function () {
       url: "example.json",
       success: function(result){
         console.log(result);
-        var output="<div  id='tab' ><div class='container'  ><div id='results-table'><table class='table table-bordered table-hover table-condensed show'><tr><th class='col-md-1'>Result Ranking</th><th class='col-md-1'>Percent Confidence</th><th>Ant Species</th><th>Common Name</th><th class='col-md-1' data-field='action' data-formatter='ActionFormatter'>Link</th><tbody>";
+        var output="<div  id='tab' ><div class='container'><div id='results-table'><table class='table table-bordered table-hover table-condensed show'><tr><th class='col-md-1'>Result Ranking</th><th class='col-md-1'>Percent Confidence</th><th>Ant Species</th><th>Common Name</th><th class='col-md-1' data-field='action' data-formatter='ActionFormatter'>Link</th><tbody>";
         for (var i in result){
           if(i==0){
           output+="<tr class='success'><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a href='"+result[i].url+"' class='btn btn-default'>More Info</a></td></tr>";}
