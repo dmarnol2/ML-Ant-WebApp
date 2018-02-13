@@ -22,7 +22,8 @@
 
     .dropzone{
 
-      width:1135px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
   .submitButton {
@@ -118,17 +119,22 @@
     </div>
   </div>
 
-  <div class="container box"  >
+  <div class="container box" id="dropz">
     <p id="steps" style="color:green">Step 1: Upload your image.</p>
     <form action="/uploads" ondrop="drop(event)" onclick="drop(event)" 
       class="dropzone" method="post"
       id="mydz" style="border-style: dashed;"></form>
+
+    </div>
+
  
       
 <div class="container box">
       <button type="submit" class=" btn btn-default submitButton" id="get-results" >Submit</button>
       </div>
     <br>
+
+
 
 <!-- <div class="container box">
       <button type="submit" class=" btn btn-default submitButton" id="cancelButton" >Get DB</button>
@@ -138,12 +144,20 @@
 
     <div id="show-results"></div>
 
-    <h4 style='text-align: center;'' id="resultText">Results:</h4>
+    <p class = "container box" id="resultText">Results:</p>
 
-    <div  id="tab" >
-    <div class="container box"  >
-  <div id="results-table"></div></div></div>
+
+
+    
+    
+  
+  
+
+
+  <div id="results-table"></div>
   <br>
+
+
   <div class="container box">
       <button type="submit" class=" btn btn-default returnButton" id="return" >Return</button>
       </div>
@@ -161,6 +175,7 @@
     <script >
 
 
+
     function drop(event) {
     event.preventDefault();
     
@@ -176,21 +191,26 @@
 
 
 
-    $(document).ready(function(){
+  $(document).ready(function(){
 
-  Dropzone.autoDiscover = false;
+    Dropzone.autoDiscover = false;
+    var dropzone = new Dropzone (".dropzone", {
+    });
 
-  var dropzone = new Dropzone (".dropzone", {
-   });
-
-  dropzone.on("removedfile", function(file){
-    document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
-    $("#get-results").hide();
-  });
-  dropzone.on("success", function(file){
+    dropzone.on("removedfile", function(file){
+      document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
+      $("#get-results").hide();
+    });
+    
+    dropzone.on("success", function(file){
         document.getElementById("steps").innerHTML = "Step 2: Click Submit to send image to classifier.";
         $("#get-results").show();
-      });
+    });
+
+
+
+
+
 
 /*
 $('#cancelButton').click(function () {
@@ -229,7 +249,7 @@ $('#cancelButton').click(function () {
       url: "example.json",
       success: function(result){
         console.log(result);
-        var output="<div  id='tab' ><div class='container'  ><div id='results-table'><table class='table table-bordered table-hover table-condensed show'><tr><th class='col-md-1'>Result Ranking</th><th class='col-md-1'>Percent Confidence</th><th>Ant Species</th><th>Common Name</th><th class='col-md-1' data-field='action' data-formatter='ActionFormatter'>Link</th><tbody>";
+        var output="<div  id='tab' ><div class='container'><div id='results-table'><table class='table table-bordered table-hover table-condensed show'><tr><th class='col-md-1'>Result Ranking</th><th class='col-md-1'>Percent Confidence</th><th>Ant Species</th><th>Common Name</th><th class='col-md-1' data-field='action' data-formatter='ActionFormatter'>Link</th><tbody>";
         for (var i in result){
           if(i==0){
           output+="<tr class='success'><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a href='"+result[i].url+"' class='btn btn-default'>More Info</a></td></tr>";}
@@ -243,10 +263,9 @@ $('#cancelButton').click(function () {
           displayResources.html(output);
           $("table").addClass("table");
           }
- 
- });
- 
- });
+        });
+    });
+
 
 
     $("#get-results").hide();
@@ -255,6 +274,7 @@ $('#cancelButton').click(function () {
     $(".jTron").show();
     $("#return").hide();
     $("#resultText").hide();
+    $("#return").hide();
 
     
     $("#get-results").click(function(){
@@ -269,16 +289,21 @@ $('#cancelButton').click(function () {
     });
 
   $("#return").click(function(){
-        $(".jTron").slideDown("fast");
+
+        $(".jTron").hide();
+
         $("#tab").show();
         $(".dropzone").show();
-        document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
+        document.getElementById("steps").innerHTML = "Submit another image for classifying.";
         $("#get-results").show();
         document.getElementById("resultText").innerHTML = "Previous Results:";
         $("#return").hide();
 
         $('div.dz-success').remove();
         $(".dz-message").show();
+        $("#get-results").hide();
+        
+        $("#returnButton").hide();
    });
         
 
