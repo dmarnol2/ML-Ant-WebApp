@@ -78,6 +78,26 @@
       height:28px;
 
     }
+    .regCancelButton {
+      border-radius:5px;
+      margin-left: 10px;
+      width: 120px;
+      text-align: center;
+      color:black;
+      margin-top: 8px;
+      height:28px;
+
+    }
+        .regSubmitButton {
+      border-radius:5px;
+      margin-left: 30px;
+      width: 120px;
+      text-align: center;
+      color:black;
+      margin-top: 8px;
+      height:28px;
+
+    }
     .resTable{
 
       margin-left: auto;
@@ -149,6 +169,7 @@
         <h1>Welcome to Ant Classifier</h1>
         <p>Using Artificial Intelligence to identify and classify your images.</p>
         <a href="#" class="btn btn-default" id="learnBtn">Learn More</a>
+        
         <!--
         <a href="#" class="btn btn-default" id="loginBtn">Log In</a>
         <a href="#" class="btn btn-default" id="regBtn" >Register</a>
@@ -161,9 +182,7 @@
       <div class="jumbotron" >
         <div class="container text-center">
           <h1>Registration</h1>
-          
-          <p>
-            Registering will allow you upload a photo for identification.
+          <p> Registering grants you access to the image classification system.
           </p>
         </div>
       </div>
@@ -201,7 +220,8 @@
         <input type="checkbox" name="option2" value='1' onchange="changeType2()" /> View password
 
        
-       <a href="#" class="btn btn-default regButton" id="registrationBtn" >Submit</a>
+       <a href="#" class="btn btn-default regSubmitButton" id="registrationBtn" >Submit</a>
+       <a href="#" class="btn btn-default regCancelButton" id="regCancelBtn" >Cancel</a>
         <!--<button id="registrationBtn" class="btn btn-default regButton "   >Submit</button>-->
        
 
@@ -316,6 +336,7 @@
 
   $(document).ready(function(){
 
+
     Dropzone.autoDiscover = false;
     var dropzone = new Dropzone (".dropzone", {
     });
@@ -372,7 +393,7 @@ $('#cancelButton').click(function () {
       url: "example.json",
       success: function(result){
         console.log(result);
-        var output="<div  id='tab' ><div class='container'><div class='table-responsive' id='results-table'><table class='table table-bordered table-hover'><tr><th class='col-md-1'>Result Ranking</th><th class='col-md-1'>Percent Confidence</th><th>Ant Species</th><th>Common Name</th><th  data-field='action' data-formatter='ActionFormatter'>Link</th></tr><tbody>";
+        var output="<div  id='tab' ><div class='container'><div class='table-responsive' id='results-table' style='overflow-x:auto;'><table class='table table-bordered table-hover'><tr><th class='col-md-1'>Result Ranking</th><th class='col-md-1'>Percent Confidence</th><th>Ant Species</th><th>Common Name</th><th  data-field='action' data-formatter='ActionFormatter'>Link</th></tr><tbody>";
         for (var i in result){
           if(i==0){
           output+="<tr class='success'><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a href='"+result[i].url+"' class='btn btn-default'>More Info</a></td></tr>";}
@@ -400,6 +421,7 @@ $('#cancelButton').click(function () {
     $("#return").hide();
     $("#dropz").hide();
     $("#regJTron").hide();
+
 
     
     $("#get-results").click(function(){
@@ -460,6 +482,14 @@ $('#cancelButton').click(function () {
         $("#regJTron").slideDown("slow");
         $("#login").hide();
         $("#registration").show();
+
+    });
+    $("#regCancelBtn").click(function(){
+        $(".jTron").show();
+        $("#regJTron").hide();
+        $("#login").show();
+        $("#registration").hide();
+        
 
     });
     $(".navbar-brand").click(function(){
