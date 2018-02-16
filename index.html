@@ -103,20 +103,16 @@
       margin-left: auto;
       margin-right: auto;
     }
-
-
-   
-
-
-
-
-</style>
+    .dzone{
+      padding-top: 120px;
+      
+    }
+  </style>
 
   <nav class="navbar navbar-inverse right">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -152,8 +148,6 @@
                 <li><a href="https://en.wikipedia.org/wiki/Ant" target="_blank">Wikipedia</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="https://sols.asu.edu/" target="_blank">ASU School of Life Sciences</a></li>
-               
-                
               </ul>
             </li>
             <li><a href="#">About Site</a></li>
@@ -169,7 +163,7 @@
         <h1>Welcome to Ant Classifier</h1>
         <p>Using Artificial Intelligence to identify and classify your images.</p>
         <a href="#" class="btn btn-default" id="learnBtn">Learn More</a>
-        
+
         <!--
         <a href="#" class="btn btn-default" id="loginBtn">Log In</a>
         <a href="#" class="btn btn-default" id="regBtn" >Register</a>
@@ -264,65 +258,35 @@
     </form>
   </div>
 
-  <div class="container box" id="dropz">
+  <div class="container box dzone" id="dropz">
     <p id="steps" style="color:green">Step 1: Upload your image.</p>
     <form action="/uploads" ondrop="drop(event)" onclick="drop(event)" 
       class="dropzone" method="post"
       id="mydz" style="border-style: dashed;"></form>
-
     </div>
-
  
       
-<div class="container box">
-      <button type="submit" class=" btn btn-default submitButton" id="get-results" >Submit</button>
-      </div>
-    <br>
+<div class="container box" id="resBox">
+   <button type="submit" class=" btn btn-default submitButton" id="get-results" >Submit</button>
+   <br>
+</div>
 
+<p class = "container box" id="resultText">Results:</p>
+<div id="results-table"></div></div></div>
 
-
-<!-- <div class="container box">
-      <button type="submit" class=" btn btn-default submitButton" id="cancelButton" >Get DB</button>
-      </div>
-    <br>
-  -->
-
-    <div id="show-results"></div>
-
-    <p class = "container box" id="resultText">Results:</p>
-
-
-  
-  
-
-
-  <div id="results-table"></div></div></div>
-
-  <br>
-
-
-  <div class="container box">
+  <div class="container box" >
       <button type="submit" class=" btn btn-default returnButton" id="return" >Return</button>
       </div>
-    
-    
-    
-  
-  
 
-
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
-    <script >
-
-
+    
+    <script>
 
     function drop(event) {
-    event.preventDefault();
-    
-    //document.getElementById("mydz").style.width = "500px";
+      event.preventDefault();
+      //document.getElementById("mydz").style.width = "500px";
     }    
     
 
@@ -335,7 +299,6 @@
 
 
   $(document).ready(function(){
-
 
     Dropzone.autoDiscover = false;
     var dropzone = new Dropzone (".dropzone", {
@@ -352,39 +315,6 @@
     });
 
 
-
-
-
-
-/*
-$('#cancelButton').click(function () {
-      var displayResources = $('#res');
-      var k=1;
-      $.ajax({
-      type: "GET",
-      url: "/database/db",
-      success: function(result){
-        console.log(result);
-        var output="<div  id='tab' ><div class='container'  ><div id='results-table'><table class='table table-bordered table-hover table-condensed show'><tr><th class='col-md-1'>Result Ranking</th><th class='col-md-1'>Percent Confidence</th><th>Ant Species</th><th>Common Name</th><th class='col-md-1' data-field='action' data-formatter='ActionFormatter'>Link</th><tbody>";
-        for (var i in result){
-          if(i==0){
-          output+="<tr class='success'><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a href='"+result[i].url+"' class='btn btn-default'>More Info</a></td></tr>";}
-          else{
-            output+="<tr><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a href='"+result[i].url+"' class='btn btn-default'>More Info</a></td></tr>";}
-
-          k++;
-          }
-          output+="</tbody></table>";
- 
-          displayResources.html(output);
-          $("table").addClass("table");
-          }
- 
- });
- 
- });
- */
-
     $('#get-results').click(function () {
       var displayResources = $('#results-table');
       var k=1;
@@ -396,9 +326,9 @@ $('#cancelButton').click(function () {
         var output="<div  id='tab' ><div class='container'><div class='table-responsive' id='results-table' style='overflow-x:auto;'><table class='table table-bordered table-hover'><tr><th class='col-md-1'>Result Ranking</th><th class='col-md-1'>Percent Confidence</th><th>Ant Species</th><th>Common Name</th><th  data-field='action' data-formatter='ActionFormatter'>Link</th></tr><tbody>";
         for (var i in result){
           if(i==0){
-          output+="<tr class='success'><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a href='"+result[i].url+"' class='btn btn-default'>More Info</a></td></tr>";}
+          output+="<tr class='success'><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a href='"+result[i].url+"' class='btn btn-default' target='_blank'>More Info</a></td></tr>";}
           else{
-            output+="<tr><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a href='"+result[i].url+"' class='btn btn-default'>More Info</a></td></tr>";}
+            output+="<tr><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a target='_blank' href='"+result[i].url+"' class='btn btn-default' >More Info</a></td></tr>";}
 
           k++;
           }
@@ -425,14 +355,18 @@ $('#cancelButton').click(function () {
 
     
     $("#get-results").click(function(){
-      $('#removedfile').trigger('click');
+        $('#removedfile').trigger('click');
         $(".jTron").slideUp("slow");
         $("#tab").show();
         $(".dropzone").hide();
         document.getElementById("steps").innerHTML = "";
         $("#get-results").hide();
+        $("#resultText").css("padding-top", "20px");
         $("#return").show();
         $("#resultText").show();
+        $("#resBox").hide();
+        
+        $("#dropz").css("display", "none");
     });
 
   $("#return").click(function(){
@@ -440,6 +374,8 @@ $('#cancelButton').click(function () {
         $(".jTron").hide();
 
         $("#tab").show();
+        $("#dropz").css("display", "block");
+        $("#dropz").css("padding-top", "10px");
         $(".dropzone").show();
         document.getElementById("steps").innerHTML = "Submit another image for classifying.";
         $("#get-results").show();
@@ -457,7 +393,7 @@ $('#cancelButton').click(function () {
 
 
     $("#cancelButton").click(function(){
-    $("#tab").show();
+        $("#tab").show();
     //  document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
     });
 
@@ -468,6 +404,7 @@ $('#cancelButton').click(function () {
         $("#login").hide();
         $("#results-table").hide();
         $("#dropz").hide();
+       
     });
     $("#sBtn").click(function(){
         $(".jTron").hide();
@@ -475,6 +412,8 @@ $('#cancelButton').click(function () {
         $("#login").hide();
         $("#registration").hide();
         $("#dropz").show();
+        $(".dropzone").show();
+        document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
 
     });
     $("#regBtn").click(function(){
@@ -498,15 +437,36 @@ $('#cancelButton').click(function () {
         $(".jTron").slideDown("slow");
         $("#regJTron").hide();
         $("#registration").hide();
-        $("#dropz").hide();
+        $("#dropz").show();
+        $("#tab").hide();
+        $("#resultText").hide();
+        
+        $("#dropz").css("display", "block");
+        $("#return").hide();
+        $('div.dz-success').remove();
+        $(".dz-message").show();
+        document.getElementById("steps").innerHTML = "";
+        $(".dropzone").hide();
+       
     });
     $("#home").click(function(){
         //SHOW ONLY IF NOT ALREADY LOGGED IN
         $("#login").show();
         $(".jTron").slideDown("slow");
         $("#regJTron").hide();
-         $("#registration").hide();
-         $("#dropz").hide();
+        $("#registration").hide();
+        $("#dropz").show();
+        $("#tab").hide();
+        $("#resultText").hide();
+        
+
+        $("#dropz").css("display", "block");
+        $("#return").hide();
+        $('div.dz-success').remove();
+        $(".dz-message").show();
+        document.getElementById("steps").innerHTML = "";
+        $(".dropzone").hide();
+
     });
 });
 
