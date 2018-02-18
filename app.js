@@ -58,7 +58,7 @@ app.get('/db', function (req, res, next) {
 
 
 
-app.post('/uploads', function(req, res){
+app.post('/user_img', function(req, res){
     // create an incoming form object
   var form = new formidable.IncomingForm();
 
@@ -66,7 +66,7 @@ app.post('/uploads', function(req, res){
   form.multiples = true;
 
   // store all uploads in the /uploads directory
-  form.uploadDir = path.join(__dirname, '/uploads');
+  form.uploadDir = path.join(__dirname, '/user_img');
 
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name
