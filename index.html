@@ -16,7 +16,7 @@
   }
 
   .box{
-      margin-top: 10px;}
+      margin-top: 5px;}
 
   .navbar{
       margin-bottom:0;
@@ -103,6 +103,10 @@
       margin-left: auto;
       margin-right: auto;
     }
+  .dzone{
+      padding-top: 120px;
+      
+   }
 
   </style>
 
@@ -360,7 +364,7 @@
         $(".dropzone").hide();
         document.getElementById("steps").innerHTML = "";
         $("#get-results").hide();
-        $("#resultText").css("padding-top", "20px");
+        //$("#resultText").css("padding-top", "20px");
         $("#return").show();
         $("#resultText").show();
         //$("#resBox").hide();
@@ -412,6 +416,7 @@
         $("#registration").hide();
         $("#dropz").show();
         $(".dropzone").show();
+        $("#steps").show();
         document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
     });
 
@@ -442,8 +447,13 @@
         $("#return").hide();
         //$('div.dz-success').remove();
         //$(".dz-message").show();
-        document.getElementById("steps").innerHTML = "";
+        $("#steps").hide();
+        //document.getElementById("steps").innerHTML = "";
+        dropzone.removeAllFiles(true); 
         $(".dropzone").hide();
+        $("#dropz").css("display", "block");
+        $("#dropz").css("padding-top", "120px");
+
     });
   
     $("#home").click(function(){
