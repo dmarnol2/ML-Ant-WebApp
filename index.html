@@ -23,7 +23,7 @@
       border-radius:0;
     }
 
-    .dropzone{
+  .dropzone{
 
       margin-left: auto;
       margin-right: auto;
@@ -38,7 +38,7 @@
       float: left;
       
       }
-    .cancelButton {
+  .cancelButton {
 
       border-radius:10px;
       display:block;
@@ -48,7 +48,7 @@
       float: left;
       margin-left: 5px;
       }
-      .returnButton {
+  .returnButton {
       border-radius:10px;
       display:block;
       width: 100px;
@@ -57,7 +57,7 @@
       float: left;
       
       }
-      .submitLoginButton {
+  .submitLoginButton {
       border-radius:5px;
       width: 170px;
       height:28px;
@@ -68,7 +68,7 @@
       margin-top: 15px;
     
     }
-      .regButton {
+  .regButton {
       border-radius:5px;
       margin-left: 72px;
       width: 170px;
@@ -78,7 +78,7 @@
       height:28px;
 
     }
-    .regCancelButton {
+  .regCancelButton {
       border-radius:5px;
       margin-left: 10px;
       width: 120px;
@@ -88,7 +88,7 @@
       height:28px;
 
     }
-        .regSubmitButton {
+  .regSubmitButton {
       border-radius:5px;
       margin-left: 30px;
       width: 120px;
@@ -98,15 +98,12 @@
       height:28px;
 
     }
-    .resTable{
+  .resTable{
 
       margin-left: auto;
       margin-right: auto;
     }
-    .dzone{
-      padding-top: 120px;
-      
-    }
+
   </style>
 
   <nav class="navbar navbar-inverse right">
@@ -163,11 +160,6 @@
         <h1>Welcome to Ant Classifier</h1>
         <p>Using Artificial Intelligence to identify and classify your images.</p>
         <a href="#" class="btn btn-default" id="learnBtn">Learn More</a>
-
-        <!--
-        <a href="#" class="btn btn-default" id="loginBtn">Log In</a>
-        <a href="#" class="btn btn-default" id="regBtn" >Register</a>
-      -->
       </div>
     </div>
   </div>
@@ -181,7 +173,7 @@
         </div>
       </div>
     </div>
-
+                <!--  LOG IN -->
 <div id="login">
   <br>
   <br>
@@ -193,14 +185,13 @@
     <br>
     <div id="password" class="container">
       Password    <input style="margin-left: 7px;" type="text" id="Password"/><br>
-    
       <a href="#" class="btn btn-default submitLoginButton" id="sBtn" >Submit</a><br>
       <a href="#" class="btn btn-default regButton" id="regBtn">Register</a>
    </div>
   </form> 
+  </div>
 </div>
-</div>
-
+        <!-- REGISTRATION -->
 <div class="container" id="registration">
     <form method="post" name="userInfo" onsubmit="return ValidateEmail()">
       <div id="credentials" class="col-md-12">
@@ -217,43 +208,6 @@
        <a href="#" class="btn btn-default regSubmitButton" id="registrationBtn" >Submit</a>
        <a href="#" class="btn btn-default regCancelButton" id="regCancelBtn" >Cancel</a>
         <!--<button id="registrationBtn" class="btn btn-default regButton "   >Submit</button>-->
-       
-
-        <script language='javascript' type='text/javascript'>
-          function check() {
-           if (document.getElementById('confPassword').value != document.getElementById('regPassword').value) {
-                document.getElementById('confPassword').setCustomValidity('Password Must be Matching.');
-            } else {
-                // input is valid -- reset the error message
-                document.getElementById('confPassword').setCustomValidity('');
-            }
-          }
-        </script>
-
-        <script language='javascript' type='text/javascript'> 
-          function ValidateEmail() 
-          {
-           if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(document.getElementById('email').value))
-            {
-              return (true)
-            }
-              alert("You have entered an invalid email address!")
-              return (false)
-          }
-        </script>
-
-        <script language='javascript' type='text/javascript'>
-          function changeType()
-          {
-              document.getElementById('regPassword').type=(document.userInfo.option.value=(document.userInfo.option.value==1)?'-1':'1')=='-1'?'text':'password';
-          }
-          </script>
-          <script language='javascript' type='text/javascript'>
-          function changeType2()
-          {
-              document.getElementById('confPassword').type=(document.userInfo.option2.value=(document.userInfo.option2.value==1)?'-1':'1')=='-1'?'text':'password';
-          }
-        </script>
       </div>
     </form>
   </div>
@@ -283,37 +237,86 @@
     <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
     
     <script>
+    var count=0;
+    function check(){
+          if (document.getElementById('confPassword').value != document.getElementById('regPassword').value) {
+                document.getElementById('confPassword').setCustomValidity('Password Must be Matching.');} 
+          else {
+                // input is valid -- reset the error message
+                document.getElementById('confPassword').setCustomValidity('');
+              }
+          }
+        
+    function ValidateEmail(){
+          if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(document.getElementById('email').value)){
+            return (true)
+            }
+            alert("You have entered an invalid email address!")
+            return (false)
+            }
+        
+    function changeType(){
+          document.getElementById('regPassword').type=(document.userInfo.option.value=(document.userInfo.option.value==1)?'-1':'1')=='-1'?'text':'password';
+          }
+          
+          function changeType2()
+          {
+            document.getElementById('confPassword').type=(document.userInfo.option2.value=(document.userInfo.option2.value==1)?'-1':'1')=='-1'?'text':'password';
+          }
 
     function drop(event) {
-      event.preventDefault();
-      //document.getElementById("mydz").style.width = "500px";
-    }    
+          event.preventDefault();
+          //document.getElementById("mydz").style.width = "500px";
+          }    
     
 
     Dropzone.options.mydz = {
       dictDefaultMessage: "Click or drag image into box",
       addRemoveLinks: true,
-      acceptedFiles: "image/png,image/gif,image/jpg,image/jpeg,image/tif,image/tiff,image/bmp,image/raw,image/wmf, image/webp, image/img, image/pct, image/tga, image/jpe, image/ani, image/heif, image/heic"
+      uploadMultiple: false,
+      maxFiles:1,
+      acceptedFiles: "image/png,image/gif,image/jpg,image/jpeg,image/tif,image/tiff,image/bmp,image/raw,image/wmf, image/webp, image/img, image/pct, image/tga, image/jpe, image/ani, image/heif, image/heic",
+
+      init: function() {
+        this.on("maxfilesexceeded", function(file){
+        count++;
+        document.getElementById("steps").innerHTML = "<span style='color:red'>ONLY ONE FILE ALLOWED, PLEASE REMOVE LAST FILE.</span>";
+        $("#get-results").hide();
+      });
+          
+      }
     };
 
-
-
-  $(document).ready(function(){
-
-    Dropzone.autoDiscover = false;
-    var dropzone = new Dropzone (".dropzone", {
-    });
+    $(document).ready(function(){
+      Dropzone.autoDiscover = false;
+      var dropzone = new Dropzone (".dropzone", {
+      });
 
     dropzone.on("removedfile", function(file){
-      document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
-      $("#get-results").hide();
-    });
+      count--;
+      if (count==0){
+        document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
+        $("#get-results").hide();
+        $(".dz-message").show();
+        }
+        else if (count==1){
+          document.getElementById("steps").innerHTML = "Step 2: Click Submit to send image to classifier.";
+          $("#get-results").show();
+        }
+      else{        
+        $("#get-results").hide();
+        }
+      });
     
     dropzone.on("success", function(file){
+        count++; 
         document.getElementById("steps").innerHTML = "Step 2: Click Submit to send image to classifier.";
         $("#get-results").show();
-    });
+      });
 
+    dropzone.on("processing", function(file){
+        $(".dz-message").hide();
+      });
 
     $('#get-results').click(function () {
       var displayResources = $('#results-table');
@@ -326,18 +329,16 @@
         var output="<div  id='tab' ><div class='container'><div class='table-responsive' id='results-table' style='overflow-x:auto;'><table class='table table-bordered table-hover'><tr><th class='col-md-1'>Result Ranking</th><th class='col-md-1'>Percent Confidence</th><th>Ant Species</th><th>Common Name</th><th  data-field='action' data-formatter='ActionFormatter'>Link</th></tr><tbody>";
         for (var i in result){
           if(i==0){
-          output+="<tr class='success'><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a href='"+result[i].url+"' class='btn btn-default' target='_blank'>More Info</a></td></tr>";}
+            output+="<tr class='success'><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a href='"+result[i].url+"' class='btn btn-default' target='_blank'>More Info</a></td></tr>";}
           else{
             output+="<tr><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a target='_blank' href='"+result[i].url+"' class='btn btn-default' >More Info</a></td></tr>";}
-
-          k++;
+            k++;
           }
-          output+="</tbody></table>";
- 
-          displayResources.html(output);
-          $("table").addClass("table");
-          }
-        });
+        output+="</tbody></table>";
+        displayResources.html(output);
+        $("table").addClass("table");
+        }
+      });
     });
 
     $("#registration").hide();
@@ -353,9 +354,7 @@
     $("#regJTron").hide();
 
 
-    
     $("#get-results").click(function(){
-        $('#removedfile').trigger('click');
         $(".jTron").slideUp("slow");
         $("#tab").show();
         $(".dropzone").hide();
@@ -364,48 +363,48 @@
         $("#resultText").css("padding-top", "20px");
         $("#return").show();
         $("#resultText").show();
-        $("#resBox").hide();
-        
+        //$("#resBox").hide();
         $("#dropz").css("display", "none");
+        $('.dz-preview').remove();
+        
     });
 
-  $("#return").click(function(){
-
+    $("#return").click(function(){
         $(".jTron").hide();
-
         $("#tab").show();
         $("#dropz").css("display", "block");
         $("#dropz").css("padding-top", "10px");
         $(".dropzone").show();
         document.getElementById("steps").innerHTML = "Submit another image for classifying.";
-        $("#get-results").show();
+        //$("#get-results").show();
         document.getElementById("resultText").innerHTML = "Previous Results:";
         $("#return").hide();
+        // dropzone.options.maxFiles=dropzone.options.maxFiles+1;
+        dropzone.removeAllFiles(true); 
+      
+    
 
-        $('div.dz-success').remove();
-        $(".dz-message").show();
-        $("#get-results").hide();
+
+
+        //$('div.dz-success').remove();
+        //$(".dz-message").show();
+        //$("#get-results").hide();
         
-        $("#returnButton").hide();
-   });
-        
-
-
+        // $("#returnButton").hide();
+    });
 
     $("#cancelButton").click(function(){
         $("#tab").show();
-    //  document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
+        //  document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
     });
-
-    
     
     $("#learnBtn").click(function(){
         $(".jTron").slideUp("slow");
         $("#login").hide();
         $("#results-table").hide();
         $("#dropz").hide();
-       
     });
+    
     $("#sBtn").click(function(){
         $(".jTron").hide();
         $("#regJTron").hide();
@@ -414,25 +413,24 @@
         $("#dropz").show();
         $(".dropzone").show();
         document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
-
     });
+
     $("#regBtn").click(function(){
         $(".jTron").hide();
         $("#regJTron").slideDown("slow");
         $("#login").hide();
         $("#registration").show();
-
     });
+
     $("#regCancelBtn").click(function(){
         $(".jTron").show();
         $("#regJTron").hide();
         $("#login").show();
         $("#registration").hide();
-        
-
     });
+
     $(".navbar-brand").click(function(){
-      //SHOW ONLY IF NOT ALREADY LOGGED IN
+        //SHOW ONLY IF NOT ALREADY LOGGED IN
         $("#login").show();
         $(".jTron").slideDown("slow");
         $("#regJTron").hide();
@@ -440,15 +438,14 @@
         $("#dropz").show();
         $("#tab").hide();
         $("#resultText").hide();
-        
         $("#dropz").css("display", "block");
         $("#return").hide();
-        $('div.dz-success').remove();
-        $(".dz-message").show();
+        //$('div.dz-success').remove();
+        //$(".dz-message").show();
         document.getElementById("steps").innerHTML = "";
         $(".dropzone").hide();
-       
     });
+  
     $("#home").click(function(){
         //SHOW ONLY IF NOT ALREADY LOGGED IN
         $("#login").show();
@@ -458,20 +455,15 @@
         $("#dropz").show();
         $("#tab").hide();
         $("#resultText").hide();
-        
-
         $("#dropz").css("display", "block");
         $("#return").hide();
-        $('div.dz-success').remove();
-        $(".dz-message").show();
+        //$('div.dz-success').remove();
+        //$(".dz-message").show();
         document.getElementById("steps").innerHTML = "";
         $(".dropzone").hide();
-
     });
 });
-
 (jQuery);
-
-    </script>
+</script>
 </body>
 </html>
