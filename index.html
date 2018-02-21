@@ -163,7 +163,7 @@
       <div class="container text-center">
         <h1>Welcome to Ant Classifier</h1>
         <p>Using Artificial Intelligence to identify and classify your images.</p>
-        <a href="#" class="btn btn-default" id="learnBtn">Learn More</a>
+        <a href="/about.html" class="btn btn-default" id="learnBtn">Learn More</a>
       </div>
     </div>
   </div>
@@ -177,6 +177,8 @@
         </div>
       </div>
     </div>
+
+
                 <!--  LOG IN -->
 <div id="login">
   <br>
@@ -403,10 +405,7 @@
     });
     
     $("#learnBtn").click(function(){
-        $(".jTron").slideUp("slow");
-        $("#login").hide();
-        $("#results-table").hide();
-        $("#dropz").hide();
+        
     });
     
     $("#sBtn").click(function(){
@@ -458,6 +457,7 @@
   
     $("#home").click(function(){
         //SHOW ONLY IF NOT ALREADY LOGGED IN
+       //SHOW ONLY IF NOT ALREADY LOGGED IN
         $("#login").show();
         $(".jTron").slideDown("slow");
         $("#regJTron").hide();
@@ -469,8 +469,12 @@
         $("#return").hide();
         //$('div.dz-success').remove();
         //$(".dz-message").show();
-        document.getElementById("steps").innerHTML = "";
+        $("#steps").hide();
+        //document.getElementById("steps").innerHTML = "";
+        dropzone.removeAllFiles(true); 
         $(".dropzone").hide();
+        $("#dropz").css("display", "block");
+        $("#dropz").css("padding-top", "120px");
     });
 });
 (jQuery);
