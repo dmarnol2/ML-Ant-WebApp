@@ -78,6 +78,7 @@
       height:28px;
 
     }
+  /* REGISTRATION MOVED TO NEW FILE 
   .regCancelButton {
       border-radius:5px;
       margin-left: 10px;
@@ -98,6 +99,7 @@
       height:28px;
 
     }
+    */
   .resTable{
 
       margin-left: auto;
@@ -167,7 +169,8 @@
       </div>
     </div>
   </div>
-
+  
+  <!-- REGISTRATION MOVED TO NEW FILE
   <div class="jTron" id="regJTron">
       <div class="jumbotron" >
         <div class="container text-center">
@@ -177,6 +180,7 @@
         </div>
       </div>
     </div>
+  -->
 
 
                 <!--  LOG IN -->
@@ -192,12 +196,12 @@
     <div id="password" class="container">
       Password    <input style="margin-left: 7px;" type="text" id="Password"/><br>
       <a href="#" class="btn btn-default submitLoginButton" id="sBtn" >Submit</a><br>
-      <a href="#" class="btn btn-default regButton" id="regBtn">Register</a>
+      <a href="/registration.html" class="btn btn-default regButton" id="regBtn">Register</a>
    </div>
   </form> 
   </div>
 </div>
-        <!-- REGISTRATION -->
+        <!-- REGISTRATION found in seperate file
 <div class="container" id="registration">
     <form method="post" name="userInfo" onsubmit="return ValidateEmail()">
       <div id="credentials" class="col-md-12">
@@ -213,10 +217,11 @@
        
        <a href="#" class="btn btn-default regSubmitButton" id="registrationBtn" >Submit</a>
        <a href="#" class="btn btn-default regCancelButton" id="regCancelBtn" >Cancel</a>
-        <!--<button id="registrationBtn" class="btn btn-default regButton "   >Submit</button>-->
+      <button id="registrationBtn" class="btn btn-default regButton "   >Submit</button>
       </div>
     </form>
   </div>
+-->
 
   <div class="container box dzone" id="dropz">
     <p id="steps" style="color:green">Step 1: Upload your image.</p>
@@ -244,38 +249,12 @@
     
     <script>
     var count=0;
-    function check(){
-          if (document.getElementById('confPassword').value != document.getElementById('regPassword').value) {
-                document.getElementById('confPassword').setCustomValidity('Password Must be Matching.');} 
-          else {
-                // input is valid -- reset the error message
-                document.getElementById('confPassword').setCustomValidity('');
-              }
-          }
-        
-    function ValidateEmail(){
-          if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(document.getElementById('email').value)){
-            return (true)
-            }
-            alert("You have entered an invalid email address!")
-            return (false)
-            }
-        
-    function changeType(){
-          document.getElementById('regPassword').type=(document.userInfo.option.value=(document.userInfo.option.value==1)?'-1':'1')=='-1'?'text':'password';
-          }
-          
-          function changeType2()
-          {
-            document.getElementById('confPassword').type=(document.userInfo.option2.value=(document.userInfo.option2.value==1)?'-1':'1')=='-1'?'text':'password';
-          }
-
+    
     function drop(event) {
           event.preventDefault();
           //document.getElementById("mydz").style.width = "500px";
           }    
     
-
     Dropzone.options.mydz = {
       dictDefaultMessage: "Click or drag image into box",
       addRemoveLinks: true,
@@ -347,7 +326,7 @@
       });
     });
 
-    $("#registration").hide();
+    //$("#registration").hide();
     $("#login").show();
     $("#get-results").hide();
     $("#cancelButton").show();
@@ -357,7 +336,7 @@
     $("#resultText").hide();
     $("#return").hide();
     $("#dropz").hide();
-    $("#regJTron").hide();
+    //$("#regJTron").hide();
 
 
     $("#get-results").click(function(){
@@ -410,15 +389,16 @@
     
     $("#sBtn").click(function(){
         $(".jTron").hide();
-        $("#regJTron").hide();
+        //$("#regJTron").hide();
         $("#login").hide();
-        $("#registration").hide();
+        //$("#registration").hide();
         $("#dropz").show();
         $(".dropzone").show();
         $("#steps").show();
         document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
     });
 
+    /*  REGISTRATION MOVED TO NEW FILE
     $("#regBtn").click(function(){
         $(".jTron").hide();
         $("#regJTron").slideDown("slow");
@@ -432,13 +412,14 @@
         $("#login").show();
         $("#registration").hide();
     });
+    */
 
     $(".navbar-brand").click(function(){
         //SHOW ONLY IF NOT ALREADY LOGGED IN
         $("#login").show();
         $(".jTron").slideDown("slow");
-        $("#regJTron").hide();
-        $("#registration").hide();
+        //$("#regJTron").hide();
+        //$("#registration").hide();
         $("#dropz").show();
         $("#tab").hide();
         $("#resultText").hide();
@@ -457,11 +438,10 @@
   
     $("#home").click(function(){
         //SHOW ONLY IF NOT ALREADY LOGGED IN
-       //SHOW ONLY IF NOT ALREADY LOGGED IN
         $("#login").show();
         $(".jTron").slideDown("slow");
-        $("#regJTron").hide();
-        $("#registration").hide();
+       // $("#regJTron").hide();
+       // $("#registration").hide();
         $("#dropz").show();
         $("#tab").hide();
         $("#resultText").hide();
