@@ -6,57 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ant Classifier</title>
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
   <style>
   .box{
-      margin-top: 10px;}
-  .navbar{
-      margin-bottom:0;
-      border-radius:0;
+      margin-top: 10px;
     }
 
-  .submitButton {
-      border-radius:10px;
-      display:block;
-      width: 100px;
-      text-align: center;
-      color:black;
-      float: left;
-      
-      }
-    .cancelButton {
-      border-radius:10px;
-      display:block;
-      width: 100px;
-      text-align: center;
-      color:black;
-      float: left;
-      margin-left: 5px;
-      }
-  
-  .regCancelButton {
-      border-radius:5px;
-      margin-left: 10px;
-      width: 120px;
-      text-align: center;
-      color:black;
-      margin-top: 8px;
-      height:28px;
-
-    }
-  .regSubmitButton {
-      border-radius:5px;
-      margin-left: 30px;
-      width: 120px;
-      text-align: center;
-      color:black;
-      margin-top: 8px;
-      height:28px;
-
-    } 
 </style>
 
   <nav class="navbar navbar-inverse right">
@@ -70,7 +28,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.html">Ant Classifier</a>
+          <a class="navbar-brand" href="/">Ant Classifier</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -103,8 +61,8 @@
                 
               </ul>
             </li>
-            <li><a href="#">About Site</a></li>
-            <li id="home"><a href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li><a href="/about.html">About Site</a></li>
+            <li id="home"><a href="/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
             
           </ul>
         </div><!-- /.navbar-collapse -->
@@ -141,34 +99,9 @@
     </form>
   </div>
 
-  <script language='javascript' type='text/javascript'>
-          
-    function check() {
-        if (document.getElementById('confPassword').value != document.getElementById('regPassword').value){
-         document.getElementById('confPassword').setCustomValidity('Password Must be Matching.');
-        }
-        else {// input is valid -- reset the error message
-          document.getElementById('confPassword').setCustomValidity('');}
-        }
-    function ValidateEmail() {
-        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(document.getElementById('email').value)){
-              return (true)
-        }
-        alert("You have entered an invalid email address!")
-        return (false)
-        }
-        
-    function changeType(){
-        document.getElementById('regPassword').type=(document.userInfo.option.value=(document.userInfo.option.value==1)?'-1':'1')=='-1'?'text':'password';
-        }
-
-    function changeType2(){
-        document.getElementById('confPassword').type=(document.userInfo.option2.value=(document.userInfo.option2.value==1)?'-1':'1')=='-1'?'text':'password';
-        }
-  </script>
-  
-  <script src="js/bootstrap.min.js"></script>
-  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="javascripts/myScript.js"></script>
 
 </body>
 </html>

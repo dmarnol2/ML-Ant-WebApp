@@ -1,75 +1,120 @@
-.clickArea {
-    display:block;
+ .login{
+    float:left;
+  }
+
+  .box{
+      margin-top: 5px;}
+
+  .navbar{
+      margin-bottom:0;
+      border-radius:0;
+    }
+
+  .dropzone{
+
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+  .submitButton {
+      border-radius:10px;
+      display:block;
+      width: 100px;
+      text-align: center;
+      color:black;
+      float: left;
+      
+      }
+  .cancelButton {
+
+      border-radius:10px;
+      display:block;
+      width: 100px;
+      text-align: center;
+      color:black;
+      float: left;
+      margin-left: 5px;
+      }
+  .returnButton {
+      border-radius:10px;
+      display:block;
+      width: 100px;
+      text-align: center;
+      color:black;
+      float: left;
+      
+      }
+  .submitLoginButton {
+      border-radius:5px;
+      width: 170px;
+      height:28px;
+      margin-left: 72px;
+      text-align: center;
+      color:black;
+      margin-bottom: 5px; 
+      margin-top: 15px;
     
-    line-height:140px;
-    height:140px;
-    width: 1135px;
-    border-radius:40px;
-    -webkit-font-smoothing: antialiased; 
-    
-    
-    text-align:center;
-}
+    }
+  .regButton {
+      border-radius:5px;
+      margin-left: 72px;
+      width: 170px;
+      text-align: center;
+      color:black;
+      margin-top: 8px;
+      height:28px;
 
-.submitButton {
-  border-radius:10px;
-  display:block;
-  width: 100px;
-  text-align: center;
-  color:gray;
-  float:right;
-}
+    }
 
-.filePicker + label {
+      
+  .regCancelButton {
+      border-radius:5px;
+      margin-left: 10px;
+      width: 120px;
+      text-align: center;
+      color:black;
+      margin-top: 8px;
+      height:28px;
 
-    display: inline-block;
-}
+    }
+  .regSubmitButton {
+      border-radius:5px;
+      margin-left: 30px;
+      width: 120px;
+      text-align: center;
+      color:black;
+      margin-top: 8px;
+      height:28px;
 
-.filePicker + label {
-  cursor: pointer; /* "hand" cursor */
-}
+    } 
+  /* REGISTRATION MOVED TO NEW FILE 
+  .regCancelButton {
+      border-radius:5px;
+      margin-left: 10px;
+      width: 120px;
+      text-align: center;
+      color:black;
+      margin-top: 8px;
+      height:28px;
 
-.filePicker {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
+    }
+  .regSubmitButton {
+      border-radius:5px;
+      margin-left: 30px;
+      width: 120px;
+      text-align: center;
+      color:black;
+      margin-top: 8px;
+      height:28px;
 
-}
+    }
+    */
+  .resTable{
 
-.hide {
-   display:none;
-}
-.show{
-	display:block;
-}
-
-.navbar{
-        margin-bottom:0;
-        border-radius:0;
-}
-
-
-
-/* layout.css Style */
-.upload-drop-zone {
-  height: 150px;
-  border-width: 2px;
-  margin-bottom: 20px;
-}
-
-/* skin.css Style*/
-.upload-drop-zone {
-  color: #ccc;
-  border-style: dashed;
-  border-color: #ccc;
-  line-height: 150px;
-  text-align: center;
-  background-color: #fff;
-}
-.upload-drop-zone.drop {
-  color: #222;
-  border-color: #222;
-}
+      margin-left: auto;
+      margin-right: auto;
+    }
+  .dzone{
+      padding-top: 120px;
+      
+   }
