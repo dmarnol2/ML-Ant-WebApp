@@ -18,11 +18,16 @@
   },
   "homepage": "https://github.com/dmarnol2/ML-Ant-WebApp#readme",
   "dependencies": {
+    "File": "^0.10.2",
+    "clamscan": "^0.8.4",
     "express": "^4.16.2",
     "formidable": "^1.1.1",
+    "image-downloader": "^3.3.0",
     "nodemon": "^1.14.11",
     "path": "^0.12.7",
     "pg": "^7.4.1",
-    "pg-format": "^1.0.4"
+    "pg-format": "^1.0.4",
+    "sharp": "^0.20.1",
+    "xmlhttprequest": "^1.8.0"
   }
 }
