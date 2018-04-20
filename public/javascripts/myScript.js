@@ -117,7 +117,7 @@
 
     $("#get-results").click(function(){
         $("#convert").hide();
-    $("#returnHome").hide();
+        $("#returnHome").hide();
         $(".jTron").slideUp("slow");
         $("#tab").show();
         $(".dropzone").hide();
@@ -134,13 +134,15 @@
 
     $("#return").click(function(){
         $(".jTron").hide();
-        $("#tab").show();
-        $("#dropz").css("display", "block");
-        $("#dropz").css("padding-top", "10px");
+        $("#returnHome").show();
+        $("#resultText").hide();
+        $("#tab").hide();
+        $("#dropz").show();//css("display", "block");
+        //$("#dropz").css("padding-top", "10px");
         $(".dropzone").show();
         document.getElementById("steps").innerHTML = "Submit another image for classifying.";
         //$("#get-results").show();
-        document.getElementById("resultText").innerHTML = "Previous Results:";
+        //document.getElementById("resultText").innerHTML = "Previous Results:";
         $("#return").hide();
         // dropzone.options.maxFiles=dropzone.options.maxFiles+1;
         dropzone.removeAllFiles(true); 
@@ -195,8 +197,9 @@
 
     $(".navbar-brand").click(function(){
         //SHOW ONLY IF NOT ALREADY LOGGED IN
-        $("#login").show();
-        $(".jTron").slideDown("slow");
+        
+        $(".jTron").slideDown("fast");
+         $("#returnHome").hide();
         //$("#regJTron").hide();
         //$("#registration").hide();
         $("#dropz").show();
@@ -207,6 +210,7 @@
         //$('div.dz-success').remove();
         //$(".dz-message").show();
         $("#steps").hide();
+        $("#login").show();
         //document.getElementById("steps").innerHTML = "";
         dropzone.removeAllFiles(true); 
         $(".dropzone").hide();
@@ -217,8 +221,33 @@
   
     $("#home").click(function(){
         //SHOW ONLY IF NOT ALREADY LOGGED IN
+        
+        $(".jTron").slideDown("fast");
+         $("#returnHome").hide();
+        //$("#regJTron").hide();
+        //$("#registration").hide();
+       // $("#dropz").show();
+        $("#tab").hide();
+        $("#resultText").hide();
+       // $("#dropz").css("display", "block");
+        $("#return").hide();
+        //$('div.dz-success').remove();
+        //$(".dz-message").show();
+        $("#steps").hide();
         $("#login").show();
-        $(".jTron").slideDown("slow");
+        //document.getElementById("steps").innerHTML = "";
+        dropzone.removeAllFiles(true); 
+        $(".dropzone").hide();
+        //$("#dropz").css("display", "block");
+        //$("#dropz").css("padding-top", "120px");
+
+    });
+
+     $("#returnHome").click(function(){
+        //SHOW ONLY IF NOT ALREADY LOGGED IN
+        $("#returnHome").hide();
+        $("#login").show();
+        $(".jTron").slideDown("fast");
        // $("#regJTron").hide();
        // $("#registration").hide();
         $("#dropz").show();
@@ -235,5 +264,6 @@
         $("#dropz").css("display", "block");
         $("#dropz").css("padding-top", "120px");
     });
+
 });
 (jQuery);
