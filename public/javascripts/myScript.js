@@ -73,6 +73,7 @@
       });
 
     dropzone.on("processing", function(file){
+         $("#convert").show();
         $(".dz-message").hide();
       });
 
@@ -100,6 +101,8 @@
     });
 
     //$("#registration").hide();
+    $("#convert").hide();
+    $("#returnHome").hide();
     $("#login").show();
     $("#get-results").hide();
     $("#cancelButton").show();
@@ -113,6 +116,8 @@
 
 
     $("#get-results").click(function(){
+        $("#convert").hide();
+    $("#returnHome").hide();
         $(".jTron").slideUp("slow");
         $("#tab").show();
         $(".dropzone").hide();
@@ -161,6 +166,7 @@
     });
     
     $("#sBtn").click(function(){
+        $("#returnHome").show();
         $(".jTron").hide();
         //$("#regJTron").hide();
         $("#login").hide();
