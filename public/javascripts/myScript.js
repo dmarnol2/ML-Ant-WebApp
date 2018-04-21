@@ -77,7 +77,9 @@
         $(".dz-message").hide();
       });
 
+    
     $('#get-results').click(function () {
+         $("#convert").hide();
       var displayResources = $('#results-table');
       var k=1;
       $.ajax({
@@ -99,51 +101,54 @@
         }
       });
     });
+    
 
     //$("#registration").hide();
     $("#convert").hide();
-    $("#returnHome").hide();
-    $("#login").show();
+    //$("#returnHome").hide();
+    //$("#login").show();
     $("#get-results").hide();
-    $("#cancelButton").show();
+    /*$("#cancelButton").show();
     $("#tab").hide();
     $(".jTron").show();
     $("#return").hide();
     $("#resultText").hide();
     $("#return").hide();
     $("#dropz").hide();
-    //$("#regJTron").hide();
+    $("#regJTron").hide();
+    */
 
-
-    $("#get-results").click(function(){
-        $("#convert").hide();
-        $("#returnHome").hide();
+    //$("#get-results").click(function(){
+        //$("#convert").hide();
+        /*$("#returnHome").hide();
         $(".jTron").slideUp("slow");
         $("#tab").show();
         $(".dropzone").hide();
-        document.getElementById("steps").innerHTML = "";
-        $("#get-results").hide();
+        */
+        //document.getElementById("steps").innerHTML = "";
+        /*$("#get-results").hide();
         //$("#resultText").css("padding-top", "20px");
         $("#return").show();
         $("#resultText").show();
         //$("#resBox").hide();
-        $("#dropz").css("display", "none");
-        $('.dz-preview').remove();
+        */
+        //$("#dropz").css("display", "none");
+        //$('.dz-preview').remove();
         
-    });
+   //});
 
-    $("#return").click(function(){
-        $(".jTron").hide();
+    $("#classifyAgain").click(function(){
+        //$(".jTron").hide();
         $("#returnHome").show();
-        $("#resultText").hide();
-        $("#tab").hide();
-        $("#dropz").show();//css("display", "block");
+       // $("#resultText").hide();
+       // $("#tab").hide();
+       // $("#dropz").show();//css("display", "block");
         //$("#dropz").css("padding-top", "10px");
-        $(".dropzone").show();
+       // $(".dropzone").show();
         document.getElementById("steps").innerHTML = "Submit another image for classifying.";
         //$("#get-results").show();
         //document.getElementById("resultText").innerHTML = "Previous Results:";
-        $("#return").hide();
+        //$("#classifyAgain").hide();
         // dropzone.options.maxFiles=dropzone.options.maxFiles+1;
         dropzone.removeAllFiles(true); 
       
@@ -159,16 +164,18 @@
     });
 
     $("#cancelButton").click(function(){
+         $("#convert").hide();
         $("#tab").show();
         //  document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
     });
     
     $("#learnBtn").click(function(){
+         $("#convert").hide();
         
     });
     
     $("#sBtn").click(function(){
-        $("#returnHome").show();
+       /* $("#returnHome").show();
         $(".jTron").hide();
         //$("#regJTron").hide();
         $("#login").hide();
@@ -176,6 +183,7 @@
         $("#dropz").show();
         $(".dropzone").show();
         $("#steps").show();
+        */
         document.getElementById("steps").innerHTML = "Step 1: Upload your image.";
     });
 
@@ -196,8 +204,9 @@
     */
 
     $(".navbar-brand").click(function(){
+         $("#convert").hide();
         //SHOW ONLY IF NOT ALREADY LOGGED IN
-        
+        /*
         $(".jTron").slideDown("fast");
          $("#returnHome").hide();
         //$("#regJTron").hide();
@@ -211,41 +220,44 @@
         //$(".dz-message").show();
         $("#steps").hide();
         $("#login").show();
-        //document.getElementById("steps").innerHTML = "";
-        dropzone.removeAllFiles(true); 
-        $(".dropzone").hide();
-        $("#dropz").css("display", "block");
-        $("#dropz").css("padding-top", "120px");
+        */
+        document.getElementById("steps").innerHTML = "";
+        //dropzone.removeAllFiles(true); 
+        //$(".dropzone").hide();
+        //$("#dropz").css("display", "block");
+       //$("#dropz").css("padding-top", "120px");
 
     });
   
     $("#home").click(function(){
+         $("#convert").hide();
         //SHOW ONLY IF NOT ALREADY LOGGED IN
         
-        $(".jTron").slideDown("fast");
-         $("#returnHome").hide();
+      //  $(".jTron").slideDown("fast");
+        // $("#returnHome").hide();
         //$("#regJTron").hide();
         //$("#registration").hide();
        // $("#dropz").show();
-        $("#tab").hide();
-        $("#resultText").hide();
+     //   $("#tab").hide();
+       // $("#resultText").hide();
        // $("#dropz").css("display", "block");
-        $("#return").hide();
+       // $("#return").hide();
         //$('div.dz-success').remove();
         //$(".dz-message").show();
-        $("#steps").hide();
-        $("#login").show();
+       // $("#steps").hide();
+       // $("#login").show();
         //document.getElementById("steps").innerHTML = "";
         dropzone.removeAllFiles(true); 
-        $(".dropzone").hide();
+       // $(".dropzone").hide();
         //$("#dropz").css("display", "block");
         //$("#dropz").css("padding-top", "120px");
 
     });
 
      $("#returnHome").click(function(){
+         $("#convert").hide();
         //SHOW ONLY IF NOT ALREADY LOGGED IN
-        $("#returnHome").hide();
+      /*  $("#returnHome").hide();
         $("#login").show();
         $(".jTron").slideDown("fast");
        // $("#regJTron").hide();
@@ -258,11 +270,12 @@
         //$('div.dz-success').remove();
         //$(".dz-message").show();
         $("#steps").hide();
+        */
         //document.getElementById("steps").innerHTML = "";
-        dropzone.removeAllFiles(true); 
-        $(".dropzone").hide();
-        $("#dropz").css("display", "block");
-        $("#dropz").css("padding-top", "120px");
+        //dropzone.removeAllFiles(true); 
+        //$(".dropzone").hide();
+        //$("#dropz").css("display", "block");
+        //$("#dropz").css("padding-top", "120px");
     });
 
 });

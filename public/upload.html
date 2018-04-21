@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
     <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-
-    
 </head>
 <body>
 <nav class="navbar navbar-inverse right">
@@ -56,49 +54,46 @@
             </li>
             <li><a href="about.html">About Site</a></li>
             <li id="home"><a href="/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-            
+            <li id="convert" ><img src="oc.png"></img></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
 
-  <div class="jTron">
-    <div class=" jumbotron " id="jumbotron-display">
-      <div class="container text-center">
-        <h1>Welcome to Ant Classifier</h1>
-        <p>Using Artificial Intelligence to identify and classify your images.</p>
-        <a href="/about.html" class="btn btn-default" id="learnBtn">Learn More</a>
-      </div>
-    </div>
-  </div>
   
   
-                <!--  LOG IN -->
-<div id="login">
-  <br>
-  <br>
-  <div class="container">
-  <form>
-    <div id="userName" class="container ">
-      User Name <input type="text" id="Username"/>
+
+  <div class="container box dzone" id="dropz">
+    <p id="steps" style="color:green">Step 1: Upload your image.</p>
+    <form action="/user_img" ondrop="drop(event)" onclick="drop(event)" 
+      class="dropzone" method="post"
+      id="mydz" style="border-style: dashed;"></form>
     </div>
-    <br>
-    <div id="password" class="container">
-      Password    <input style="margin-left: 7px;" type="text" id="Password"/><br>
-      <a href="/upload.html" class="btn btn-default submitLoginButton" id="sBtn" >Submit</a><br>
-      <a href="/registration.html" class="btn btn-default regButton" id="regBtn">Register</a>
-   </div>
-  </form> 
-  </div>
+ 
+      
+<div class="container box" id="resBox">
+	<a href="/results.html" class=" btn btn-default returnButton" id="get-results">Submit</a>
+   <!--<button type="submit" class=" btn btn-default submitButton" id="get-results" >Submit</button>
+   -->
+   <br>
 </div>
-       
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+
+
+  <div class="container box" >
+     
+      <a href="/" class=" btn btn-default returnButton" id="returnHome">Return Home</a>
+     <!-- <button type="submit" class=" btn btn-default returnButton" id="returnHome" >Return Home</button>
+     -->
+      </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
     <script src="javascripts/myScript.js"></script>
-
-
     
-
+    <script>
+    
+</script>
 </body>
 </html>

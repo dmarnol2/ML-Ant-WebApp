@@ -39,6 +39,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, 'index.html'));
 });
+app.get('/upload', function(req, res){
+  res.sendFile(path.join(__dirname, 'public/upload.html'));
+});
+app.get('/results', function(req, res){
+  res.sendFile(path.join(__dirname, 'public/results.html'));
+});
 
 app.get('/user_img/*', function(req, res){
     console.log('file being uploaded'); 
