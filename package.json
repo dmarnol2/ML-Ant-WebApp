@@ -19,7 +19,9 @@
   "homepage": "https://github.com/dmarnol2/ML-Ant-WebApp#readme",
   "dependencies": {
     "File": "^0.10.2",
+    "FormData": "^0.10.1",
     "clamscan": "^0.8.4",
+    "download-image": "^1.0.1",
     "express": "^4.16.2",
     "formidable": "^1.1.1",
     "image-downloader": "^3.3.0",

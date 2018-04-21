@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var formidable = require('formidable');
+var bodyParser = require("body-parser");
 var fs = require('fs');
 var sharp = require('sharp');
 var pg = require('pg');
@@ -9,18 +10,16 @@ var format = require('pg-format');
 var sharp = require('sharp');
 var File = require('File');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-var download = require('image-downloader');
+var downloadImage = require('download-image');
 var clam = require('clamscan');
+var FormData = require('FormData');
 var PGUSER = 'antuser';
 var PGDATABASE = 'antDB';
 var PASS = 'password';
 var apiKey = '3817e0e0f890b7f1e28ebd7e705e34b3';
 
-
-
-//var http = require('http');
-//var url = require('url');
-
+var apiServerUrl = process.env.apiServerUrl;
+var apiServerPort = "8000";
 
 var config = {
   user: PGUSER, // name of the user account
@@ -34,23 +33,20 @@ var pool = new pg.Pool(config);
 var hostname = 'localhost';
 var connectionString = "postgres://antuser:password@localhost:5432/antDB";
 
+app.use(bodyParser.text());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, 'index.html'));
 });
-app.get('/upload', function(req, res){
-  res.sendFile(path.join(__dirname, 'public/upload.html'));
-});
-app.get('/results', function(req, res){
-  res.sendFile(path.join(__dirname, 'public/results.html'));
+
+app.get('/public/javascripts/results.js', function(req, res, next){
+    res.sendFile(path.join(__dirname, "/public/javascripts/results.js"));
 });
 
 app.get('/user_img/*', function(req, res){
-    console.log('file being uploaded'); 
+    res.sendFile(path.join())
 });
-
-
 
 //FIGURE OUT DATABASE
 app.get('/db', function (req, res, next) {
@@ -74,7 +70,36 @@ app.get('/db', function (req, res, next) {
     });
 });
 
+app.get('/results', function(req, res, next){
+        
+    var fn = req.get("File-Name");
+    var endIndex = fn.length;
+    var filename = fn.substring(0, endIndex);
+    var filetype = fn.substring(endIndex+1, fn.length);
+    var xmlhr = new XMLHttpRequest();
+    var id = Math.floor(Math.random() * 10000);
+    var data = new FormData();
+    var file = new File("user_img/jpegs/" + filename + ".jpg");
+    data.append("file", file);
+    
+    
+    
+    xmlhr.open("POST", apiServerUrl + apiServerPort + "/api/user/" + id + "/images", false);
+    xmlhr.setRequestHeader("Content-Type", "application/form-data")
+    xmlhr.onreadystatechange = function(){
+        if(xmlhr.readyState == 4 && xhttp.status == 200){
 
+            var jsonResponse = xmlhr.responseText;
+            console.log(jsonResponse);
+            res.send(jsonResponse);
+        }
+    }
+    var file = new File("user_img/jpegs/" + filename + ".jpg");
+    var fd = new FormData();
+    fd.append("file", file);
+    xmlhr.send(fd);
+    
+});
 
 app.post('/user_img', function(req, res){
     console.log(req.method);
@@ -119,6 +144,8 @@ app.post('/user_img', function(req, res){
             catch(err){
                 console.log(err);
             }
+            res.download("/user_img/jpegs/" + filename + ".jpg", filename + ".jpg");
+            res.sendStatus(200);
         }
         
         
@@ -144,7 +171,7 @@ app.post('/user_img', function(req, res){
                 xhttp.setRequestHeader('Cache-Control','no-cache');
                 var reqbody = '{ "input": [{' 
                         + '"type": "remote",'
-                        + '"source": "https://localhost:8080/user_img/' + name 
+                        + '"source": "https://localhost:8080/user_img/' + filename 
                     + '"}],'
                     + '"conversion": [{'
                         + '"target": "jpg"'
@@ -153,7 +180,6 @@ app.post('/user_img', function(req, res){
                 xhttp.onreadystatechange = function() {
                     console.log("\r\nStarted file conversion job.");
     
-                    console.log(xhttp.status);
                     
                     if(xhttp.readyState == 4 && xhttp.status == 201){
                         jsonResponse = JSON.parse(xhttp.responseText);
@@ -171,35 +197,10 @@ app.post('/user_img', function(req, res){
                                     jobFinished = true;
                                     var imageURI = jsonResponse2.output[0].uri;
                                     console.log(imageURI);
-                                    /*xhttp3 = new XMLHttpRequest()
-                                    xhttp3.open("GET", imageURI);
-                                    xhttp3.setRequestHeader('Cache-Control','no-cache');
-                                    xhttp3.onreadystatechange = function(){
-                                        console.log('\r\nFinished downloading converted file.');
-                                        console.log(xhttp3.status);
-                                        if(xhttp3.status = 200 && xhttp3.readyState == 4){
-                                            //save image
-                                               
-                                            
-                                        }
-                                    }
-                                    xhttp3.send();
-                                    */
-                                    /*
-                                    options = {
-                                      url: imageURI,
-                                      dest: 'uploads/jpegs/' + filename +'.jpg'        
-                                        // Save to /path/to/dest/photo.jpg
-                                    }
-
-                                    download.image(options)
-                                      .then(({ filename, image }) => {
-                                        console.log('File saved to', filename)
-                                      }).catch((err) => {
-                                        throw err
-                                      })
-                                    */
-                                    
+    
+                                    downloadImage(imageURI, "user_img/jpegs/" + filename + ".jpg");
+                                    res.download("user_img/jpegs" + filename + ".jpg", filename + ".jpg");
+                                    res.sendStatus(200);
                                 }
                             }
                             xhttp2.send();
@@ -216,22 +217,22 @@ app.post('/user_img', function(req, res){
                 
             }
             catch(err) {
-                console.log('Error converting file: ' + name);
+                console.log('Error converting file: ' + file.name);
                 console.log(err);
+                res.sendStatus(400);
             }
+            
         }
-
-        createMetadata(file, filename);
     });
 
     // log any errors that occur
     form.on('error', function(err) {
-    console.log('An error has occured: \n' + err);
+        console.log('An error has occured: \n' + err);
     });
 
     // once all the files have been uploaded, send a response to the client
     form.on('end', function() {
-    res.end('success');
+        res.end('success');
     });
 
     // parse the incoming request containing the form data

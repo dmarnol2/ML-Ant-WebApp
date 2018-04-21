@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,8 +10,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
     <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="./public/javascripts/results.js"></script>
 </head>
-<body>
+<body onload="getResults()">
 <nav class="navbar navbar-inverse right">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -80,7 +82,7 @@
 
 
 <p class = "container box" id="resultText">Results:</p>
-<div id="results-table"></div></div></div>
+<div id="results-table"></div>
 
   <div class="container box" >
     <a href="/upload.html" class=" btn btn-default returnButton" id="classifyAgain">Classify Another</a></div>
@@ -98,9 +100,5 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
     <script src="javascripts/myScript.js"></script>
-    
-    <script>
-    
-</script>
 </body>
 </html>
