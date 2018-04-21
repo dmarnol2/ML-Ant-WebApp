@@ -12,7 +12,8 @@ var File = require('File');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var downloadImage = require('download-image');
 var clam = require('clamscan');
-var FormData = require('FormData');
+var FormData = require('form-data');
+var https = require('https');
 var PGUSER = 'antuser';
 var PGDATABASE = 'antDB';
 var PASS = 'password';
@@ -20,6 +21,7 @@ var apiKey = '3817e0e0f890b7f1e28ebd7e705e34b3';
 
 var apiServerUrl = process.env.apiServerUrl;
 var apiServerPort = "8000";
+var lastSelectedFile;
 
 var config = {
   user: PGUSER, // name of the user account
@@ -45,7 +47,11 @@ app.get('/public/javascripts/results.js', function(req, res, next){
 });
 
 app.get('/user_img/*', function(req, res){
-    res.sendFile(path.join())
+    res.sendFile(path.join());
+});
+
+app.get('/user_img/jpegs/*', function(req, res){
+    res.sendFile(path.join());
 });
 
 //FIGURE OUT DATABASE
@@ -70,35 +76,34 @@ app.get('/db', function (req, res, next) {
     });
 });
 
-app.get('/results', function(req, res, next){
-        
-    var fn = req.get("File-Name");
-    var endIndex = fn.length;
-    var filename = fn.substring(0, endIndex);
-    var filetype = fn.substring(endIndex+1, fn.length);
-    var xmlhr = new XMLHttpRequest();
-    var id = Math.floor(Math.random() * 10000);
-    var data = new FormData();
-    var file = new File("user_img/jpegs/" + filename + ".jpg");
-    data.append("file", file);
-    
-    
-    
-    xmlhr.open("POST", apiServerUrl + apiServerPort + "/api/user/" + id + "/images", false);
-    xmlhr.setRequestHeader("Content-Type", "application/form-data")
-    xmlhr.onreadystatechange = function(){
-        if(xmlhr.readyState == 4 && xhttp.status == 200){
 
-            var jsonResponse = xmlhr.responseText;
-            console.log(jsonResponse);
-            res.send(jsonResponse);
-        }
-    }
-    var file = new File("user_img/jpegs/" + filename + ".jpg");
-    var fd = new FormData();
-    fd.append("file", file);
-    xmlhr.send(fd);
+
+app.get('/results', function(req, res, next){
     
+    
+    var id = Math.floor(Math.random() * 20000);
+    var apiServerPath = "http://" + apiServerUrl + ":" + apiServerPort + "/api/user/" + id + "/images";
+    
+    var fd = new FormData();
+    fd.append('file', fs.createReadStream("user_img/jpegs/images.jpg"), {
+        filename: "images.jpg",
+        filepath: "user_img/jpegs/image.jpg",
+        contentType: "text/plain",
+        beforeSend: function( xhr ) {
+            xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+        }
+    });
+    
+    fd.submit(apiServerPath, function(err, response){
+        if (!response){
+            console.log("Error:");
+            console.log(err);
+        } else {
+            console.log("Response status: " + response.statusCode);
+            console.log("Response body: " + response.responseXML);
+            res.send(response.body);
+        }
+    });
 });
 
 app.post('/user_img', function(req, res){
@@ -108,7 +113,7 @@ app.post('/user_img', function(req, res){
     var form = new formidable.IncomingForm();
     
     // specify that we want to allow the user to upload multiple files in a single request
-    form.multiples = true;
+    form.multiples = false;
 
     // store all uploads in the /uploads directory
     form.uploadDir = path.join(__dirname, '/user_img/');
@@ -144,7 +149,7 @@ app.post('/user_img', function(req, res){
             catch(err){
                 console.log(err);
             }
-            res.download("/user_img/jpegs/" + filename + ".jpg", filename + ".jpg");
+            lastSelectedFile = filename + ".jpg";
             res.sendStatus(200);
         }
         
@@ -200,6 +205,9 @@ app.post('/user_img', function(req, res){
     
                                     downloadImage(imageURI, "user_img/jpegs/" + filename + ".jpg");
                                     res.download("user_img/jpegs" + filename + ".jpg", filename + ".jpg");
+                                    
+                                    
+                                    lastSelectedFile = filename + ".jpg";
                                     res.sendStatus(200);
                                 }
                             }
