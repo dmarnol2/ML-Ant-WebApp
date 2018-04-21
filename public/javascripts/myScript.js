@@ -33,6 +33,10 @@
       addRemoveLinks: true,
       uploadMultiple: false,
       maxFiles:1,
+      renameFile: function(file){
+        var temp = file.name;
+        return "image."+temp.slice((temp.lastIndexOf(".") - 1 >>> 0) + 2);
+    },      
       acceptedFiles: "image/png,image/gif,image/jpg,image/jpeg,image/tif,image/tiff,image/bmp,image/raw,image/wmf, image/webp, image/img, image/pct, image/tga, image/jpe, image/ani, image/heif, image/heic",
 
       init: function() {
@@ -47,6 +51,7 @@
 
     $(document).ready(function(){
       Dropzone.autoDiscover = false;
+
       var dropzone = new Dropzone (".dropzone", {
       });
 
@@ -73,17 +78,20 @@
       });
 
     dropzone.on("processing", function(file){
+
          $("#convert").show();
         $(".dz-message").hide();
       });
 
+
+
     
-    $('#get-results').click(function () {
+    /*$('#get-results').click(function () {
          $("#convert").hide();
       var displayResources = $('#results-table');
       var k=1;
       $.ajax({
-      type: "GET",
+      type: "POST",
       url: "example.json",
       success: function(result){
         console.log(result);
@@ -101,6 +109,7 @@
         }
       });
     });
+    */
     
 
     //$("#registration").hide();

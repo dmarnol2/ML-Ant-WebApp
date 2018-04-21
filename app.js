@@ -50,6 +50,8 @@ app.get('/user_img/*', function(req, res){
     console.log('file being uploaded'); 
 });
 
+
+
 //FIGURE OUT DATABASE
 app.get('/db', function (req, res, next) {
     pool.connect(function(err,client,done) {
