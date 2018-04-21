@@ -1,5 +1,11 @@
 var express = require('express');
+var exphbs  = require('express-handlebars');
+
 var app = express();
+
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
 var path = require('path');
 var formidable = require('formidable');
 var fs = require('fs');
@@ -37,10 +43,12 @@ var connectionString = "postgres://antuser:password@localhost:5432/antDB";
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname, 'index.html'));
+  //res.sendFile(path.join(__dirname, 'index.html'));
+  res.render('home');
 });
 app.get('/upload', function(req, res){
-  res.sendFile(path.join(__dirname, 'public/upload.html'));
+  //res.sendFile(path.join(__dirname, 'public/upload.html'));
+  res.render('upload');
 });
 app.get('/results', function(req, res){
   res.sendFile(path.join(__dirname, 'public/results.html'));
@@ -50,6 +58,9 @@ app.get('/user_img/*', function(req, res){
     console.log('file being uploaded'); 
 });
 
+app.get('/test', function (req, res) {
+    res.render('upload');
+});
 
 
 //FIGURE OUT DATABASE
