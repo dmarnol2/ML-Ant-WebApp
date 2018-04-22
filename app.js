@@ -1,9 +1,9 @@
 var express = require('express');
-var exphbs  = require('express-handlebars');
+var exphbs = require('express-handlebars');
 
 var app = express();
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 var path = require('path');
@@ -17,82 +17,133 @@ var File = require('File');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var download = require('image-downloader');
 var clam = require('clamscan');
-var PGUSER = 'antuser';
-var PGDATABASE = 'antDB';
-var PASS = 'password';
+
 var apiKey = '3817e0e0f890b7f1e28ebd7e705e34b3';
 
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const passport = require('passport');
+const Auth0Strategy = require('passport-auth0');
+const flash = require('connect-flash');
 
+const home = require('./routes/home');
+const user = require('./routes/user');
+const upload = require('./routes/upload');
 
-//var http = require('http');
-//var url = require('url');
+const env = {
+    AUTH0_CLIENT_ID: 'fvMtWEHx74JIig33pGXhi9nthQm2FyCq',
+    AUTH0_DOMAIN: 'specifier.auth0.com',
+    AUTH0_CLIENT_SECRET: 'FJdb6e8BetTZgl-Wa9jK6-Z4QxcU9LqCtXAMam3h7FZXPV277Mll6AgxBqRaUFx_',
+    AUTH0_CALLBACK_URL: 'http://localhost:8080/callback'
+};
 
+const strategy = new Auth0Strategy(
+    {
+        domain: env.AUTH0_DOMAIN,
+        clientID: env.AUTH0_CLIENT_ID,
+        clientSecret: env.AUTH0_CLIENT_SECRET,
+        callbackURL:
+            env.AUTH0_CALLBACK_URL || 'http://localhost:8080/upload'
+    },
+    function (accessToken, refreshToken, extraParams, profile, done) {
+        // accessToken is the token to call Auth0 API (not needed in the most cases)
+        // extraParams.id_token has the JSON Web Token
+        // profile has all the information from the user
+        return done(null, profile);
+    }
+);
 
-var config = {
-  user: PGUSER, // name of the user account
-  database: PGDATABASE, // name of the database
-  password: PASS,
-  max: 10, // max number of clients in the pool
-  idleTimeoutMillis: 30000 // how long a client is allowed to remain idle before being closed
-}
-var port = process.env.PORT || 8080;
-var pool = new pg.Pool(config);
-var hostname = 'localhost';
-var connectionString = "postgres://antuser:password@localhost:5432/antDB";
+passport.use(strategy);
 
+// you can use this section to keep a smaller payload
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+    done(null, user);
+});
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(
+    session({
+        secret: 'shhhhhhhhh',
+        resave: true,
+        saveUninitialized: true
+    })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function(req, res){
-  //res.sendFile(path.join(__dirname, 'index.html'));
-  res.render('home');
-});
-app.get('/upload', function(req, res){
-  //res.sendFile(path.join(__dirname, 'public/upload.html'));
-  res.render('upload');
-});
-app.get('/results', function(req, res){
-  res.sendFile(path.join(__dirname, 'public/results.html'));
+app.use(flash());
+
+app.use(function (req, res, next) {
+    if (req && req.query && req.query.error) {
+        req.flash("error", req.query.error);
+    }
+    if (req && req.query && req.query.error_description) {
+        req.flash("error_description", req.query.error_description);
+    }
+    next();
 });
 
-app.get('/user_img/*', function(req, res){
-    console.log('file being uploaded'); 
+// Check logged in
+app.use(function (req, res, next) {
+    res.locals.loggedIn = false;
+    if (req.session.passport && typeof req.session.passport.user != 'undefined') {
+        res.locals.loggedIn = true;
+    }
+    next();
 });
 
-app.get('/test', function (req, res) {
-    res.render('upload');
+app.use('/', home);
+app.use('/user', user);
+app.use('/upload', upload);
+
+app.get('/results', function (req, res) {
+    res.sendFile(path.join(__dirname, 'public/results.html'));
 });
 
+app.get('/user_img/*', function (req, res) {
+    console.log('file being uploaded');
+});
 
 //FIGURE OUT DATABASE
 app.get('/db', function (req, res, next) {
-    pool.connect(function(err,client,done) {
-       if(err){
-           console.log("not able to get connection "+ err);
-           res.status(400).send(err);
-       } 
-       client.query('SELECT * FROM profile', function(err,result) {
-           done(); // closing the connection;
-           if(err){
-               console.log(err);
-               res.status(400).send(err);
-           }
+    pool.connect(function (err, client, done) {
+        if (err) {
+            console.log("not able to get connection " + err);
+            res.status(400).send(err);
+        }
+        client.query('SELECT * FROM profile', function (err, result) {
+            done(); // closing the connection;
+            if (err) {
+                console.log(err);
+                res.status(400).send(err);
+            }
 
-           res.status(200).send("<div  id='tab' ><div class='container'>"+
-            "<div id='results-table'><table class='table table-bordered table-hover table-condensed show'>"+
-            "<tr><th class='col-md-1'>Result Ranking</th><th class='col-md-1'>Percent Confidence</th>"+
-            "<th>Ant Species</th><th>Common Name</th><tbody>"+result);
-       });
+            res.status(200).send("<div  id='tab' ><div class='container'>" +
+                "<div id='results-table'><table class='table table-bordered table-hover table-condensed show'>" +
+                "<tr><th class='col-md-1'>Result Ranking</th><th class='col-md-1'>Percent Confidence</th>" +
+                "<th>Ant Species</th><th>Common Name</th><tbody>" + result);
+        });
     });
 });
 
 
 
-app.post('/user_img', function(req, res){
+app.post('/user_img', function (req, res) {
     console.log(req.method);
 
     // create an incoming form object
     var form = new formidable.IncomingForm();
-    
+
     // specify that we want to allow the user to upload multiple files in a single request
     form.multiples = true;
 
@@ -101,83 +152,83 @@ app.post('/user_img', function(req, res){
 
     // every time a file has been uploaded successfully,
     // rename it to it's orignal name
-    form.on('file', function(name, file) {
-        
+    form.on('file', function (name, file) {
+
         var endIndex = file.name.lastIndexOf('.');
         var filename = file.name.substring(0, endIndex);
-        var filetype = file.name.substring(endIndex+1, file.length);
-        
+        var filetype = file.name.substring(endIndex + 1, file.length);
+
         // Print file name to console.
         console.log(file.name);
 
         // Save original image to upload directory
         fs.rename(file.path, path.join(form.uploadDir, file.name));
         scanFile(form.uploadDir + file.name);
-        
-        
+
+
         // If file is JPEG, PNG, WebP, TIFF, TIF, or SVG,
         // use sharp to convert image and save it /uploads/jpegs
         // This library is used to ease the load on online-convert.com
         // for some of the more widely used filetypes.
-        
-        
-        if(filetype == 'jpeg' || filetype == 'jpg' || filetype == 'png' || filetype == 'webp' || filetype == 'tiff' || filetype == 'tif' || filetype == 'svg'){
-            try{
-                sharp('user_img/'+file.name).toFile("user_img/jpegs/" + filename +".jpg", function(err, info){
-                        if(err) console.log(info);
+
+
+        if (filetype == 'jpeg' || filetype == 'jpg' || filetype == 'png' || filetype == 'webp' || filetype == 'tiff' || filetype == 'tif' || filetype == 'svg') {
+            try {
+                sharp('user_img/' + file.name).toFile("user_img/jpegs/" + filename + ".jpg", function (err, info) {
+                    if (err) console.log(info);
                 });
             }
-            catch(err){
+            catch (err) {
                 console.log(err);
             }
         }
-        
-        
-        
+
+
+
         // use online.convert.com to convert other file types. 
         // Heif and heic are still un-implemented at time of writing.
         // Online-convert has a free service for images of 100 mB max size
         // and low traffic. Upgrade of service is available as well as
         // purchase of conversion minutes. $10 for 500 minutes.
-        
-        else{
-            try{
+
+        else {
+            try {
                 var jsonResponse, jsonResponse2;
                 var id;
                 var xhttp, xhttp2, xhttp3;
                 var jobFinished = false;
                 var convertedImage;
 
-                
+
                 xhttp = new XMLHttpRequest();
                 xhttp.open("POST", 'https://api2.online-convert.com/jobs', false);
                 xhttp.setRequestHeader('x-oc-api-key', apiKey);
-                xhttp.setRequestHeader('Cache-Control','no-cache');
-                var reqbody = '{ "input": [{' 
-                        + '"type": "remote",'
-                        + '"source": "https://localhost:8080/user_img/' + name 
+                xhttp.setRequestHeader('Cache-Control', 'no-cache');
+                var reqbody = '{ "input": [{'
+                    + '"type": "remote",'
+                    + '"source": "https://localhost:8080/user_img/' + name
                     + '"}],'
                     + '"conversion": [{'
-                        + '"target": "jpg"'
+                    + '"target": "jpg"'
                     + '}]'
-                + '}';
-                xhttp.onreadystatechange = function() {
+                    + '}';
+                xhttp.onreadystatechange = function () {
                     console.log("\r\nStarted file conversion job.");
-    
+
                     console.log(xhttp.status);
-                    
-                    if(xhttp.readyState == 4 && xhttp.status == 201){
+
+                    if (xhttp.readyState == 4 && xhttp.status == 201) {
                         jsonResponse = JSON.parse(xhttp.responseText);
                         id = jsonResponse.id;
-                        while(!jobFinished){
+                        while (!jobFinished) {
                             xhttp2 = new XMLHttpRequest();
-                            xhttp2.open("GET", 'https://api2.online-convert.com/jobs/'+id, false);
+                            xhttp2.open("GET", 'https://api2.online-convert.com/jobs/' + id, false);
                             xhttp2.setRequestHeader('x-oc-api-key', apiKey);
                             xhttp2.setRequestHeader('Cache-Control', 'no-cache');
-                            xhttp2.onreadystatechange = function(){
+                            xhttp2.onreadystatechange = function () {
                                 jsonResponse2 = JSON.parse(xhttp2.responseText);
                                 console.log(jsonResponse2.status.code);
-                                if (jsonResponse2.status.code == "completed"){
+                                if (jsonResponse2.status.code == "completed") {
                                     console.log('\r\nFinished converting file.');
                                     jobFinished = true;
                                     var imageURI = jsonResponse2.output[0].uri;
@@ -210,23 +261,23 @@ app.post('/user_img', function(req, res){
                                         throw err
                                       })
                                     */
-                                    
+
                                 }
                             }
                             xhttp2.send();
                         }
-                    } else{
+                    } else {
                         console.log(xhttp.status);
                         console.log(xhttp.statusText);
                     }
                 }
                 xhttp.send(reqbody);
-            
+
                 console.log('http request sent to online-convert');
-                
-                
+
+
             }
-            catch(err) {
+            catch (err) {
                 console.log('Error converting file: ' + name);
                 console.log(err);
             }
@@ -236,22 +287,22 @@ app.post('/user_img', function(req, res){
     });
 
     // log any errors that occur
-    form.on('error', function(err) {
-    console.log('An error has occured: \n' + err);
+    form.on('error', function (err) {
+        console.log('An error has occured: \n' + err);
     });
 
     // once all the files have been uploaded, send a response to the client
-    form.on('end', function() {
-    res.end('success');
+    form.on('end', function () {
+        res.end('success');
     });
 
     // parse the incoming request containing the form data
     form.parse(req);
-    
+
 
 });
 
-function scanFile(filename){
+function scanFile(filename) {
     /*var files = [filename];
     clam.scan_files(files, function(err, good_files, bad_files) {
         if(!err) {
@@ -278,24 +329,22 @@ function scanFile(filename){
     */
 }
 
-function createMetadata(file, filename){
-    
+function createMetadata(file, filename) {
+
     // Create JSON string with metadata for file.
     var jsonString = '{ "name":"' + file.name + ', "type":"' + file.type + '", "size":"' + file.size + '"  }';
     var fileTitle = "user_img/metadata/" + filename + ".json";
-    fs.writeFile(fileTitle, jsonString, function(err){
-        if (err){
+    fs.writeFile(fileTitle, jsonString, function (err) {
+        if (err) {
             return console.log(err);
         }
-        console.log('Metadata written successfully'); 
+        console.log('Metadata written successfully');
     });
-    
+
 }
 
-var server = app.listen(port, function(){
-  console.log('Server listening on port 8080');
+var port = process.env.PORT || 8080;
+
+var server = app.listen(port, function () {
+    console.log('Server listening on port 8080');
 });
-
-
-
-

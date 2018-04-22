@@ -79,7 +79,11 @@
                         <a href="about.html">About Site</a>
                     </li>
                     <li>
-                        <a href="#" id="btn-login">Log in</a>
+                        {{#if loggedIn}}
+                        <a href="/logout" id="btn-logout">Log out</a>
+                        {{else}}
+                        <a href="/login" id="btn-login">Log in</a>
+                        {{/if}}
                     </li>
 
                 </ul>
@@ -95,8 +99,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
     <script src="javascripts/myScript.js"></script>
+    {{!--
+    disabled because we're not doing a true single page app here
+    
     <script src="https://cdn.auth0.com/js/auth0/9.3.1/auth0.min.js"></script>
     <script src="scripts/authentication.js"></script>
+     --}}
 </body>
 
 </html>

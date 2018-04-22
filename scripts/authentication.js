@@ -6,7 +6,9 @@ window.addEventListener('load', function () {
         responseType: 'token id_token',
         audience: 'https://specifier.auth0.com/userinfo',
         scope: 'openid',
-        redirectUri: 'http://localhost:8080/upload'//window.location.href
+        redirectUri: 'http://localhost:8080/upload',
+        audience: 'http://www.specifierapp.com',
+        scope: 'openid profile post:user-images'
     });
 
     var loginBtn = document.getElementById('btn-login');

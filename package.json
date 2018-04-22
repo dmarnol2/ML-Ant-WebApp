@@ -28,6 +28,18 @@
     "pg": "^7.4.1",
     "pg-format": "^1.0.4",
     "sharp": "^0.20.1",
-    "xmlhttprequest": "^1.8.0"
+    "xmlhttprequest": "^1.8.0",
+    "express-session": "^1.15.6",
+    "express-jwt": "^5.3.0",
+    "express-jwt-authz": "^1.0.0",
+    "jwks-rsa": "^1.2.0",
+    "passport": "^0.4.0",
+    "passport-auth0": "^0.6.1",
+    "connect-flash": "^0.1.1",
+    "connect-ensure-login": "^0.1.1",
+    "morgan": "^1.9.0",
+    "cookie-parser": "^1.4.3",
+    "body-parser": "^1.18.2",
+    "express-handlebars": "^3.0.0"
   }
 }
