@@ -9,29 +9,12 @@ function sendRequest(){
         contentType: "text/plain",
         url: "/results",
         success:function(output) {
-            addResults(output);
+            addResults(output.responseText);
         },
         error:function(output) {
         }
     });
-
-    
-    
-    
-    
-    
-    /*
-    xhr = new XMLHttpRequest();
-    xhr.open("GET", "/results", true);
-    xhr.onreadystatechange = function(){
-        if(xmlhr.readyState == 4 && xhttp.status == 200){
-            jsonResponse = JSON.parse(xhr.responseText);
-            addResults(jsonResponse);
-        }
-    }
-    xhr.send();
-    */
-}
+};
 
 function addResults(result){
     

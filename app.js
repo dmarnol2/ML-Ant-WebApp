@@ -7,13 +7,12 @@ var fs = require('fs');
 var sharp = require('sharp');
 var pg = require('pg');
 var format = require('pg-format');
-var sharp = require('sharp');
-var File = require('File');
+var File = require('file');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-var downloadImage = require('download-image');
 var clam = require('clamscan');
 var FormData = require('form-data');
-var https = require('https');
+var http = require('http');
+var Request = require('request');
 var PGUSER = 'antuser';
 var PGDATABASE = 'antDB';
 var PASS = 'password';
@@ -46,13 +45,6 @@ app.get('/public/javascripts/results.js', function(req, res, next){
     res.sendFile(path.join(__dirname, "/public/javascripts/results.js"));
 });
 
-app.get('/user_img/*', function(req, res){
-    res.sendFile(path.join());
-});
-
-app.get('/user_img/jpegs/*', function(req, res){
-    res.sendFile(path.join());
-});
 
 //FIGURE OUT DATABASE
 app.get('/db', function (req, res, next) {
@@ -80,20 +72,84 @@ app.get('/db', function (req, res, next) {
 
 app.get('/results', function(req, res, next){
     
+        //Delete this.
+        lastSelectedFile = "images.png";
     
-    var id = Math.floor(Math.random() * 20000);
-    var apiServerPath = "http://" + apiServerUrl + ":" + apiServerPort + "/api/user/" + id + "/images";
+    
+    var id = Math.floor(Math.random() * 2000);
+    var apiServerPath = "/api/user/" + id + "/images";
+    var filename = lastSelectedFile;
+    var index = filename.lastIndexOf(".");
+    var filetype = filename.substr(index + 1, filename.length);   
+    var boundaryKey = Math.random().toString(16);
+    
+    
+    var request = http.request({
+        host: apiServerUrl,
+        port: apiServerPort,
+        path: apiServerPath,
+        method : 'POST'
+    }, function (response) {
+        var data = '';
+        response.on('data', function(chunk) {
+            data += chunk.toString();
+        });
+        response.on('end', function() {
+            console.log(data);
+        });
+    });
+
+    request.setHeader('Content-Type', 'multipart/form-data; boundary="' + boundaryKey+'"');
+
+    request.write( 
+        '----------------------------' + boundaryKey + '\r\n' 
+        + 'Content-Disposition: form-data; name="file"; filename="'+filename+'"\r\n'
+        + 'Content-Type: image/' + filetype 
+        + '\r\n\r\n' 
+    );
+    
+    fs.createReadStream('user_img/' + filename, { bufferSize: 4 * 1024 })
+
+        .pipe(request, { end: false })
+    
+        .on('end', function() {
+            var ending = "--" + boundaryKey + "\r\n"
+                + 'Content-Disposition: form-data; name="id"'
+                + "\r\n\r\n" + id + "\r\n" +
+                + '--' + boundaryKey + '--';
+            request.end(ending); 
+        });
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
+    console.log(lastSelectedFile);
+    var file = new File("user_img/" + lastSelectedFile);
+    
     
     var fd = new FormData();
-    fd.append('file', fs.createReadStream("user_img/jpegs/images.jpg"), {
-        filename: "images.jpg",
-        filepath: "user_img/jpegs/image.jpg",
-        contentType: "text/plain",
-        beforeSend: function( xhr ) {
-            xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
-        }
-    });
+    fd.append('uploads[]', file);
     
+    res.send("BEANS AND FRUIT");
+    
+    
+    
+
     fd.submit(apiServerPath, function(err, response){
         if (!response){
             console.log("Error:");
@@ -104,6 +160,7 @@ app.get('/results', function(req, res, next){
             res.send(response.body);
         }
     });
+    */
 });
 
 app.post('/user_img', function(req, res){
@@ -123,7 +180,6 @@ app.post('/user_img', function(req, res){
     form.on('file', function(name, file) {
         
         // Print file name to console.
-        console.log(file.name);
         lastSelectedFile = file.name;
 
         // Save original image to upload directory
