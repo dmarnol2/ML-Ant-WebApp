@@ -122,115 +122,14 @@ app.post('/user_img', function(req, res){
     // rename it to it's orignal name
     form.on('file', function(name, file) {
         
-        var endIndex = file.name.lastIndexOf('.');
-        var filename = file.name.substring(0, endIndex);
-        var filetype = file.name.substring(endIndex+1, file.length);
-        
         // Print file name to console.
         console.log(file.name);
+        lastSelectedFile = file.name;
 
         // Save original image to upload directory
         fs.rename(file.path, path.join(form.uploadDir, file.name));
         scanFile(form.uploadDir + file.name);
-        
-        
-        // If file is JPEG, PNG, WebP, TIFF, TIF, or SVG,
-        // use sharp to convert image and save it /uploads/jpegs
-        // This library is used to ease the load on online-convert.com
-        // for some of the more widely used filetypes.
-        
-        
-        if(filetype == 'jpeg' || filetype == 'jpg' || filetype == 'png' || filetype == 'webp' || filetype == 'tiff' || filetype == 'tif' || filetype == 'svg'){
-            try{
-                sharp('user_img/'+file.name).toFile("user_img/jpegs/" + filename +".jpg", function(err, info){
-                        if(err) console.log(info);
-                });
-            }
-            catch(err){
-                console.log(err);
-            }
-            lastSelectedFile = filename + ".jpg";
-            res.sendStatus(200);
-        }
-        
-        
-        
-        // use online.convert.com to convert other file types. 
-        // Heif and heic are still un-implemented at time of writing.
-        // Online-convert has a free service for images of 100 mB max size
-        // and low traffic. Upgrade of service is available as well as
-        // purchase of conversion minutes. $10 for 500 minutes.
-        
-        else{
-            try{
-                var jsonResponse, jsonResponse2;
-                var id;
-                var xhttp, xhttp2, xhttp3;
-                var jobFinished = false;
-                var convertedImage;
-
-                
-                xhttp = new XMLHttpRequest();
-                xhttp.open("POST", 'https://api2.online-convert.com/jobs', false);
-                xhttp.setRequestHeader('x-oc-api-key', apiKey);
-                xhttp.setRequestHeader('Cache-Control','no-cache');
-                var reqbody = '{ "input": [{' 
-                        + '"type": "remote",'
-                        + '"source": "https://localhost:8080/user_img/' + filename 
-                    + '"}],'
-                    + '"conversion": [{'
-                        + '"target": "jpg"'
-                    + '}]'
-                + '}';
-                xhttp.onreadystatechange = function() {
-                    console.log("\r\nStarted file conversion job.");
-    
-                    
-                    if(xhttp.readyState == 4 && xhttp.status == 201){
-                        jsonResponse = JSON.parse(xhttp.responseText);
-                        id = jsonResponse.id;
-                        while(!jobFinished){
-                            xhttp2 = new XMLHttpRequest();
-                            xhttp2.open("GET", 'https://api2.online-convert.com/jobs/'+id, false);
-                            xhttp2.setRequestHeader('x-oc-api-key', apiKey);
-                            xhttp2.setRequestHeader('Cache-Control', 'no-cache');
-                            xhttp2.onreadystatechange = function(){
-                                jsonResponse2 = JSON.parse(xhttp2.responseText);
-                                console.log(jsonResponse2.status.code);
-                                if (jsonResponse2.status.code == "completed"){
-                                    console.log('\r\nFinished converting file.');
-                                    jobFinished = true;
-                                    var imageURI = jsonResponse2.output[0].uri;
-                                    console.log(imageURI);
-    
-                                    downloadImage(imageURI, "user_img/jpegs/" + filename + ".jpg");
-                                    res.download("user_img/jpegs" + filename + ".jpg", filename + ".jpg");
-                                    
-                                    
-                                    lastSelectedFile = filename + ".jpg";
-                                    res.sendStatus(200);
-                                }
-                            }
-                            xhttp2.send();
-                        }
-                    } else{
-                        console.log(xhttp.status);
-                        console.log(xhttp.statusText);
-                    }
-                }
-                xhttp.send(reqbody);
-            
-                console.log('http request sent to online-convert');
-                
-                
-            }
-            catch(err) {
-                console.log('Error converting file: ' + file.name);
-                console.log(err);
-                res.sendStatus(400);
-            }
-            
-        }
+ 
     });
 
     // log any errors that occur
