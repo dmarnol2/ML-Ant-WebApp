@@ -112,12 +112,6 @@ app.get('/user-images/*', function (req, res) {
 app.post('/user-images', async function (req, res) {
     console.log(req.method);
 
-    // create an incoming form object
-    var form = new formidable.IncomingForm();
-
-    // specify that we want to allow the user to upload multiple files in a single request
-    form.multiples = true;
-
     var preprocessedImageDirectory = path.join(__dirname, '/user-images/');
 
     var uploadForm = await getUploadForm(req, preprocessedImageDirectory);
@@ -152,8 +146,6 @@ app.post('/user-images', async function (req, res) {
 
             var viewModel = { layout: false, results: JSON.parse(body) };
 
-            console.log(viewModel);
-
             res.render('classification-results', viewModel );
         }
         catch (err) {
@@ -170,7 +162,7 @@ function getUploadForm (req,userImageUploadDirectory) {
         var form = new formidable.IncomingForm()
 
         form.uploadDir = userImageUploadDirectory;
-        form.multiples = true;
+        form.multiples = false;
         
         form.parse(req, function (err, fields, files) {
             if (err) return reject(err)
