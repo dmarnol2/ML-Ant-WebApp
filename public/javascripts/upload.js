@@ -6,6 +6,11 @@ $(function () {
         window.alert('dropped');
     });
 
+    $("#user-image-drop-zone").click (function (e) {
+        e.preventDefault();
+        window.alert('dropped');
+    });
+
     Dropzone.options['user-image-drop-zone'] = {
         dictDefaultMessage: "Click or drag image into box",
         addRemoveLinks: true,
