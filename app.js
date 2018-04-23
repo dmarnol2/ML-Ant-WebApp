@@ -12,22 +12,20 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var clam = require('clamscan');
 var FormData = require('form-data');
 var http = require('http');
-var Request = require('request');
+var FileReader = require('filereader');
+var request = require('request');
 var PGUSER = 'antuser';
 var PGDATABASE = 'antDB';
 var PASS = 'password';
 var apiKey = '3817e0e0f890b7f1e28ebd7e705e34b3';
 
-var apiServerUrl = process.env.apiServerUrl;
-var apiServerPort = "8000";
-var lastSelectedFile;
 
 var config = {
-  user: PGUSER, // name of the user account
-  database: PGDATABASE, // name of the database
-  password: PASS,
-  max: 10, // max number of clients in the pool
-  idleTimeoutMillis: 30000 // how long a client is allowed to remain idle before being closed
+    user: PGUSER, // name of the user account
+    database: PGDATABASE, // name of the database
+    password: PASS,
+    max: 10, // max number of clients in the pool
+    idleTimeoutMillis: 30000 // how long a client is allowed to remain idle before being closed
 }
 var port = process.env.PORT || 8080;
 var pool = new pg.Pool(config);
@@ -72,96 +70,182 @@ app.get('/db', function (req, res, next) {
 
 app.get('/results', function(req, res, next){
     
-        //Delete this.
-        lastSelectedFile = "images.png";
     
-    
-    var id = Math.floor(Math.random() * 2000);
+
+    var apiServerHost = process.env.apiServerUrl;
+    var apiServerPort = "8000";
     var apiServerPath = "/api/user/" + id + "/images";
-    var filename = lastSelectedFile;
-    var index = filename.lastIndexOf(".");
-    var filetype = filename.substr(index + 1, filename.length);   
-    var boundaryKey = Math.random().toString(16);
+    var apiURL = apiServerHost + ":" + apiServerPort + apiServerPath;
     
     
-    var request = http.request({
-        host: apiServerUrl,
-        port: apiServerPort,
-        path: apiServerPath,
-        method : 'POST'
-    }, function (response) {
-        var data = '';
-        response.on('data', function(chunk) {
-            data += chunk.toString();
-        });
-        response.on('end', function() {
-            console.log(data);
-        });
-    });
+    var id = Math.floor(Math.random() * 20000);
+    var filename = req.body;
+    console.log("Request body: " + req.body);
+    var periodIndex = filename.lastIndexOf(".");
+    var filetype = filename.substr(periodIndex + 1, filename.length);   
+    var boundary = Math.random().toString(16);
 
-    request.setHeader('Content-Type', 'multipart/form-data; boundary="' + boundaryKey+'"');
+    var CRLF = "\r\n";
+    var fieldName = "file";
+    var part = "";
+    
+    var xhr = new XMLHttpRequest();
+    var reader = new FileReader();
+    
+    reader.onload = function(){
+        
+        xhr.open("POST", apiURL, true);
+        xhr.onreadystatechange = function(response) {
+            if (xhr.readyState === 4) {
+                console.log(response.responseText);
+                console.log(response.response);
+                var doc = getResultsDocument(response.responseText);
+                res.send(doc);
+            }
+        };
+        var contentType = "multipart/form-data; boundary=" + boundary;
+        xhr.setRequestHeader("Content-Type", contentType);
 
-    request.write( 
-        '----------------------------' + boundaryKey + '\r\n' 
-        + 'Content-Disposition: form-data; name="file"; filename="'+filename+'"\r\n'
-        + 'Content-Type: image/' + filetype 
-        + '\r\n\r\n' 
-    );
-    
-    fs.createReadStream('user_img/' + filename, { bufferSize: 4 * 1024 })
+        part += "--" + boundary + "--" + CRLF;
+        part += "Content-Disposition: form-data' ";
+        part += 'name="' + fieldName + '"; ';
+        part += 'filename="'+ fileName + '"' + CRLF;
+        part += "Content-Type: image/" + fileType;
+        part += CRLF + CRLF;
+        part += reader.result;
+        part += CRLF + "--" + boundary + CRLF;
+        part += 'Content-Disposition: form-data; name="id"';
+        part += CRLF + CRLF + id + CRLF;
+        part += "--" + boundary + "--" + CRLF;
 
-        .pipe(request, { end: false })
-    
-        .on('end', function() {
-            var ending = "--" + boundaryKey + "\r\n"
-                + 'Content-Disposition: form-data; name="id"'
-                + "\r\n\r\n" + id + "\r\n" +
-                + '--' + boundaryKey + '--';
-            request.end(ending); 
-        });
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /*
-    console.log(lastSelectedFile);
-    var file = new File("user_img/" + lastSelectedFile);
-    
-    
-    var fd = new FormData();
-    fd.append('uploads[]', file);
-    
-    res.send("BEANS AND FRUIT");
-    
-    
-    
-
-    fd.submit(apiServerPath, function(err, response){
-        if (!response){
-            console.log("Error:");
-            console.log(err);
-        } else {
-            console.log("Response status: " + response.statusCode);
-            console.log("Response body: " + response.responseXML);
-            res.send(response.body);
-        }
-    });
-    */
+        xhr.send(part);
+    }
+    reader.readAsBinaryString(new File("./user_img/"+filename));
 });
+
+function getResultsDocument(tableInfo){
+    
+    var result = JSON.parse(tableInfo);
+    
+    var table="<div  id='tab' ><div class='container'><div class='table-responsive' id='results-table' style='overflow-x:auto;'><table class='table table-bordered table-hover'><tr><th class='col-md-1'>Result Ranking</th><th class='col-md-1'>Percent Confidence</th><th>Ant Species</th><th>Common Name</th><th  data-field='action' data-formatter='ActionFormatter'>Link</th></tr><tbody>";
+    for (var i in result){
+      if(i==0){
+        table+="<tr class='success'><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a href='"+result[i].url+"' class='btn btn-default' target='_blank'>More Info</a></td></tr>";}
+      else{
+        table+="<tr><td>" + k + "</td><td>" + result[i].confidence + "</td><td>" + result[i].species + "</td><td>"+result[i].name+"</td><td><a target='_blank' href='"+result[i].url+"' class='btn btn-default' >More Info</a></td></tr>";}
+        k++;
+      }
+    table+="</tbody></table>";
+    
+    var page = '<!DOCTYPE html>'  
+    + '<html lang="en">'
+    + '<head>'
+
+    + '<meta charset="UTF-8">'
+    + '<meta http-equiv="X-UA-Compatible" content="IE=edge">'
+    + '<meta name="viewport" content="width=device-width, initial-scale=1">'
+    + '<title>Ant Classifier</title>'
+    + '<!-- Bootstrap -->'
+    + '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >'
+    + '<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">'
+    + '<link rel="stylesheet" type="text/css" href="css/style.css">'
+    + '<script src="javascripts/results.js"></script>'
+    + '</head>'
+    + '<body onload="getResults()">'
+    + '<nav class="navbar navbar-inverse right">'
+    + '<div class="container">'
+    + '<!-- Brand and toggle get grouped for better mobile display -->'
+    + '<div class="navbar-header">'
+    + ' <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">'
+    +   '<span class="sr-only">Toggle navigation</span>'
+    +    '<span class="icon-bar"></span>'
+    +    '<span class="icon-bar"></span>'
+    +    '<span class="icon-bar"></span>'
+    +  '</button>'
+    +  '<a class="navbar-brand" href="#">Ant Classifier</a>'
+    + '</div>'
+
+    + '<!-- Collect the nav links, forms, and other content for toggling -->'
+    + '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">'
+    +  '<ul class="nav navbar-nav navbar-right">'
+
+    +      '<li class="dropdown ">'
+    +      '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contact Us <span class="caret"></span></a>'
+    +      '<ul class="dropdown-menu">'
+    +        '<li><a class="headerLinks">Marek Borowiec - Site Sponsor</a>'
+    +        '<a class="listLinks" href="mailto:petiolus@gmail.com" target="_top">email: petiolus@gmail.com </a>  </li>'
+    +        '<li role="separator" class="divider"></li>'
+    +        '<li><a class="headerLinks">Gabriele Valentini - Site Sponsor </a>'
+    +        '<a class="listLinks" href="mailto:gvalent3@asu.edu" target="_top">email: gvalent3@asu.edu </a></li>'
+    +      '</ul>'
+    +    '</li>'
+    +    '<!--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li> -->'
+
+    +    '<li class="dropdown">'
+    +      '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Links <span class="caret"></span></a>'
+    +      '<ul class="dropdown-menu">'
+    +        '<li><a href="http://antweb.org" target="_blank">AntWeb</a></li>'
+    +        '<li role="separator" class="divider"></li>'
+    +        '<li><a href="https://bugguide.net/node/view/15740" target="_blank">BugGuide</a></li>'
+    +        '<li role="separator" class="divider"></li>'
+    +        '<li><a href="https://en.wikipedia.org/wiki/Ant" target="_blank">Wikipedia</a></li>'
+    +        '<li role="separator" class="divider"></li>'
+    +        '<li><a href="https://sols.asu.edu/" target="_blank">ASU School of Life Sciences</a></li>'
+    +      '</ul>'
+    +    '</li>'
+    +    '<li><a href="about.html">About Site</a></li>'
+    +    '<li id="home"><a href="/"><span class="glyphicon glyphicon-home"></span> Home</a></li>'
+
+    +  '</ul>'
+    +'</div><!-- /.navbar-collapse -->'
+    +'</div><!-- /.container-fluid -->'
+    +'</nav>'
+
+
+
+    +'<!-- REGISTRATION MOVED TO NEW FILE'
+    +'<div class="jTron" id="regJTron">'
+    +  '<div class="jumbotron" >'
+    +    '<div class="container text-center">'
+    +      '<h1>Registration</h1>'
+    +      '<p> Registering grants you access to the image classification system.'
+    +      '</p>'
+    +    '</div>'
+    +  '</div>'
+    +'</div>'
+    +'-->'
+
+
+
+
+
+
+    +'<p class = "container box" id="resultText">Results:</p>'
+    +'<div id="results-table">'
+    + table
+    +'</div>'
+
+    +  '<div class="container box" >'
+    +    '<a href="/upload.html" class=" btn btn-default returnButton" id="classifyAgain">Classify Another</a></div>'
+    +      '<!--<button type="submit" class=" btn btn-default returnButton" id="return" >Classify Another</button>'
+    +      '-->'
+    +      '<div class="container box">'
+    +      '<a href="/" class=" btn btn-default returnButton" id="returnHome">Return Home</a>'
+
+    +      '<!--'
+    +      '<button type="submit" class=" btn btn-default returnButton" id="returnHome" >Return Home</button>'
+    +    '-->'
+    +      '</div>'
+
+    +    '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>'
+    +    '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>'
+    +    '<script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>'
+    +    '<script src="javascripts/myScript.js"></script>'
+    +'</body>'
+    +'</html>'
+    
+    return page;
+}
 
 app.post('/user_img', function(req, res){
     console.log(req.method);
@@ -169,7 +253,6 @@ app.post('/user_img', function(req, res){
     // create an incoming form object
     var form = new formidable.IncomingForm();
     
-    // specify that we want to allow the user to upload multiple files in a single request
     form.multiples = false;
 
     // store all uploads in the /uploads directory

@@ -23,12 +23,14 @@
     "clamscan": "^0.8.4",
     "download-image": "^1.0.1",
     "express": "^4.16.2",
+    "filereader": "^0.10.3",
     "formidable": "^1.1.1",
     "image-downloader": "^3.3.0",
     "nodemon": "^1.14.11",
     "path": "^0.12.7",
     "pg": "^7.4.1",
     "pg-format": "^1.0.4",
+    "request": "^2.85.0",
     "sharp": "^0.20.1",
     "xmlhttprequest": "^1.8.0"
   }

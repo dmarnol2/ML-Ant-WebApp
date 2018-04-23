@@ -3,7 +3,16 @@ function getResults(){
 }
 
 function sendRequest(){
-        
+    
+    var hiddenFileName = document.getElementById("hiddenFileName").getAttribute("value");
+    
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET","/results");
+    xhr.onreadystatechange = function(response){
+        addResults(response);
+    }
+    xhr.send(hiddenFileName);
+    /*
     $.ajax({
         type: 'GET',
         contentType: "text/plain",
@@ -14,6 +23,7 @@ function sendRequest(){
         error:function(output) {
         }
     });
+    */
 };
 
 function addResults(result){

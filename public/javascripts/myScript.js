@@ -73,6 +73,8 @@
     
     dropzone.on("success", function(file){
         count++; 
+        var hiddenFile = document.getElementById("hiddenFileName");
+        hiddenFile.innerHTML = file.name;
         document.getElementById("steps").innerHTML = "Step 2: Click Submit to send image to classifier.";
         $("#get-results").show();
       });
