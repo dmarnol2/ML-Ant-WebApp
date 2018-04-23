@@ -37,7 +37,7 @@ const strategy = new Auth0Strategy(
         domain: process.env.Auth0Domain,
         clientID: process.env.Auth0ClientId,
         clientSecret: process.env.Auth0ClientSecret,
-        callbackURL: process.env.Auth0CallbackUrl || 'http://localhost:8080/upload'
+        callbackURL: process.env.Auth0CallbackUrl || 'http://localhost:8080/callback'
     },
     function (accessToken, refreshToken, extraParams, profile, done) {
         // accessToken is the token to call Auth0 API (not needed in the most cases)
@@ -102,7 +102,7 @@ app.get('/results', function (req, res) {
     res.sendFile(path.join(__dirname, 'public/results.html'));
 });
 
-app.get('/user_img/*', function (req, res) {
+app.get('/user-images/*', function (req, res) {
     console.log('file being uploaded');
 });
 
@@ -130,7 +130,7 @@ app.get('/db', function (req, res, next) {
 
 
 
-app.post('/user_img', function (req, res) {
+app.post('/user-images', function (req, res) {
     console.log(req.method);
 
     // create an incoming form object
@@ -140,7 +140,7 @@ app.post('/user_img', function (req, res) {
     form.multiples = true;
 
     // store all uploads in the /uploads directory
-    form.uploadDir = path.join(__dirname, '/user_img/');
+    form.uploadDir = path.join(__dirname, '/user-images/');
 
     // every time a file has been uploaded successfully,
     // rename it to it's orignal name
@@ -166,7 +166,7 @@ app.post('/user_img', function (req, res) {
 
         if (filetype == 'jpeg' || filetype == 'jpg' || filetype == 'png' || filetype == 'webp' || filetype == 'tiff' || filetype == 'tif' || filetype == 'svg') {
             try {
-                sharp('user_img/' + file.name).toFile("user_img/jpegs/" + filename + ".jpg", function (err, info) {
+                sharp('user-images/' + file.name).toFile("user-images/jpegs/" + filename + ".jpg", function (err, info) {
                     if (err) console.log(info);
                 });
             }
@@ -198,7 +198,7 @@ app.post('/user_img', function (req, res) {
                 xhttp.setRequestHeader('Cache-Control', 'no-cache');
                 var reqbody = '{ "input": [{'
                     + '"type": "remote",'
-                    + '"source": "https://localhost:8080/user_img/' + name
+                    + '"source": "https://localhost:8080/user-images/' + name
                     + '"}],'
                     + '"conversion": [{'
                     + '"target": "jpg"'
@@ -325,7 +325,7 @@ function createMetadata(file, filename) {
 
     // Create JSON string with metadata for file.
     var jsonString = '{ "name":"' + file.name + ', "type":"' + file.type + '", "size":"' + file.size + '"  }';
-    var fileTitle = "user_img/metadata/" + filename + ".json";
+    var fileTitle = "user-images/metadata/" + filename + ".json";
     fs.writeFile(fileTitle, jsonString, function (err) {
         if (err) {
             return console.log(err);
