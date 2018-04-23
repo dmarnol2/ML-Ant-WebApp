@@ -32,20 +32,12 @@ const home = require('./routes/home');
 const user = require('./routes/user');
 const upload = require('./routes/upload');
 
-const env = {
-    AUTH0_CLIENT_ID: 'fvMtWEHx74JIig33pGXhi9nthQm2FyCq',
-    AUTH0_DOMAIN: 'specifier.auth0.com',
-    AUTH0_CLIENT_SECRET: 'FJdb6e8BetTZgl-Wa9jK6-Z4QxcU9LqCtXAMam3h7FZXPV277Mll6AgxBqRaUFx_',
-    AUTH0_CALLBACK_URL: 'http://localhost:8080/callback'
-};
-
 const strategy = new Auth0Strategy(
     {
-        domain: env.AUTH0_DOMAIN,
-        clientID: env.AUTH0_CLIENT_ID,
-        clientSecret: env.AUTH0_CLIENT_SECRET,
-        callbackURL:
-            env.AUTH0_CALLBACK_URL || 'http://localhost:8080/upload'
+        domain: process.env.Auth0Domain,
+        clientID: process.env.Auth0ClientId,
+        clientSecret: process.env.Auth0ClientSecret,
+        callbackURL: process.env.Auth0CallbackUrl || 'http://localhost:8080/upload'
     },
     function (accessToken, refreshToken, extraParams, profile, done) {
         // accessToken is the token to call Auth0 API (not needed in the most cases)
@@ -72,7 +64,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(
     session({
-        secret: 'shhhhhhhhh',
+        secret: process.env.SessionSecret,
         resave: true,
         saveUninitialized: true
     })
@@ -343,8 +335,8 @@ function createMetadata(file, filename) {
 
 }
 
-var port = process.env.PORT || 8080;
+var port = process.env.Port || 80;
 
 var server = app.listen(port, function () {
-    console.log('Server listening on port 8080');
+    console.log('Server listening on port ' + port);
 });
