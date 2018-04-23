@@ -1,10 +1,7 @@
 <div class="container box dzone" id="dropz">
-  <p id="steps" style="color:green">Step 1: Upload your image.</p>
+  <p id="steps" style="color:green">Upload your image.</p>
   <form action="/user-images" ondrop="drop(event)" onclick="drop(event)" class="dropzone" method="post" id="mydz" style="border-style: dashed;"></form>
 </div>
 
-<div class="container box">
-  <form action="/results.html" method="POST">
-    <a class=" btn btn-default returnButton" id="get-results">Submit</a>
-  </form>
+<div id="classification-results" class="container box">
 </div>

@@ -1,0 +1,16 @@
+<table class='table table-bordered table-hover'>
+    <thead>
+        <tr>
+            <th class='col-md-1'>Probability</th>
+            <th>Genus</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{#each results}}
+        <tr>
+            <td>{{this.probability}}</td>
+            <td>{{this.genusName}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

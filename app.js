@@ -27,6 +27,9 @@ const session = require('express-session');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const flash = require('connect-flash');
+const uuidv1 = require('uuid/v1');
+const FormData = require('form-data');
+const request = require('request');
 
 const home = require('./routes/home');
 const user = require('./routes/user');
@@ -106,31 +109,7 @@ app.get('/user-images/*', function (req, res) {
     console.log('file being uploaded');
 });
 
-//FIGURE OUT DATABASE
-app.get('/db', function (req, res, next) {
-    pool.connect(function (err, client, done) {
-        if (err) {
-            console.log("not able to get connection " + err);
-            res.status(400).send(err);
-        }
-        client.query('SELECT * FROM profile', function (err, result) {
-            done(); // closing the connection;
-            if (err) {
-                console.log(err);
-                res.status(400).send(err);
-            }
-
-            res.status(200).send("<div  id='tab' ><div class='container'>" +
-                "<div id='results-table'><table class='table table-bordered table-hover table-condensed show'>" +
-                "<tr><th class='col-md-1'>Result Ranking</th><th class='col-md-1'>Percent Confidence</th>" +
-                "<th>Ant Species</th><th>Common Name</th><tbody>" + result);
-        });
-    });
-});
-
-
-
-app.post('/user-images', function (req, res) {
+app.post('/user-images', async function (req, res) {
     console.log(req.method);
 
     // create an incoming form object
@@ -139,186 +118,96 @@ app.post('/user-images', function (req, res) {
     // specify that we want to allow the user to upload multiple files in a single request
     form.multiples = true;
 
-    // store all uploads in the /uploads directory
-    form.uploadDir = path.join(__dirname, '/user-images/');
+    var preprocessedImageDirectory = path.join(__dirname, '/user-images/');
 
-    // every time a file has been uploaded successfully,
-    // rename it to it's orignal name
-    form.on('file', function (name, file) {
+    var uploadForm = await getUploadForm(req, preprocessedImageDirectory);
 
-        var endIndex = file.name.lastIndexOf('.');
-        var filename = file.name.substring(0, endIndex);
-        var filetype = file.name.substring(endIndex + 1, file.length);
+    var file = uploadForm.files.file;
 
-        // Print file name to console.
-        console.log(file.name);
+    var endIndex = file.name.lastIndexOf('.');
+    var fileId = uuidv1();
+    var filetype = file.name.substring(endIndex + 1, file.length);
+    var processedImagePath = path.join(__dirname, "/user-images/jpegs/" + fileId + ".jpg");
 
-        // Save original image to upload directory
-        fs.rename(file.path, path.join(form.uploadDir, file.name));
-        scanFile(form.uploadDir + file.name);
+    // print file name to console.
+    console.log('saving ' + file.name + ' to ' + processedImagePath);
 
+    var preprocessedImagePath = path.join(preprocessedImageDirectory, file.name);
 
-        // If file is JPEG, PNG, WebP, TIFF, TIF, or SVG,
-        // use sharp to convert image and save it /uploads/jpegs
-        // This library is used to ease the load on online-convert.com
-        // for some of the more widely used filetypes.
+    // save original image to upload directory
+    fs.rename(file.path, preprocessedImagePath);
 
+    // if file is JPEG, PNG, WebP, TIFF, TIF, or SVG,
+    // use sharp to convert image and save it /uploads/jpegs
+    // this library is used to ease the load on online-convert.com
+    // for some of the more widely used filetypes.
 
-        if (filetype == 'jpeg' || filetype == 'jpg' || filetype == 'png' || filetype == 'webp' || filetype == 'tiff' || filetype == 'tif' || filetype == 'svg') {
-            try {
-                sharp('user-images/' + file.name).toFile("user-images/jpegs/" + filename + ".jpg", function (err, info) {
-                    if (err) console.log(info);
-                });
-            }
-            catch (err) {
-                console.log(err);
-            }
+    if (filetype == 'jpeg' || filetype == 'jpg' || filetype == 'png' || filetype == 'webp' || filetype == 'tiff' || filetype == 'tif' || filetype == 'svg') {
+        try {
+            await processUserImage(preprocessedImagePath, processedImagePath);
+
+            var body = await classifyUserImage("123", processedImagePath);
+
+            createMetadata(file, fileId);
+
+            var viewModel = { layout: false, results: JSON.parse(body) };
+
+            console.log(viewModel);
+
+            res.render('classification-results', viewModel );
         }
+        catch (err) {
+            console.log(err);
 
-
-
-        // use online.convert.com to convert other file types. 
-        // Heif and heic are still un-implemented at time of writing.
-        // Online-convert has a free service for images of 100 mB max size
-        // and low traffic. Upgrade of service is available as well as
-        // purchase of conversion minutes. $10 for 500 minutes.
-
-        else {
-            try {
-                var jsonResponse, jsonResponse2;
-                var id;
-                var xhttp, xhttp2, xhttp3;
-                var jobFinished = false;
-                var convertedImage;
-
-
-                xhttp = new XMLHttpRequest();
-                xhttp.open("POST", 'https://api2.online-convert.com/jobs', false);
-                xhttp.setRequestHeader('x-oc-api-key', apiKey);
-                xhttp.setRequestHeader('Cache-Control', 'no-cache');
-                var reqbody = '{ "input": [{'
-                    + '"type": "remote",'
-                    + '"source": "https://localhost:8080/user-images/' + name
-                    + '"}],'
-                    + '"conversion": [{'
-                    + '"target": "jpg"'
-                    + '}]'
-                    + '}';
-                xhttp.onreadystatechange = function () {
-                    console.log("\r\nStarted file conversion job.");
-
-                    console.log(xhttp.status);
-
-                    if (xhttp.readyState == 4 && xhttp.status == 201) {
-                        jsonResponse = JSON.parse(xhttp.responseText);
-                        id = jsonResponse.id;
-                        while (!jobFinished) {
-                            xhttp2 = new XMLHttpRequest();
-                            xhttp2.open("GET", 'https://api2.online-convert.com/jobs/' + id, false);
-                            xhttp2.setRequestHeader('x-oc-api-key', apiKey);
-                            xhttp2.setRequestHeader('Cache-Control', 'no-cache');
-                            xhttp2.onreadystatechange = function () {
-                                jsonResponse2 = JSON.parse(xhttp2.responseText);
-                                console.log(jsonResponse2.status.code);
-                                if (jsonResponse2.status.code == "completed") {
-                                    console.log('\r\nFinished converting file.');
-                                    jobFinished = true;
-                                    var imageURI = jsonResponse2.output[0].uri;
-                                    console.log(imageURI);
-                                    /*xhttp3 = new XMLHttpRequest()
-                                    xhttp3.open("GET", imageURI);
-                                    xhttp3.setRequestHeader('Cache-Control','no-cache');
-                                    xhttp3.onreadystatechange = function(){
-                                        console.log('\r\nFinished downloading converted file.');
-                                        console.log(xhttp3.status);
-                                        if(xhttp3.status = 200 && xhttp3.readyState == 4){
-                                            //save image
-                                               
-                                            
-                                        }
-                                    }
-                                    xhttp3.send();
-                                    */
-                                    /*
-                                    options = {
-                                      url: imageURI,
-                                      dest: 'uploads/jpegs/' + filename +'.jpg'        
-                                        // Save to /path/to/dest/photo.jpg
-                                    }
-
-                                    download.image(options)
-                                      .then(({ filename, image }) => {
-                                        console.log('File saved to', filename)
-                                      }).catch((err) => {
-                                        throw err
-                                      })
-                                    */
-
-                                }
-                            }
-                            xhttp2.send();
-                        }
-                    } else {
-                        console.log(xhttp.status);
-                        console.log(xhttp.statusText);
-                    }
-                }
-                xhttp.send(reqbody);
-
-                console.log('http request sent to online-convert');
-
-
-            }
-            catch (err) {
-                console.log('Error converting file: ' + name);
-                console.log(err);
-            }
+            res.status(500).json({ error: 'Cannot classify image. Please try again.' });
         }
-
-        createMetadata(file, filename);
-    });
-
-    // log any errors that occur
-    form.on('error', function (err) {
-        console.log('An error has occured: \n' + err);
-    });
-
-    // once all the files have been uploaded, send a response to the client
-    form.on('end', function () {
-        res.end('success');
-    });
-
-    // parse the incoming request containing the form data
-    form.parse(req);
-
+    }
 
 });
 
-function scanFile(filename) {
-    /*var files = [filename];
-    clam.scan_files(files, function(err, good_files, bad_files) {
-        if(!err) {
-            if(bad_files.length > 0) {
-                res.send({
-                    msg: good_files.length + ' files were OK. ' + bad_files.length + ' were infected!',
-                    bad: bad_files,
-                    good: good_files
-                });
-            } else {
-                res.send({msg: "Everything looks good! No problems here!."});
+function getUploadForm (req,userImageUploadDirectory) {
+    return new Promise(function (resolve, reject) {
+        var form = new formidable.IncomingForm()
+
+        form.uploadDir = userImageUploadDirectory;
+        form.multiples = true;
+        
+        form.parse(req, function (err, fields, files) {
+            if (err) return reject(err)
+            resolve({ fields: fields, files: files })
+        })
+    })
+}
+
+function processUserImage(originalImagePath, transformedImagePath) {
+    return new Promise(function (resolve, reject) {
+        sharp(originalImagePath).toFile(transformedImagePath, function (err, info) {
+            if (err) reject(err);
+            else {
+                resolve(info);
             }
-        } else {
-            // Do some error handling 
-        }
-    }, function(err, file, is_infected) {
-        if(is_infected) {
-            scan_status.bad++;
-        } else {
-            scan_status.good++;
-        }
-    console.log("Scan Status: " + (scan_status.bad + scan_status.good) + "/" + files.length);
+        });
     });
-    */
+}
+
+function classifyUserImage(userId, imagePath) {
+
+    var apiBaseUrl = process.env.SpecifierApiUrl || 'http://api.specifierapp.com/api/';
+    var classificationApiUrl = apiBaseUrl + 'user/' + userId + '/images';
+
+    var formData = {
+        file: fs.createReadStream(imagePath),
+    };
+
+    return new Promise(function (resolve, reject) {
+        request.post({ url: classificationApiUrl, formData: formData }, function (err, httpResponse, body) {
+            if (err) {
+                reject(err);
+            }
+            resolve(body);
+        })
+    });
+
 }
 
 function createMetadata(file, filename) {
