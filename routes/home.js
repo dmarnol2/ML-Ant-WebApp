@@ -2,23 +2,16 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 
-const env = {
-    AUTH0_CLIENT_ID: 'fvMtWEHx74JIig33pGXhi9nthQm2FyCq',
-    AUTH0_DOMAIN: 'specifier.auth0.com',
-    AUTH0_CLIENT_SECRET: 'FJdb6e8BetTZgl-Wa9jK6-Z4QxcU9LqCtXAMam3h7FZXPV277Mll6AgxBqRaUFx_',
-    AUTH0_CALLBACK_URL: 'http://localhost:8080/callback'
-};
-
 router.get('/', function (req, res, next) {
     res.render('home');
 });
 
 router.get('/login', passport.authenticate('auth0', {
-    clientID: env.AUTH0_CLIENT_ID,
-    domain: env.AUTH0_DOMAIN,
-    redirectUri: env.AUTH0_CALLBACK_URL,
+    clientID: process.env.Auth0ClientId,
+    domain: process.env.Auth0Domain,
+    redirectUri: process.env.Auth0CallbackUrl,
     responseType: 'code',
-    audience: 'https://' + env.AUTH0_DOMAIN + '/userinfo',
+    audience: 'https://' + process.env.Auth0Domain + '/userinfo',
     scope: 'openid profile '
 }),
     function (req, res) {
