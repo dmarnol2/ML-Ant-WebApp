@@ -38,7 +38,6 @@ router.post('/', ensureLoggedIn, async function (req, res) {
         try {
             await processUserImage(preprocessedImagePath, processedImagePath);
 
-            console.log(req.user);
             var userId = req.user.user_id.replace('|','');
 
             var body = await classifyUserImage(userId, processedImagePath);
@@ -88,7 +87,7 @@ function classifyUserImage(userId, imagePath) {
     var apiBaseUrl = process.env.SpecifierApiUrl || 'http://api.specifierapp.com/api/';
     var classificationApiUrl = apiBaseUrl + 'users/' + userId + '/images';
 
-    console.log('POSTing classfication request to ' + classificationApiUrl);
+    console.log('POSTing classification request to ' + classificationApiUrl);
 
     var formData = {
         file: fs.createReadStream(imagePath),
