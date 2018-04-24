@@ -9,7 +9,6 @@ const sharp = require('sharp');
 const uuidv1 = require('uuid/v1');
 
 router.post('/', ensureLoggedIn, async function (req, res) {
-    console.log(req.method);
 
     var preprocessedImageDirectory = path.join(path.dirname(require.main.filename), '/user-images/');
 
@@ -39,7 +38,9 @@ router.post('/', ensureLoggedIn, async function (req, res) {
         try {
             await processUserImage(preprocessedImagePath, processedImagePath);
 
-            var body = await classifyUserImage("123", processedImagePath);
+            var userId = req.user.user_id.replace('|','');
+
+            var body = await classifyUserImage(userId, processedImagePath);
 
             createMetadata(file, fileId);
 
@@ -84,7 +85,9 @@ function processUserImage(originalImagePath, transformedImagePath) {
 function classifyUserImage(userId, imagePath) {
 
     var apiBaseUrl = process.env.SpecifierApiUrl || 'http://api.specifierapp.com/api/';
-    var classificationApiUrl = apiBaseUrl + 'user/' + userId + '/images';
+    var classificationApiUrl = apiBaseUrl + 'users/' + userId + '/images';
+
+    console.log('POSTing classification request to ' + classificationApiUrl);
 
     var formData = {
         file: fs.createReadStream(imagePath),
