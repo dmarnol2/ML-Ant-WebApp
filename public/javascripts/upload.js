@@ -14,10 +14,6 @@ $(function () {
         addRemoveLinks: true,
         uploadMultiple: false,
         maxFiles: 1,
-        renameFile: function (file) {
-            var temp = file.name;
-            return "image." + temp.slice((temp.lastIndexOf(".") - 1 >>> 0) + 2);
-        },
         acceptedFiles: "image/png,image/gif,image/jpg,image/jpeg,image/tif,image/tiff,image/bmp,image/raw,image/wmf, image/webp, image/img, image/pct, image/tga, image/jpe, image/ani, image/heif, image/heic",
 
         init: function () {
