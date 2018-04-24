@@ -3,12 +3,10 @@ $(function () {
 
     $("#user-image-drop-zone").on("drop", function (e) {
         e.preventDefault();
-        window.alert('dropped');
     });
 
     $("#user-image-drop-zone").click (function (e) {
         e.preventDefault();
-        window.alert('dropped');
     });
 
     Dropzone.options['user-image-drop-zone'] = {
