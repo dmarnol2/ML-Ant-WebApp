@@ -1,5 +1,5 @@
 # ML-Ant-WebApp
-Web application for Capstone project using Tensorflow ML model to identify Ant species
+A web server application that takes uploaded images and sends them to a Tensorflow Machine Learning model for identifying and classifying Ant genus.
 
 ## Getting Started
 
@@ -26,11 +26,13 @@ Then to launch change into the root directory and run the app with nodemon.
 
 ```
 ..\workspace\> cd AntCLassifierWebApp
-..\workspace\BrewSimDB\BrewSimDB\> node app.js
+..\workspace\BrewSimDB\AntClassifierWebApp\> npm start
+or alternatively to automatically restart server with each change:
+..\workspace\AntClassifierWebApp\> nodemon app.js
 ```
 If it won't launch because any dependencies aren't install, run the following command replacing 'dependency' with the name of the dependency you need to install.
 ```
-..\workspace\AntClassifierWebApp\> npm install dependency --save
+..\workspace\AntClassifierWebApp\> npm install <dependency> --save
 ```
 
 Finally, to access the app, open your browser and type:
