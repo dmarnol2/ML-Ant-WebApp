@@ -1,5 +1,5 @@
 # ML-Ant-WebApp
-A web server application that takes uploaded images and sends them to a Tensorflow Machine Learning model for identifying and classifying Ant genus.
+A web and server application that takes uploaded images and sends them to a Tensorflow Machine Learning model for identifying and classifying Ant genus.
 
 This project is a data science project that aims to develop a system to automatically identify insect specimens. This system would primarily help researchers studying biodiversity, behavior, and ecology of ants but also provide means to support amateur entomologists in the field as well as to generalize to other insect species. 
 
