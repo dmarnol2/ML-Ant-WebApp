@@ -62,7 +62,7 @@ Application is live at:
 
 * **David Arnold**  - [dmarnol2](https://github.com/dmarnol2)
 * **Aaron Hulseman**  - [ahulsem](https://github.com/ahulsem)
-* **Sadai Sarmiento **  - [Heidern](https://github.com/Heidern)
+* **Sadai Sarmiento**  - [Heidern](https://github.com/Heidern)
 * **Francisco Bencomo**  - [fbencomo](https://github.com/fbencomo)
 
 
