@@ -16,11 +16,8 @@ A step by step series of examples that tell you have to get a development env ru
 First, you need to clone the repository.
 
 ```
-git clone https://github.com/dmarnol2/BrewSimDB.git
+https://github.com/dmarnol2/ML-Ant-WebApp.git
 ```
-
-Then, you need to set up your local environment. Using the '.sample_env' as a template, create and fill out a '.env' file as follows, replacing username and password with the username and password for your installation of MySQL.
-
 
 Then to launch change into the root directory and run the app with nodemon.
 
@@ -43,12 +40,15 @@ localhost:8080
 
 ## Running the app
 
-
+On the upload page, simply drag and drop an image into the box or click box to be taken to your file system. Explore tabs on navigation bar to learn more about the site.
 
 ## Built With
 
 * [Node](https://nodejs.org/) - Web server used
 * [Express](https://expressjs.com/) - Web framework used
+* [Express-Handlebars](https://handlebarsjs.com/) - Templating Engine used
+* [DropzoneJS](http://www.dropzonejs.com/) - File Uploader framework used
+* [Bootstrap](https://getbootstrap.com/) - HTML styling used
 
 ## Contributing
 
@@ -56,11 +56,15 @@ This project is not open for contribution at this time.
 
 ## Versioning
 
-We are still in beta for this project.
+Application is live at: 
 
 ## Authors
 
-* **David Arnold**  - [dmarnold2](https://github.com/dmarnol2)
+* **David Arnold**  - [dmarnol2](https://github.com/dmarnol2)
+* **Aaron Hulseman**  - [ahulsem](https://github.com/ahulsem)
+* **Sadai Sarmiento **  - [Heidern](https://github.com/Heidern)
+* **Francisco Bencomo**  - [fbencomo](https://github.com/fbencomo)
+
 
 ## License
 
