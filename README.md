@@ -28,7 +28,7 @@ Then to launch change into the root directory and run the application.
 
 ```
 ..\workspace\> cd AntCLassifierWebApp
-..\workspace\BrewSimDB\AntClassifierWebApp\> npm start
+..\workspace\AntClassifierWebApp\> npm start
 or alternatively to automatically restart server with each change:
 ..\workspace\AntClassifierWebApp\> nodemon app.js
 ```
@@ -49,11 +49,12 @@ On the upload page, simply drag and drop an image into the box or click box to b
 
 ## Built With
 
-* [Node](https://nodejs.org/) - Web server used
-* [Express](https://expressjs.com/) - Web framework used
-* [Express-Handlebars](https://handlebarsjs.com/) - Templating Engine used
-* [DropzoneJS](http://www.dropzonejs.com/) - File Uploader framework used
-* [Bootstrap](https://getbootstrap.com/) - HTML styling used
+* [Node](https://nodejs.org/) - Web server
+* [Auth0](https://auth0.com/) - 3rd party authentication
+* [Express](https://expressjs.com/) - Web framework 
+* [Express-Handlebars](https://handlebarsjs.com/) - Templating Engine 
+* [DropzoneJS](http://www.dropzonejs.com/) - File Uploader framework
+* [Bootstrap](https://getbootstrap.com/) - Styling
 
 ## Contributing
 
