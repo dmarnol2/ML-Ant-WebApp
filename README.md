@@ -19,7 +19,7 @@ First, you need to clone the repository.
 https://github.com/dmarnol2/ML-Ant-WebApp.git
 ```
 
-Then to launch change into the root directory and run the app with nodemon.
+Then to launch change into the root directory and run the application.
 
 ```
 ..\workspace\> cd AntCLassifierWebApp
